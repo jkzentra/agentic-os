@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.DS_Store
+Thumbs.db
+.pytest_cache/
+
+# Per-client runtime artifacts (never pushed to template repo)
+HR-Attendance/v*/06_REPORTS/
+HR-Attendance/v*/_backup/
+HR-Attendance/v*/03_MASTER_DATA/staff_map.csv
+HR-Attendance/v*/03_MASTER_DATA/public_holidays.csv
+HR-Attendance/v*/03_MASTER_DATA/outlets.csv
+
+# All xlsx excluded by default, with sample_data allowlisted
+*.xlsx
+!HR-Attendance/v*/sample_data/**/*.xlsx
+!HR-Attendance/v*/sample_data/expected_output/*.xlsx

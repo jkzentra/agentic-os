@@ -1,0 +1,33 @@
+# client_config.toml
+#
+# This is the ONE file a new client edits to onboard onto the HR-Attendance
+# template. It is a skeleton only: every value below is a placeholder. The
+# engine itself reads 03_MASTER_DATA/rules.toml (business rules) and the
+# 03_MASTER_DATA/*.csv files (staff, outlets, holidays, roster text labels);
+# this file is a convenience reference for setup notes and is not parsed by
+# src/ at runtime.
+
+client_name = ""
+
+# Company names used in report tabs, e.g. ["Acme Retail", "Acme Logistics"]
+companies = []
+
+# Map of outlet_id -> company name, e.g. { "OUT1" = "Acme Retail" }
+outlet_company_map = {}
+
+opening_time = ""
+standard_day_hours = 0
+weekly_ot_threshold = 0
+
+[data_paths]
+roster = ""
+punches = ""
+output_dir = ""
+
+# Full names (as they appear in 03_MASTER_DATA/staff_map.csv) to exclude from
+# attendance entirely, e.g. shareholders/directors who are not staff.
+excluded_names = []
+
+# Full names (as they appear in staff_map.csv) who are off-site/WFH with no
+# roster by design: punches are shown but no shift checks or OT are applied.
+offsite_names = []

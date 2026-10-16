@@ -1,0 +1,363 @@
+# rules.toml: attendance rules for this HR-Attendance template.
+# Code reads these; nothing is hard-coded in src/. Every rule here is a working
+# DEFAULT (status = "ASSUMED") that a new client must confirm or override before
+# go-live. To change a rule: edit value/status/source here, run
+# `py -m src.rules check`, then rerun the engine.
+#
+# CONFIRMED needs a non-empty source. ASSUMED = working default, shown amber
+# with a "(default; confirm with client)" note in its question/label text.
+
+[meta]
+schema_version = 1
+allowed_status = ["CONFIRMED", "ASSUMED", "OPEN"]
+
+# ------------------------------------------------------------ rounding & shift rules
+[rules.morning_open]
+label = "Morning opening time (default; confirm with client)"
+value = "10:00"
+status = "ASSUMED"
+question = "Confirm the outlet/office opening time with the client."
+source = ""
+
+[rules.opening_time]
+label = "Opening time used by the end-only-start rule (default; confirm with client)"
+value = "10:00"
+status = "ASSUMED"
+question = "Confirm the opening time used when a roster code has an end but no start."
+source = ""
+
+[rules.early_in_counts_as_start]
+label = "A clock-in before the shift start is recorded as the shift start (default; confirm with client)"
+value = true
+status = "ASSUMED"
+question = "Confirm whether an early clock-in should be treated as the shift start."
+source = ""
+
+[rules.late_round_step_minutes]
+label = "Late in: rounds UP to the next N minutes (default; confirm with client)"
+value = 30
+status = "ASSUMED"
+question = "Confirm the late clock-in rounding step (minutes)."
+source = ""
+
+[rules.early_out_round_step_minutes]
+label = "Early clock-out: rounds DOWN to the previous N minutes (default; confirm with client)"
+value = 30
+status = "ASSUMED"
+question = "Confirm the early clock-out rounding step (minutes)."
+source = ""
+
+[rules.cap_out_at_shift_end]
+label = "A punch-out after the shift end is capped at the shift end unless authorised (default; confirm with client)"
+value = true
+status = "ASSUMED"
+question = "Confirm whether late punch-outs should be capped at the shift end."
+source = ""
+
+[rules.flag_capped_rows_amber]
+label = "Whether capped punch-outs are highlighted and raise a per-person flag (default; confirm with client)"
+value = false
+status = "ASSUMED"
+question = "Confirm whether capped rows should be flagged."
+source = ""
+
+[rules.transfer_is_error]
+label = "Working at another outlet is a transfer, not an error (default; confirm with client)"
+value = false
+status = "ASSUMED"
+question = "Confirm how cross-outlet work should be treated."
+source = ""
+
+[rules.standard_day_hours]
+label = "Standard working day, in hours (default; confirm with client)"
+value = 8.5
+status = "ASSUMED"
+question = "Confirm the standard working day length (hours)."
+source = ""
+
+[rules.weekly_ot_threshold_hours]
+label = "Weekly hours threshold above which extra time is overtime (default; confirm with client)"
+value = 51
+status = "ASSUMED"
+question = "Confirm the weekly OT threshold (hours)."
+source = ""
+
+[rules.weekly_ot_threshold]
+label = "Alias of weekly_ot_threshold_hours, kept for onboarding docs (default; confirm with client)"
+value = 51
+status = "ASSUMED"
+question = "Confirm the weekly OT threshold (hours)."
+source = ""
+
+[rules.ot_reference_only]
+label = "Whether the OT column is reference-only, pending approval (default; confirm with client)"
+value = true
+status = "ASSUMED"
+question = "Confirm whether the system should ever auto-approve overtime (default: never)."
+source = ""
+
+[rules.approval_source]
+label = "Where approved roster changes are made before the file is dropped (default; confirm with client)"
+value = "schedule_revised_before_drop"
+status = "ASSUMED"
+question = "Confirm the client's roster-approval workflow."
+source = ""
+
+[rules.report_structure]
+label = "Report workbook layout (default; confirm with client)"
+value = "one_workbook_per_company_tab"
+status = "ASSUMED"
+question = "Confirm how companies/outlets should be laid out across report tabs."
+source = ""
+
+[rules.no_invented_data]
+label = "Missing data is flagged, never invented (fixed product principle, not client-specific)"
+value = true
+status = "ASSUMED"
+question = "This is a product principle; it should stay true for every client."
+source = ""
+
+[rules.write_policy]
+label = "The system is read-only on source files (fixed product principle)"
+value = "read_only"
+status = "ASSUMED"
+question = "This is a product principle; it should stay true for every client."
+source = ""
+
+# ------------------------------------------------------------ duplicate / single-punch handling
+[rules.duplicate_punch_window_minutes]
+label = "Two punches within this many minutes count as one duplicate tap (default; confirm with client)"
+value = 5
+status = "ASSUMED"
+question = "Confirm the duplicate-punch window (minutes)."
+source = ""
+
+[rules.duplicate_punch_keep]
+label = "Which punch of a duplicate tap is kept (default; confirm with client)"
+value = "first"
+options = ["first", "last"]
+status = "ASSUMED"
+question = "Confirm which punch of a duplicate pair should be kept."
+source = ""
+
+[rules.single_punch_classification]
+label = "A lone punch nearer the shift start is a clock-in; nearer the end is a clock-out (default; confirm with client)"
+value = "closer_to_boundary"
+status = "ASSUMED"
+question = "Confirm how a single lone punch per day should be classified."
+source = ""
+
+[rules.single_punch_tie_minutes]
+label = "A lone punch within this many minutes of the shift midpoint is not classified (default; confirm with client)"
+value = 60
+status = "ASSUMED"
+question = "Confirm the tie-break window for a lone punch near the shift midpoint (minutes)."
+source = ""
+
+# ------------------------------------------------------------ leave / holidays
+[rules.leave_day_hours]
+label = "Hours credited for a full leave or public-holiday day (default; confirm with client)"
+value = 8.5
+status = "ASSUMED"
+question = "Confirm the hours credited for a full leave/PH day."
+source = ""
+
+[rules.upl_absent_unpaid]
+label = "Whether unpaid-leave and absent days are unpaid (default; confirm with client)"
+value = "unknown"
+options = ["yes", "no", "unknown"]
+status = "ASSUMED"
+question = "Confirm whether UPL/ABSENT days are unpaid."
+source = ""
+
+[rules.half_day_leave_hours]
+label = "Hours credited for a half-day leave code (empty = flag the day, do not compute) (default; confirm with client)"
+value = ""
+status = "ASSUMED"
+question = "Confirm the hours credited for a half-day leave code."
+source = ""
+
+[rules.ot_rate_day_types]
+label = "Which day types earn the higher OT rates (rest day, public holiday) (default; confirm with client)"
+value = ""
+status = "ASSUMED"
+question = "Confirm which day types earn premium OT rates."
+source = ""
+
+[rules.asterisk_code_meaning]
+label = "Meaning of a trailing asterisk on a roster code (default; confirm with client)"
+value = "unknown"
+status = "ASSUMED"
+question = "Confirm what a trailing asterisk on a roster code means."
+source = ""
+
+[rules.named_shift_times]
+label = "Named shift start/end times, e.g. FULL/AM/PM (default; confirm with client)"
+value = "assumed"
+status = "ASSUMED"
+question = "Confirm the named-shift start/end times used in the client's roster."
+source = ""
+
+[rules.break_handling]
+label = "Whether break columns in attendance transactions are used or ignored (default; confirm with client)"
+value = "ignored"
+status = "ASSUMED"
+question = "Confirm whether break columns should reduce Working hours."
+source = ""
+
+[rules.daily_vs_weekly_ot]
+label = "Whether daily OT, weekly OT, or both are shown/paid (default; confirm with client)"
+value = "show_both"
+status = "ASSUMED"
+question = "Confirm whether OT is assessed daily, weekly, or both."
+source = ""
+
+# ------------------------------------------------------------ off-site / excluded people
+[rules.offsite_no_roster]
+label = "Off-site/remote staff have no roster by design (default; confirm with client)"
+value = "no_roster_by_design"
+status = "ASSUMED"
+question = "Confirm whether the client has any off-site staff with no roster."
+source = ""
+
+[rules.offsite_treatment]
+label = "Off-site staff: punches shown, Working = out minus in, no rounding/late/early/capped checks, OT not assessed (default; confirm with client)"
+value = "punches_only_no_ot"
+status = "ASSUMED"
+question = "Confirm how off-site staff attendance should be treated."
+source = ""
+
+[rules.excluded_names]
+label = "Staff names excluded from attendance entirely, e.g. shareholders/directors (client-specific list; empty by default)"
+value = []
+status = "ASSUMED"
+question = "List any people who should be excluded from attendance entirely (full names as they appear in staff_map.csv)."
+source = ""
+
+[rules.offsite_names]
+label = "Staff names treated as off-site/WFH with no roster (client-specific list; empty by default)"
+value = []
+status = "ASSUMED"
+question = "List any people who are off-site/WFH with no roster (full names as they appear in staff_map.csv)."
+source = ""
+
+# ------------------------------------------------------------ OT candidates / closing time
+[rules.ot_candidate_threshold_min]
+label = "A punch-out more than this many minutes after the shift end is an OT candidate, pending approval (default; confirm with client)"
+value = 30
+status = "ASSUMED"
+question = "Confirm the OT-candidate threshold past the shift end (minutes)."
+source = ""
+
+[rules.out_after_shift_end_treatment]
+label = "Out after shift end: capped, no flag, no amber; an OT-candidate note only above the threshold (default; confirm with client)"
+value = "capped_no_flag"
+status = "ASSUMED"
+question = "Confirm how a punch-out after the shift end should be treated."
+source = ""
+
+[rules.closing_time_method]
+label = "How an outlet's reference closing time is derived from the roster (default; confirm with client)"
+value = "roster_mode"
+status = "ASSUMED"
+question = "Confirm how outlet closing time should be derived (reference only)."
+source = ""
+
+[rules.closing_time_generic_codes]
+label = "Generic all-day roster codes that do not set an outlet's closing time on their own (default; confirm with client)"
+value = ["FULL", "PM"]
+status = "ASSUMED"
+question = "Confirm which generic roster codes should be excluded from closing-time derivation."
+source = ""
+
+[rules.past_closing_note]
+label = "Whether punching out after the derived closing time gets a remark only, no flag (default; confirm with client)"
+value = "remark_only"
+status = "ASSUMED"
+question = "Confirm how punching out after closing time should be noted."
+source = ""
+
+[rules.unlabelled_block_handling]
+label = "How roster blocks with no outlet label are handled (default; confirm with client)"
+value = "data_coverage"
+status = "ASSUMED"
+question = "Confirm how unlabelled roster blocks should be handled and reported."
+source = ""
+
+# ------------------------------------------------------------ partial / missing data
+[rules.partial_data_report_mode]
+label = "Partial-data people get one Flags row per person, not a no-punch row per missing day (default; confirm with client)"
+value = "one_row_per_person"
+status = "ASSUMED"
+question = "Confirm how partial/incomplete clock data should be reported."
+source = ""
+
+[rules.implausible_late_min]
+label = "A first punch more than this many minutes after the shift start is a possible missing clock-in, not a late (default; confirm with client)"
+value = 240
+status = "ASSUMED"
+question = "Confirm the implausible-late threshold (minutes)."
+source = ""
+
+[rules.ph_worked_merge]
+label = "Public holiday worked: merge into one Flags row per holiday date (default; confirm with client)"
+value = "per_holiday_date"
+status = "ASSUMED"
+question = "Confirm whether public-holiday-worked flags should be merged per date."
+source = ""
+
+[rules.info_rows_destination]
+label = "Where informational rows (asterisk, unlabelled block, transfer, duplicate tap) are listed (default; confirm with client)"
+value = "data_coverage"
+status = "ASSUMED"
+question = "Confirm where informational (non-flag) rows should be listed."
+source = ""
+
+[rules.end_only_start_rule]
+label = "End-only roster code: shift start = max(opening time, first real punch); flagged for HR to confirm (default; confirm with client)"
+value = "max_opening_or_first_punch"
+status = "ASSUMED"
+question = "Confirm how an end-only roster code (start time missing) should be handled."
+source = ""
+
+[rules.roster_code_over_hours_column]
+label = "If the roster hours column disagrees with the shift code, trust the code (default; confirm with client)"
+value = "trust_code"
+status = "ASSUMED"
+question = "Confirm whether the roster code or the roster hours column should be trusted when they disagree."
+source = ""
+
+[rules.partial_data_threshold_pct]
+label = "A person with punches on fewer than this percent of scheduled work days has partial (trial) data (default; confirm with client)"
+value = 50
+status = "ASSUMED"
+question = "Confirm the partial-data coverage threshold (percent)."
+source = ""
+
+[rules.not_assessed_label]
+label = "Exact label used everywhere for a data gap (default; confirm with client)"
+value = "Not assessed, missing data"
+status = "ASSUMED"
+question = "Confirm the exact wording to use for a data-coverage gap."
+source = ""
+
+[rules.not_assessed_rule]
+label = "A person is Not assessed when there is no clock file at all, or coverage is below the partial threshold (default; confirm with client)"
+value = "no_clock_file_or_partial_threshold"
+status = "ASSUMED"
+question = "Confirm when a person should be marked Not assessed."
+source = ""
+
+[rules.no_data_day_remark]
+label = "Day remark for a scheduled work day with no punch for a Not-assessed person (default; confirm with client)"
+value = "No data (source gap)"
+status = "ASSUMED"
+question = "Confirm the remark text for a day with no data for a Not-assessed person."
+source = ""
+
+[rules.large_late_min]
+label = "A late of this many minutes or more gets a 'large late' remark (default; confirm with client)"
+value = 90
+status = "ASSUMED"
+question = "Confirm the large-late threshold (minutes)."
+source = ""
