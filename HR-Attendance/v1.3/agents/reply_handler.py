@@ -1,44 +1,28 @@
-"""Reply-file handler. SKELETON — not yet implemented.
+"""Reply handler agent: turns a client's *_reply.xlsx into a revised report.
 
-Fires: event-driven, invoked by drop_scanner when it finds *_reply.xlsx in
-the drop folder. Not scheduled.
+Role: triggered by drop_scanner when a *_reply.xlsx is found. Parses the
+filename to find the matching original scope, reruns the engine with the
+merged reply data, saves <stem>_v2.xlsx (or _v3 if _v2 exists), computes a
+cell-level diff against the original, and flags the dashboard "awaiting
+review".
 
-Responsibilities (planned):
-  1. Parse the reply filename to extract the original scope (e.g.
-     `2026-W42_Weekly_reply.xlsx` -> scope=week, period=2026-W42).
-  2. Merge the reply's answered/corrected rows into the engine's state.
-  3. Re-run src.run for that same scope with the merged data.
-  4. Save as <stem>_v2.xlsx (bump to _v3, _v4, ... on each subsequent reply).
-  5. Diff against the previous version and write a short changes summary
-     into 06_REPORTS/<scope>/<stem>_v2_changes.md.
-  6. Flag the dashboard: "Reply received, awaiting review".
-  7. Log to 07_LOGS/reply_handler.log.
+Cadence: event-driven (no schedule of its own).
 
-Awaiting PL confirmation on:
-  - Reply filename convention (template default: original stem + "_reply")
-  - What fields the reply file is allowed to change (Pending answers?
-    Flag resolutions? Both? Neither — only comments?)
-  - Should a revised report auto-email, or just appear in the dashboard
-    for review before any send
+SKELETON: no behaviour yet.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
-from pathlib import Path
+
+def run(ctx: dict | None = None, reply_file: str = "") -> dict:
+    """Process one reply file. Returns original/revised names and a diff summary."""
+    # TODO: parse reply_file stem (e.g. 2026-W42_Weekly_reply) -> original stem.
+    # TODO: locate the original report and its scope window.
+    # TODO: merge reply data and rerun the engine for that window.
+    # TODO: save as <stem>_v2.xlsx, or the next free version (_v3, ...).
+    # TODO: compute cell-level diff vs the original.
+    # TODO: flag the dashboard "awaiting review".
+    return {"original": "", "revised": "", "diff_summary": {}}
 
 
-@dataclass
-class ReplyResult:
-    original_stem: str
-    new_version: int   # 2 for first reply, 3 for second, etc.
-    output_path: str
-    changes_summary_path: str
-
-
-def run(ctx: dict, reply_file: Path) -> ReplyResult:
-    """Entry point called by drop_scanner. Not yet implemented."""
-    raise NotImplementedError(
-        "reply_handler.run() not implemented. "
-        "See module docstring for the planned behavior; "
-        "awaiting PL confirmation on reply filename + which fields are editable."
-    )
+if __name__ == "__main__":
+    print(run())

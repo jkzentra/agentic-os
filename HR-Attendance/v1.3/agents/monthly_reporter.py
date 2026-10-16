@@ -1,38 +1,29 @@
-"""Monthly report builder + mailer. SKELETON — not yet implemented.
+"""Monthly reporter agent: builds and emails the prior-month attendance report.
 
-Fires: Windows Task Scheduler, 1st of month 09:00 local time.
+Role: resolves the previous calendar month window via
+agents.scope_resolver.resolve("month", previous=True), calls the src.run engine
+for that window, writes 06_REPORTS/Monthly/<stem>.xlsx, and emails it via SMTP to
+the [recipients.monthly] list in client_config.toml.
 
-Responsibilities (planned):
-  1. Ask scope_resolver for the previous calendar month.
-  2. Call src.run with scope="month" to produce the xlsx.
-  3. Save to 06_REPORTS/Monthly/<stem>.xlsx (e.g. "2026-10_Monthly.xlsx").
-  4. Email it to client_config.toml [recipients].monthly.
-  5. Log the run to 07_LOGS/monthly_reporter.log.
+Cadence: 1st of month 09:00 (Windows Task Scheduler).
 
-Shares email logic with weekly_reporter — both will call a small
-agents/_mailer.py helper once built, so SMTP wiring lives in one place.
-
-Awaiting PL confirmation on:
-  - Final recipient list for monthly (may be a superset of weekly, e.g.
-    managers who only want the month-end view)
-  - Gmail App Password (same as weekly; delivery-time)
+SKELETON: no behaviour yet. SMTP config is deferred until delivery.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from datetime import date
+
+from agents import scope_resolver  # noqa: F401  (dependency made visible)
 
 
-@dataclass
-class ReportResult:
-    filename: str
-    recipients: list[str]
-    sent: bool
+def run(ctx: dict | None = None, as_of: date | None = None) -> dict:
+    """Generate and send the month report. Returns a summary dict."""
+    # TODO: window = scope_resolver.resolve("month", as_of=as_of, previous=True)
+    # TODO: call the src.run engine for that window.
+    # TODO: write 06_REPORTS/Monthly/<stem>.xlsx (skip send if it already exists).
+    # TODO: email via SMTP to [recipients.monthly] from client_config.toml.
+    return {"filename": "", "sent_to": [], "status": "stub"}
 
 
-def run(ctx: dict) -> ReportResult:
-    """Entry point called by scheduler and dashboard. Not yet implemented."""
-    raise NotImplementedError(
-        "monthly_reporter.run() not implemented. "
-        "See module docstring for the planned behavior; "
-        "awaiting PL recipient list and SMTP credentials (delivery-time)."
-    )
+if __name__ == "__main__":
+    print(run())

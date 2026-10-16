@@ -1,49 +1,40 @@
 # agents/
 
-Thin trigger layer above `src.run`. Each agent is a plain Python module
-with one `run(ctx)` function. The scheduler calls them; the dashboard
-calls the same functions. One codepath, whether a human or cron fires.
+Four agents sit above one engine (`src/run.py`). Each decides **when** and
+**what scope** to run, then calls the engine. All expose `run(ctx)`; the
+scheduler and the Streamlit dashboard call the same functions (one codepath).
+`scope_resolver.py` is the shared helper for day/week/month windows.
 
-## Files
+| Agent | Trigger | Cadence | Input | Output |
+|---|---|---|---|---|
+| `drop_scanner` | Scheduler | Daily 12:00 | `01_INPUTS/` new files | Archived files, `last_scan.txt`, engine runs |
+| `weekly_reporter` | Scheduler | Monday 09:00 | Prior Mon-Sun data | `06_REPORTS/Weekly/2026-W42_Weekly.xlsx` + email |
+| `monthly_reporter` | Scheduler | 1st of month 09:00 | Prior month data | `06_REPORTS/Monthly/2026-10_Monthly.xlsx` + email |
+| `reply_handler` | Event (from `drop_scanner`) | On `*_reply.xlsx` | Client reply file | `<stem>_v2.xlsx`, diff, dashboard flag |
 
-| File | Fires | Status |
-|---|---|---|
-| `scope_resolver.py` | shared helper — called by all agents | ✅ implemented |
-| `drop_scanner.py` | daily 12:00 (Task Scheduler) | 🔲 skeleton |
-| `weekly_reporter.py` | Mon 09:00 (Task Scheduler) | 🔲 skeleton |
-| `monthly_reporter.py` | 1st of month 09:00 (Task Scheduler) | 🔲 skeleton |
-| `reply_handler.py` | event-driven (triggered by `drop_scanner`) | 🔲 skeleton |
+## Filename convention
 
-Skeletons raise `NotImplementedError` with a module docstring explaining
-the planned behavior and what's blocking (usually: a PL confirmation).
+- Daily `2026-10-17_Daily.xlsx`, weekly `2026-W42_Weekly.xlsx`, monthly `2026-10_Monthly.xlsx`
+- Reply `*_reply.xlsx`; revision `*_v2.xlsx` (bumps to `_v3`, ...)
 
-## Date logic lives in one place
+## When each fires
 
-Every agent imports from `scope_resolver` for "what week/month am I in?"
-No agent does its own date arithmetic. Filename stems come from
-`ScopeWindow.filename_stem` — change the convention in one place.
+- **Sat 17 Oct, 12:00** — `drop_scanner` finds `punches_oct.csv` and `roster.xlsx`,
+  files them, and runs the engine if the scope is now complete.
+- **Mon 19 Oct, 09:00** — `weekly_reporter` resolves 12-18 Oct (ISO week 42),
+  writes `2026-W42_Weekly.xlsx`, emails `[recipients.weekly]`.
+- **Sun 1 Nov** (the 1st, 09:00) — `monthly_reporter` builds `2026-10_Monthly.xlsx`
+  and emails `[recipients.monthly]`.
+- **Tue 20 Oct, 12:00** — the client returns `2026-W42_Weekly_reply.xlsx`;
+  `drop_scanner` spots it and calls `reply_handler`, which writes
+  `2026-W42_Weekly_v2.xlsx` and flags the dashboard "awaiting review".
 
-Current filename convention (ISO):
+## Owned by
 
-- Daily: `2026-10-17_Daily.xlsx`
-- Weekly: `2026-W42_Weekly.xlsx`
-- Monthly: `2026-10_Monthly.xlsx`
-- Reply: `<stem>_reply.xlsx` → regenerated as `<stem>_v2.xlsx`
+All four are client-PC Windows Task Scheduler jobs (`reply_handler` runs
+inside the `drop_scanner` job). The dashboard may call the same `run()` functions.
 
-## Config
+## Status
 
-Agent behavior is driven by `client_config.toml`:
-
-- `[recipients].weekly` / `[recipients].monthly` — email lists
-- `[schedule].*` — override default times
-- `[week].starts_on` — business week start (`"Mon"` default)
-
-SMTP sender password lives in `.env` (gitignored), never in TOML.
-
-## Build order (once PL replies)
-
-1. `scope_resolver.py` ✅ (done — add tests next)
-2. `weekly_reporter.py` — highest value, delivers the main new capability
-3. `drop_scanner.py` + `reply_handler.py` — the ingestion loop
-4. `monthly_reporter.py` — reuses weekly's shape
-5. Streamlit `dashboard.py` — last, built once agents are real
+Skeletons only: every `run()` returns a stub dict. Logic lands once PL confirms.
+SMTP (sender `pl.ecosystem2026@gmail.com`) is deferred until delivery.

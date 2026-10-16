@@ -1,39 +1,29 @@
-"""Weekly report builder + mailer. SKELETON — not yet implemented.
+"""Weekly reporter agent: builds and emails the prior-week attendance report.
 
-Fires: Windows Task Scheduler, Mon 09:00 local time.
+Role: resolves the previous Mon-Sun week window via
+agents.scope_resolver.resolve("week", previous=True), calls the src.run engine
+for that window, writes 06_REPORTS/Weekly/<stem>.xlsx, and emails it via SMTP to
+the [recipients.weekly] list in client_config.toml.
 
-Responsibilities (planned):
-  1. Ask scope_resolver for the previous business week (Mon-Sun by default).
-  2. Call src.run with scope="week", start=..., end=... to produce the xlsx.
-  3. Save to 06_REPORTS/Weekly/<stem>.xlsx where stem comes from
-     ScopeWindow.filename_stem (e.g. "2026-W42_Weekly").
-  4. Email it to client_config.toml [recipients].weekly, with the week label
-     in the subject (e.g. "Weekly attendance: 2026-W42 (12-18 Oct)").
-  5. Log the run to 07_LOGS/weekly_reporter.log.
+Cadence: Monday 09:00 (Windows Task Scheduler).
 
-Awaiting PL confirmation on:
-  - Final recipient list (currently placeholders: conankei81@gmail.com,
-    office@jkzentra.com)
-  - Gmail App Password for sender pl.ecosystem2026@gmail.com (deferred to
-    delivery time per user instruction)
-  - Email subject + body copy
+SKELETON: no behaviour yet. SMTP config is deferred until delivery.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from datetime import date
+
+from agents import scope_resolver  # noqa: F401  (dependency made visible)
 
 
-@dataclass
-class ReportResult:
-    filename: str
-    recipients: list[str]
-    sent: bool
+def run(ctx: dict | None = None, as_of: date | None = None) -> dict:
+    """Generate and send the week report. Returns a summary dict."""
+    # TODO: window = scope_resolver.resolve("week", as_of=as_of, previous=True)
+    # TODO: call the src.run engine for that window.
+    # TODO: write 06_REPORTS/Weekly/<stem>.xlsx (skip send if it already exists).
+    # TODO: email via SMTP to [recipients.weekly] from client_config.toml.
+    return {"filename": "", "sent_to": [], "status": "stub"}
 
 
-def run(ctx: dict) -> ReportResult:
-    """Entry point called by scheduler and dashboard. Not yet implemented."""
-    raise NotImplementedError(
-        "weekly_reporter.run() not implemented. "
-        "See module docstring for the planned behavior; "
-        "awaiting PL recipient list and SMTP credentials (delivery-time)."
-    )
+if __name__ == "__main__":
+    print(run())
