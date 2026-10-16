@@ -37,4 +37,4 @@ inside the `drop_scanner` job). The dashboard may call the same `run()` function
 ## Status
 
 Skeletons only: every `run()` returns a stub dict. Logic lands once PL confirms.
-SMTP (sender `pl.ecosystem2026@gmail.com`) is deferred until delivery.
+SMTP sending is deferred until delivery; the sender address and password live in `.env` (gitignored).
