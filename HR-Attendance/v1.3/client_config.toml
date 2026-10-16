@@ -31,3 +31,33 @@ excluded_names = []
 # Full names (as they appear in staff_map.csv) who are off-site/WFH with no
 # roster by design: punches are shown but no shift checks or OT are applied.
 offsite_names = []
+
+# -----------------------------------------------------------------------------
+# Agent configuration (used by agents/*.py). Email sender/password live in
+# .env (gitignored), never here. Recipients can be edited inline here or
+# via the dashboard's Recipients tab.
+# -----------------------------------------------------------------------------
+
+[recipients]
+# Email addresses that receive the weekly report (Mon 09:00).
+weekly = []
+
+# Email addresses that receive the monthly report (1st of month 09:00).
+monthly = []
+
+[schedule]
+# Daily drop-folder scan time (24h, local time). Default: "12:00".
+drop_scan_time = "12:00"
+
+# Weekly report trigger (ISO weekday + 24h time). Default: Monday 09:00.
+weekly_day = "Mon"
+weekly_time = "09:00"
+
+# Monthly report trigger (day of month + 24h time). Default: 1st of month 09:00.
+monthly_day = 1
+monthly_time = "09:00"
+
+[week]
+# Business week start day. Supported: "Mon" (ISO, default), "Sun", "Sat".
+# ask client to confirm; ISO Mon-Sun is the template default.
+starts_on = "Mon"
