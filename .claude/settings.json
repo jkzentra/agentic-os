@@ -1,0 +1,19 @@
+{
+  "extraKnownMarketplaces": {
+    "claude-kit": { "source": { "source": "github", "repo": "JohnnyVizz/claude-kit" } },
+    "hellosverre-mods": { "source": { "source": "github", "repo": "hellosverre/claude-skins" } },
+    "claude-code-filetree": { "source": { "source": "github", "repo": "data-goblin/claude-code-filetree" } },
+    "claude-code-mods": { "source": { "source": "github", "repo": "karanb192/claude-code-mods" } },
+    "claude-reflect-marketplace": { "source": { "source": "github", "repo": "BayramAnnakov/claude-reflect" } },
+    "terminal-browser": { "source": { "source": "github", "repo": "zenbu-labs/terminal-browser" } }
+  },
+  "enabledPlugins": {
+    "savvy-progress@claude-kit": true,
+    "skins@hellosverre-mods": true,
+    "filetree@claude-code-filetree": true,
+    "cache-tax@claude-code-mods": true,
+    "claude-reflect@claude-reflect-marketplace": true,
+    "terminal-browser@terminal-browser": true,
+    "cc-plugin-you-should-know@builtin": true
+  }
+}
