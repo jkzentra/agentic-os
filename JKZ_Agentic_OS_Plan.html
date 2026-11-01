@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JKZ Agentic OS Plan Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* JKZ plan map: brand base (off-white, near-black, one orange anchor) with layer colours so each part of the system is recognisable at a glance. Light only, dark text on light cards. */
+:root{
+  --bg:#F5F5F5; --paper:#FFFFFF; --ink:#181818; --sub:#5A5A5A; --line:rgba(24,24,24,.12);
+  --orange:#F37002; --orange-t:#FDEBDB;
+  --indigo:#4F5BD5; --indigo-t:#E6E8FA;
+  --teal:#0E8F9B;  --teal-t:#DDF1F3;
+  --green:#1E9E68; --green-t:#DEF3EA;
+  --amber:#D99208; --amber-t:#FBEFD2;
+  --red:#D2443A;   --red-t:#FADFDC;
+  --violet:#8A5AD6;--violet-t:#EDE4FA;
+  --pink:#D6498C;  --pink-t:#F9E1EE;
+  --slate:#2A2F3A;
+  --f-d:'Oswald','Arial Narrow',Arial,sans-serif; --f-b:'Montserrat',system-ui,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 15px/1.6 var(--f-b);padding:0 max(16px,env(safe-area-inset-right)) 80px max(16px,env(safe-area-inset-left))}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-d);font-weight:400;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(34px,6vw,60px);line-height:1.02;text-transform:uppercase}
+h2{font-size:clamp(24px,3.2vw,32px);margin-bottom:6px}
+h3{font-size:18px}
+p{margin:0}
+.kicker{font:700 12px/1 var(--f-b);letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
+.sub{color:var(--sub);font-size:14px;max-width:70ch}
+section{margin-top:56px}
+.sec-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
+.num{font-family:var(--f-d);font-weight:300;font-size:54px;line-height:.9;color:var(--orange);min-width:64px}
+nav{position:sticky;top:0;z-index:5;background:rgba(245,245,245,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin:0 calc(-1*max(16px,env(safe-area-inset-left)));padding:10px max(16px,env(safe-area-inset-left));overflow-x:auto;white-space:nowrap}
+nav a{display:inline-block;font-size:12px;font-weight:600;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 12px;margin-right:6px}
+nav a:hover{border-color:var(--orange)}
+.hero{padding:44px 0 8px;display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:center}
+@media(max-width:820px){.hero{grid-template-columns:1fr}}
+.hero p.lead{font-size:17px;margin-top:16px;max-width:52ch}
+.badge{display:inline-block;font:700 11px/1 var(--f-b);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:var(--slate);color:#fff;margin-right:6px}
+.badge.o{background:var(--orange)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:22px}
+.tile{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;border-top:5px solid var(--c,var(--orange))}
+.tile b{display:block;font:500 34px/1 var(--f-d)}
+.tile span{font-size:12px;color:var(--sub);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:0 2px 14px rgba(24,24,24,.05)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.bar{border-left:6px solid var(--c);padding-left:14px}
+.chip{display:inline-block;font:700 11px/1 var(--f-b);letter-spacing:.06em;padding:4px 8px;border-radius:6px;margin:2px 4px 2px 0;background:var(--ct,#eee);color:var(--ink);border:1px solid var(--c,transparent)}
+.l0{--c:var(--green);--ct:var(--green-t)}.l1{--c:var(--amber);--ct:var(--amber-t)}.l2{--c:var(--red);--ct:var(--red-t)}.l3{--c:var(--slate);--ct:#E3E5EA}
+.code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#EDEDED;border-radius:4px;padding:1px 5px}
+svg{display:block;width:100%;height:auto}
+.note{border-left:6px solid var(--orange);background:var(--orange-t);border-radius:0 12px 12px 0;padding:12px 16px;font-size:14px}
+.note.red{border-color:var(--red);background:var(--red-t)}
+.note.teal{border-color:var(--teal);background:var(--teal-t)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 11px/1.2 var(--f-b);letter-spacing:.1em;text-transform:uppercase;color:var(--sub);background:#F0F0F0}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:6px;vertical-align:baseline}
+/* flows */
+.lane{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:stretch;margin-bottom:12px}
+@media(max-width:700px){.lane{grid-template-columns:1fr}}
+.lane-title{background:var(--c);color:#fff;border-radius:12px;padding:12px 14px;font:500 20px/1.1 var(--f-d);text-transform:uppercase;display:flex;align-items:center}
+.steps{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.step{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:8px 10px;font-size:12.5px;min-width:112px;max-width:170px;flex:1 1 112px;position:relative}
+.step small{display:block;color:var(--sub);font-size:11px;font-weight:600}
+.step.gate{background:var(--red-t);border-color:var(--red)}
+.arrow{align-self:center;color:var(--sub);font-weight:700}
+/* roadmap */
+.road{display:grid;gap:10px}
+.phase{display:grid;grid-template-columns:70px 1fr auto;gap:14px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 16px;border-left:8px solid var(--c)}
+@media(max-width:700px){.phase{grid-template-columns:50px 1fr}.phase .gate{grid-column:1/-1}}
+.phase .pn{font:500 28px/1 var(--f-d);color:var(--c)}
+.phase .gate{font-size:12px;color:var(--sub);max-width:34ch}
+.progress{height:8px;background:#E6E6E6;border-radius:99px;overflow:hidden;margin-top:6px}
+.progress i{display:block;height:100%;background:var(--c)}
+/* tree */
+pre.tree{margin:0;background:#1F232B;color:#E8ECF3;border-radius:14px;padding:18px 20px;font:500 12.5px/1.65 ui-monospace,Consolas,monospace;overflow:auto}
+pre.tree .k{color:#FFB070}.tree .a{color:#9BA3FF}.tree .d{color:#6FD6DF}.tree .c{color:#8FE0B5}.tree .m{color:#A0A7B5}
+.timeline{display:grid;gap:8px}
+.t-row{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:start}
+.t-time{font:500 20px/1.1 var(--f-d);color:var(--sub)}
+.t-card{background:var(--paper);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:10px;padding:9px 12px;font-size:13.5px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12.5px;color:var(--sub);font-weight:600}
+footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:16px;font-size:12.5px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="#map">System map</a><a href="#stack">Layers</a><a href="#agents">Agents</a><a href="#gates">Approval gates</a><a href="#flows">Flows</a><a href="#clock">Daily clock</a><a href="#data">Memory</a><a href="#reuse">Reuse</a><a href="#road">Roadmap</a><a href="#decide">Decisions</a>
+</nav>
+
+<header class="hero">
+  <div>
+    <span class="badge o">Plan only</span><span class="badge">Draft v0.2 · 28 Oct 2026</span>
+    <h1 style="margin-top:14px">JKZ Agentic OS</h1>
+    <p class="lead">An AI-operated studio with one human decision-maker. Claude is the brain, GHL is the body, the vault is the memory. Boss approves, rejects, or supplies what only he can. The rest runs.</p>
+    <div class="tiles">
+      <div class="tile" style="--c:var(--orange)"><b>5</b><span>Layers</span></div>
+      <div class="tile" style="--c:var(--indigo)"><b>13</b><span>Agents</span></div>
+      <div class="tile" style="--c:var(--green)"><b>15</b><span>Modules already specced</span></div>
+      <div class="tile" style="--c:var(--red)"><b>2</b><span>Boss actions only</span></div>
+      <div class="tile" style="--c:var(--teal)"><b>0</b><span>Live in GHL today</span></div>
+    </div>
+  </div>
+  <!-- hero art: stylised brain + body -->
+  <svg viewBox="0 0 400 330" role="img" aria-label="Claude brain connected to GHL body and vault memory">
+    <defs>
+      <linearGradient id="gO" x1="0" x2="1"><stop offset="0" stop-color="#F37002"/><stop offset="1" stop-color="#FFA24D"/></linearGradient>
+    </defs>
+    <rect x="0" y="0" width="400" height="330" rx="22" fill="#FFFFFF" stroke="rgba(24,24,24,.12)"/>
+    <circle cx="200" cy="105" r="62" fill="url(#gO)"/>
+    <text x="200" y="100" text-anchor="middle" font-family="Oswald" font-size="22" fill="#fff">BRAIN</text>
+    <text x="200" y="122" text-anchor="middle" font-family="Montserrat" font-size="11" font-weight="700" fill="#fff">Claude + CLAUDE.md</text>
+    <rect x="30" y="215" width="150" height="82" rx="14" fill="#E6E8FA" stroke="#4F5BD5" stroke-width="2"/>
+    <text x="105" y="245" text-anchor="middle" font-family="Oswald" font-size="20" fill="#181818">BODY</text>
+    <text x="105" y="266" text-anchor="middle" font-family="Montserrat" font-size="11" font-weight="600" fill="#181818">GHL · pipelines · bots</text>
+    <text x="105" y="283" text-anchor="middle" font-family="Montserrat" font-size="11" font-weight="600" fill="#181818">social · email · SMS</text>
+    <rect x="220" y="215" width="150" height="82" rx="14" fill="#DDF1F3" stroke="#0E8F9B" stroke-width="2"/>
+    <text x="295" y="245" text-anchor="middle" font-family="Oswald" font-size="20" fill="#181818">MEMORY</text>
+    <text x="295" y="266" text-anchor="middle" font-family="Montserrat" font-size="11" font-weight="600" fill="#181818">Obsidian vault</text>
+    <text x="295" y="283" text-anchor="middle" font-family="Montserrat" font-size="11" font-weight="600" fill="#181818">logs · decisions · state</text>
+    <path d="M165 150 L110 212" stroke="#4F5BD5" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+    <path d="M235 150 L290 212" stroke="#0E8F9B" stroke-width="3" fill="none"/>
+    <path d="M180 256 H215" stroke="#8A5AD6" stroke-width="3" stroke-dasharray="5 4"/>
+    <circle cx="350" cy="44" r="26" fill="#FADFDC" stroke="#D2443A" stroke-width="2"/>
+    <text x="350" y="40" text-anchor="middle" font-family="Oswald" font-size="13" fill="#181818">BOSS</text>
+    <text x="350" y="55" text-anchor="middle" font-family="Montserrat" font-size="8.5" font-weight="700" fill="#181818">approve / input</text>
+    <path d="M326 52 L258 90" stroke="#D2443A" stroke-width="2.5" stroke-dasharray="6 4" fill="none"/>
+  </svg>
+</header>
+
+<!-- 1. MAP -->
+<section id="map">
+  <div class="sec-head"><div class="num">01</div><div><div class="kicker">The whole system on one page</div><h2>System map</h2><p class="sub">The kernel routes every request to one of thirteen specialist agents. Agents do the work through GHL and the vault. Anything that touches a client, money or the public passes a gate where Boss decides.</p></div></div>
+  <div class="card">
+  <svg viewBox="0 0 820 520" role="img" aria-label="Hub and spoke map of the kernel and thirteen agents"><ellipse cx="410" cy="260" rx="316" ry="200" fill="none" stroke="rgba(24,24,24,.18)" stroke-dasharray="3 6"/><g stroke="rgba(24,24,24,.28)" stroke-width="1.6"><line x1="410" y1="260" x2="410" y2="64"/><line x1="410" y1="260" x2="555" y2="86.5"/><line x1="410" y1="260" x2="666.8" y2="148.7"/><line x1="410" y1="260" x2="719.7" y2="236.4"/><line x1="410" y1="260" x2="701.7" y2="329.5"/><line x1="410" y1="260" x2="616.9" y2="406.7"/><line x1="410" y1="260" x2="484.7" y2="450.3"/><line x1="410" y1="260" x2="335.3" y2="450.3"/><line x1="410" y1="260" x2="203.1" y2="406.7"/><line x1="410" y1="260" x2="118.3" y2="329.5"/><line x1="410" y1="260" x2="100.3" y2="236.4"/><line x1="410" y1="260" x2="153.2" y2="148.7"/><line x1="410" y1="260" x2="265" y2="86.5"/></g><circle cx="410" cy="260" r="72" fill="#F37002"/><text x="410" y="248" text-anchor="middle" font-family="Oswald" font-size="24" fill="#fff">KERNEL</text><text x="410" y="270" text-anchor="middle" font-family="Montserrat" font-size="11.5" font-weight="700" fill="#fff">CLAUDE.md · routing</text><text x="410" y="286" text-anchor="middle" font-family="Montserrat" font-size="10.5" font-weight="600" fill="#fff">rules · approval levels</text><g font-family="Montserrat" font-weight="700" font-size="11.5" text-anchor="middle" fill="#181818"><g><rect x="348" y="42" width="124" height="44" rx="12" fill="#FDEBDB" stroke="#F37002" stroke-width="2"/><text x="410" y="61">@brief</text><text x="410" y="76" font-size="9.2" font-weight="600">CEO queue · ORC-GM</text></g><g><rect x="493" y="64.5" width="124" height="44" rx="12" fill="#E6E8FA" stroke="#4F5BD5" stroke-width="2"/><text x="555" y="83.5">@research</text><text x="555" y="98.5" font-size="9.2" font-weight="600">market · prospects</text></g><g><rect x="604.8" y="126.7" width="124" height="44" rx="12" fill="#E8F2D2" stroke="#6B9B1E" stroke-width="2"/><text x="666.8" y="145.7">@painpoints</text><text x="666.8" y="160.7" font-size="9.2" font-weight="600">industry pains · evidence</text></g><g><rect x="657.7" y="214.4" width="124" height="44" rx="12" fill="#FBEFD2" stroke="#D99208" stroke-width="2"/><text x="719.7" y="233.4">@offer</text><text x="719.7" y="248.4" font-size="9.2" font-weight="600">quote · CON-GEN-007</text></g><g><rect x="639.7" y="307.5" width="124" height="44" rx="12" fill="#F9E1EE" stroke="#D6498C" stroke-width="2"/><text x="701.7" y="326.5">@outreach</text><text x="701.7" y="341.5" font-size="9.2" font-weight="600">OUT-DM-003 · needs brief</text></g><g><rect x="554.9" y="384.7" width="124" height="44" rx="12" fill="#DEF3EA" stroke="#1E9E68" stroke-width="2"/><text x="616.9" y="403.7">@leads</text><text x="616.9" y="418.7" font-size="9.2" font-weight="600">LEA · PIP · FOL</text></g><g><rect x="422.7" y="428.3" width="124" height="44" rx="12" fill="#EDE4FA" stroke="#8A5AD6" stroke-width="2"/><text x="484.7" y="447.3">@content</text><text x="484.7" y="462.3" font-size="9.2" font-weight="600">SOC-EXP · ENG · BRD</text></g><g><rect x="273.3" y="428.3" width="124" height="44" rx="12" fill="#EDE4FA" stroke="#8A5AD6" stroke-width="2"/><text x="335.3" y="447.3">@video</text><text x="335.3" y="462.3" font-size="9.2" font-weight="600">AIGC · AI Ambassador</text></g><g><rect x="141.1" y="384.7" width="124" height="44" rx="12" fill="#E6E8FA" stroke="#4F5BD5" stroke-width="2"/><text x="203.1" y="403.7">@ghl</text><text x="203.1" y="418.7" font-size="9.2" font-weight="600">config · bots · GHL-AI</text></g><g><rect x="56.3" y="307.5" width="124" height="44" rx="12" fill="#DDF1F3" stroke="#0E8F9B" stroke-width="2"/><text x="118.3" y="326.5">@delivery</text><text x="118.3" y="341.5" font-size="9.2" font-weight="600">PRJ-MGT · PRJ-CLI</text></g><g><rect x="38.3" y="214.4" width="124" height="44" rx="12" fill="#FBEFD2" stroke="#D99208" stroke-width="2"/><text x="100.3" y="233.4">@finance</text><text x="100.3" y="248.4" font-size="9.2" font-weight="600">margins · FIN · tax</text></g><g><rect x="91.2" y="126.7" width="124" height="44" rx="12" fill="#DDF1F3" stroke="#0E8F9B" stroke-width="2"/><text x="153.2" y="145.7">@vault</text><text x="153.2" y="160.7" font-size="9.2" font-weight="600">memory · wrap-ups</text></g><g><rect x="203" y="64.5" width="124" height="44" rx="12" fill="#FADFDC" stroke="#D2443A" stroke-width="2"/><text x="265" y="83.5">@qa</text><text x="265" y="98.5" font-size="9.2" font-weight="600">adversarial reviewer</text></g></g><text x="410" y="508" text-anchor="middle" font-family="Montserrat" font-size="11.5" font-weight="700" fill="#D2443A">Every client-facing, money or public action ends at a Boss gate (L2 / L3)</text></svg>
+  </div>
+  <div class="legend" style="margin-top:12px"><span><span class="dot" style="--c:var(--orange)"></span>kernel</span><span><span class="dot" style="--c:var(--indigo)"></span>build and research</span><span><span class="dot" style="--c:#6B9B1E"></span>pain research</span><span><span class="dot" style="--c:var(--amber)"></span>commercial</span><span><span class="dot" style="--c:var(--pink)"></span>outbound</span><span><span class="dot" style="--c:var(--green)"></span>pipeline</span><span><span class="dot" style="--c:var(--violet)"></span>content and video</span><span><span class="dot" style="--c:var(--teal)"></span>memory and delivery</span><span><span class="dot" style="--c:var(--red)"></span>quality gate</span></div>
+</section>
+
+<!-- 2. STACK -->
+<section id="stack">
+  <div class="sec-head"><div class="num">02</div><div><div class="kicker">ECC agentic-os pattern</div><h2>Five layers</h2><p class="sub">The ECC skill gives four layers (kernel, agents, commands, scripts) plus state. JKZ adds one thing on top: GHL is the body that runs in real time, so the scheduler only has to handle the brain's periodic work.</p></div></div>
+  <div class="card">
+  <svg viewBox="0 0 1000 390" role="img" aria-label="Five layer stack">
+    <g font-family="Montserrat">
+      <rect x="10" y="10" width="980" height="62" rx="14" fill="#FDEBDB" stroke="#F37002" stroke-width="2.5"/>
+      <text x="34" y="38" font-family="Oswald" font-size="24" fill="#181818">1 · KERNEL</text><text x="34" y="58" font-size="13" font-weight="600" fill="#181818">CLAUDE.md under 200 lines. Identity, 12 standing rules, routing table, approval matrix, price-wall and tool-name rules.</text>
+      <rect x="10" y="82" width="980" height="62" rx="14" fill="#E6E8FA" stroke="#4F5BD5" stroke-width="2.5"/>
+      <text x="34" y="110" font-family="Oswald" font-size="24" fill="#181818">2 · AGENTS</text><text x="34" y="130" font-size="13" font-weight="600" fill="#181818">agents/*.md, each under 100 lines: identity, memory scope, tools, constraints. Thirteen specialists, one job each.</text>
+      <rect x="10" y="154" width="980" height="62" rx="14" fill="#F9E1EE" stroke="#D6498C" stroke-width="2.5"/>
+      <text x="34" y="182" font-family="Oswald" font-size="24" fill="#181818">3 · COMMANDS</text><text x="34" y="202" font-size="13" font-weight="600" fill="#181818">.claude/commands/*.md: /brief  /wrapup  /pain  /quote  /qa  /outreach  /content-batch  /decision  /vault-sync  /month-close</text>
+      <rect x="10" y="226" width="980" height="62" rx="14" fill="#FBEFD2" stroke="#D99208" stroke-width="2.5"/>
+      <text x="34" y="254" font-family="Oswald" font-size="24" fill="#181818">4 · SCHEDULER</text><text x="34" y="274" font-size="13" font-weight="600" fill="#181818">scripts/ + Windows Task Scheduler call the commands on a clock. GHL workflows handle everything real-time on their own.</text>
+      <rect x="10" y="298" width="980" height="62" rx="14" fill="#DDF1F3" stroke="#0E8F9B" stroke-width="2.5"/>
+      <text x="34" y="326" font-family="Oswald" font-size="24" fill="#181818">5 · STATE AND MEMORY</text><text x="34" y="346" font-size="13" font-weight="600" fill="#181818">Vault for knowledge, data/ for machine state (logs, decisions, inbox, costs). GHL holds contacts, pipelines and the approval queue.</text>
+    </g>
+  </svg>
+  </div>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="card bar" style="--c:var(--orange)"><h3>Two clocks</h3><p class="sub" style="margin-top:6px">GHL is always on (lead capture, bots, sequences). Claude runs on a schedule (briefs, drafts, ranking, QA). Neither waits for the other.</p></div>
+    <div class="card bar" style="--c:var(--teal)"><h3>Declarative routing</h3><p class="sub" style="margin-top:6px">Routing lives in a markdown table, not code. Boss can read it, edit it and see why a request went where it did.</p></div>
+    <div class="card bar" style="--c:var(--red)"><h3>Reflection every session</h3><p class="sub" style="margin-top:6px">Each session ends with what worked, what failed, what to change. The OS improves without rewriting code.</p></div>
+  </div>
+</section>
+
+<!-- 3. AGENTS -->
+<section id="agents">
+  <div class="sec-head"><div class="num">03</div><div><div class="kicker">One job each</div><h2>The thirteen agents</h2><p class="sub">Built from the ten agents on paper in the vault plus the 15 GHL modules already specced. Three are new for ECC: <b>@vault</b> (memory keeper), <b>@delivery</b>, and <b>@painpoints</b> (added 28 Oct: Boss says pain points matter most while doing outreach). Build five first.</p></div></div>
+  <div class="scroll"><table>
+    <tr><th>Agent</th><th>Owns</th><th>Trigger</th><th>Level</th><th>Build</th></tr>
+    <tr><td><b style="color:var(--orange)">@brief</b></td><td>Boss's single ranked queue, daily brief, weekly report. ORC-GM-010, PRJ-MGT-009</td><td>Morning, on demand, "what needs me"</td><td><span class="chip l0">L0</span><span class="chip l1">L1</span></td><td>Wave 1</td></tr>
+    <tr><td><b style="color:var(--red)">@qa</b></td><td>Adversarial review before anything leaves the studio. Rules check, price-wall, tool names, tone</td><td>Every draft, every wrap-up</td><td><span class="chip l0">L0</span></td><td>Wave 1</td></tr>
+    <tr><td><b style="color:var(--teal)">@vault</b></td><td>Vault read and write, wrap-ups, decision log, conflict register. Keeps the master context true</td><td>Session start and end, "log this"</td><td><span class="chip l0">L0</span></td><td>Wave 1</td></tr>
+    <tr style="background:#F3F8E6"><td><b style="color:#6B9B1E">@painpoints</b><br><span class="chip" style="--c:#6B9B1E;--ct:#E8F2D2">NEW · key for outreach</span></td><td>Finds and ranks the real pain points of a client or prospect's industry, with graded evidence. Writes a one-page Pain Point Brief, pain-led headlines and discovery questions. Keeps an industry library (no client names)</td><td><b>Before every outreach draft</b>, before a discovery call, monthly refresh</td><td><span class="chip l0">L0</span></td><td><b>Wave 1</b></td></tr>
+    <tr><td><b style="color:var(--amber)">@offer</b></td><td>Quotes from the Estimate Builder catalog, proposals, contracts. CON-GEN-007</td><td>"Quote", new qualified lead</td><td><span class="chip l2">L2</span></td><td>Wave 1</td></tr>
+    <tr><td><b style="color:var(--indigo)">@research</b></td><td>Market and prospect research, verified sources only. Feeds @offer and @outreach</td><td>"Research", before outreach</td><td><span class="chip l0">L0</span></td><td>Wave 2</td></tr>
+    <tr><td><b style="color:var(--indigo)">@ghl</b></td><td>GHL sub-account setup specs, custom fields, tags, pipelines, bots. GHL-AI-008 and the config registry</td><td>New client, new module</td><td><span class="chip l2">L2</span></td><td>Wave 2</td></tr>
+    <tr><td><b style="color:var(--green)">@leads</b></td><td>Lead capture, scoring, pipeline moves, follow-up sequences. LEA-CAP, PIP-MGR, FOL-SEQ</td><td>New lead, stale lead</td><td><span class="chip l0">L0</span><span class="chip l1">L1</span></td><td>Wave 2</td></tr>
+    <tr><td><b style="color:var(--pink)">@outreach</b></td><td>Inbound-first outreach drafts, replies, categorisation. OUT-DM-003. <b>Cannot draft without a pain brief</b> for that prospect's industry</td><td>Warm lead, reply received</td><td><span class="chip l1">L1</span><span class="chip l2">L2</span></td><td>Wave 2</td></tr>
+    <tr><td><b style="color:var(--violet)">@content</b></td><td>Weekly content batch: strategist, writer, visual, scheduler, engagement. SOC-EXP, ENG, BRD, CMP, CNT</td><td>Monday brief, Friday queue</td><td><span class="chip l1">L1</span><span class="chip l2">L2</span></td><td>Wave 3</td></tr>
+    <tr><td><b style="color:var(--violet)">@video</b></td><td>AIGC and AI Ambassador scripts, storyboards, prompts. Credits need pre-approval</td><td>Approved script</td><td><span class="chip l2">L2</span></td><td>Wave 3</td></tr>
+    <tr><td><b style="color:var(--teal)">@delivery</b></td><td>Client onboarding, project tracker, check-ins, renewals. PRJ-CLI-014/015</td><td>Signed contract, stage change</td><td><span class="chip l0">L0</span><span class="chip l1">L1</span></td><td>Wave 3</td></tr>
+    <tr><td><b style="color:var(--amber)">@finance</b></td><td>Margin per SKU, usage-wallet tracking, runway, tax prep. FIN-01 to FIN-10</td><td>Month end, new quote</td><td><span class="chip l0">L0</span><span class="chip l2">L2</span></td><td>Wave 3</td></tr>
+  </table></div>
+  <div class="note" style="margin-top:14px"><b>Wave 1 is the smallest set that makes the OS useful on day one:</b> @brief tells Boss what needs him, @painpoints finds what the prospect actually struggles with, @offer turns a lead into a quote, @qa stops mistakes leaving the building, @vault makes sure nothing is lost between sessions. @painpoints needs no GHL, so it can start before P4.</div>
+</section>
+
+<!-- 4. GATES -->
+<section id="gates">
+  <div class="sec-head"><div class="num">04</div><div><div class="kicker">Boss stays the head chef</div><h2>Approval gates</h2><p class="sub">Boss's only two recurring actions: <b>approve or reject</b> a drafted option, or <b>supply an input only he can</b>. Anything that makes him operate a tool is a design gap.</p></div></div>
+  <div class="grid g4">
+    <div class="card bar l0" style="--c:var(--green)"><span class="chip l0">L0 · AUTO</span><h3 style="margin-top:8px">Runs alone</h3><p class="sub" style="margin-top:6px">Lead tagging, pipeline stage moves, FAQ auto-replies, daily brief compile, wrap-up files, QA checks.</p></div>
+    <div class="card bar l1" style="--c:var(--amber)"><span class="chip l1">L1 · DRAFT</span><h3 style="margin-top:8px">Sends after a window</h3><p class="sub" style="margin-top:6px">Social posts (default send), follow-ups (default <b>hold</b>), engagement replies. Boss can veto, or edit and his edit wins.</p></div>
+    <div class="card bar l2" style="--c:var(--red)"><span class="chip l2">L2 · PROPOSE</span><h3 style="margin-top:8px">Never sends unapproved</h3><p class="sub" style="margin-top:6px">Quotes, proposals, contracts, high-value first touch, ad budgets, any credit spend. Needs an explicit "Approved". No timeout, ever.</p></div>
+    <div class="card bar l3" style="--c:var(--slate)"><span class="chip l3">L3 · HUMAN ONLY</span><h3 style="margin-top:8px">Boss does it</h3><p class="sub" style="margin-top:6px">Pricing strategy, refunds, scope changes, legal commitments, credentials, compliance sign-off.</p></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>How an L1 / L2 draft moves (one mechanism for every module)</h3>
+    <div class="steps" style="margin-top:12px;--c:var(--indigo)">
+      <div class="step" style="--c:var(--indigo)"><b>Agent drafts</b><small>content in a GHL Task</small></div><span class="arrow">→</span>
+      <div class="step" style="--c:var(--indigo)"><b>@qa checks</b><small>rules, price-wall, tone</small></div><span class="arrow">→</span>
+      <div class="step gate" style="--c:var(--red)"><b>Boss gate</b><small>jkz_draft_status = drafted</small></div><span class="arrow">→</span>
+      <div class="step" style="--c:var(--green)"><b>Approved</b><small>workflow sends, stage moves</small></div><span class="arrow">or</span>
+      <div class="step" style="--c:var(--slate)"><b>Rejected</b><small>reopens with notes</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FLOWS -->
+<section id="flows">
+  <div class="sec-head"><div class="num">05</div><div><div class="kicker">Money path</div><h2>Four flows</h2><p class="sub">Attract, convert, deliver, retain. Red steps are Boss gates. Social is inbound-first: no cold-DM automation.</p></div></div>
+  <div class="lane" style="--c:var(--violet)"><div class="lane-title">Attract</div><div class="steps">
+    <div class="step"><b>Weekly brief</b><small>@content · Mon</small></div><span class="arrow">→</span>
+    <div class="step"><b>Anchor post</b><small>LinkedIn text first</small></div><span class="arrow">→</span>
+    <div class="step gate"><b>Boss approves anchor</b><small>L2 · before any visual</small></div><span class="arrow">→</span>
+    <div class="step"><b>Repurpose</b><small>carousel · thread · reel</small></div><span class="arrow">→</span>
+    <div class="step"><b>Queue, hold</b><small>GHL Social Planner · Fri spot-check</small></div><span class="arrow">→</span>
+    <div class="step"><b>Prospect engages first</b><small>SOC-ENG-002 routes it</small></div>
+  </div></div>
+  <div class="note" style="margin-bottom:12px;border-color:#6B9B1E;background:#E8F2D2"><b>Outreach rule:</b> @outreach cannot draft a first touch or warm follow-up until @painpoints has produced a brief for that prospect's industry. Only A or B graded pains may appear in a message; a C pain can only be asked as a question. One pain per message. Boss sees the brief next to the draft in the approval task.</div>
+  <div class="lane" style="--c:var(--green)"><div class="lane-title">Convert</div><div class="steps">
+    <div class="step"><b>GHL AI qualifies</b><small>GHL-AI-008 · on hold</small></div><span class="arrow">→</span>
+    <div class="step"><b>Score + pipeline</b><small>LEA-CAP-004 · PIP-MGR-005</small></div><span class="arrow">→</span>
+    <div class="step" style="--c:#6B9B1E"><b>Pain brief</b><small>@painpoints · graded A/B/C</small></div><span class="arrow">→</span>
+    <div class="step"><b>Discovery call booked</b><small>7 services · 30 min</small></div><span class="arrow">→</span>
+    <div class="step"><b>@offer quotes</b><small>Estimate Builder catalog</small></div><span class="arrow">→</span>
+    <div class="step gate"><b>Boss approves quote and contract</b><small>L2 · CON-GEN-007</small></div><span class="arrow">→</span>
+    <div class="step"><b>Deposit paid</b><small>gates the intake form</small></div>
+  </div></div>
+  <div class="lane" style="--c:var(--teal)"><div class="lane-title">Deliver</div><div class="steps">
+    <div class="step"><b>Intake form</b><small>logo · copy · access</small></div><span class="arrow">→</span>
+    <div class="step"><b>@ghl sets up</b><small>sub-account, fields, tags</small></div><span class="arrow">→</span>
+    <div class="step"><b>Build</b><small>Folista or @video</small></div><span class="arrow">→</span>
+    <div class="step"><b>@qa gate</b><small>no delivery without a pass</small></div><span class="arrow">→</span>
+    <div class="step gate"><b>Boss final sign-off</b><small>L2 · before release</small></div><span class="arrow">→</span>
+    <div class="step"><b>Tracker updates client</b><small>PRJ-CLI-015 · 6 stages</small></div>
+  </div></div>
+  <div class="lane" style="--c:var(--amber)"><div class="lane-title">Retain</div><div class="steps">
+    <div class="step"><b>Check-ins</b><small>PRJ-CLI-015 · L1</small></div><span class="arrow">→</span>
+    <div class="step"><b>Usage metered</b><small>SMS · calls · email per client</small></div><span class="arrow">→</span>
+    <div class="step"><b>@finance margin</b><small>per SKU and client</small></div><span class="arrow">→</span>
+    <div class="step"><b>Upsell trigger</b><small>"want the funnel that feeds it?"</small></div><span class="arrow">→</span>
+    <div class="step gate"><b>Boss approves renewal</b><small>L2 · pricing is L3</small></div>
+  </div></div>
+</section>
+
+<!-- 6. CLOCK -->
+<section id="clock">
+  <div class="sec-head"><div class="num">06</div><div><div class="kicker">What runs, when</div><h2>The daily clock (proposed, KL time)</h2><p class="sub">Boss's own rhythm: a 15-minute morning check and a 15-minute evening log. Everything between is the OS. Times are placeholders to tune.</p></div></div>
+  <div class="grid g2">
+    <div class="timeline">
+      <div class="t-row"><div class="t-time">08:00</div><div class="t-card" style="--c:var(--orange)"><b>/brief</b> compiles the queue: approvals waiting, hot leads, blockers, cash. <span class="chip l0">L0</span></div></div>
+      <div class="t-row"><div class="t-time">08:15</div><div class="t-card" style="--c:var(--red)"><b>Boss, 15 min:</b> approve or reject. Nothing else.</div></div>
+      <div class="t-row"><div class="t-time">10:00</div><div class="t-card" style="--c:var(--green)"><b>/pain</b> then <b>/outreach</b>: a pain brief per prospect first, then replies and warm follow-ups drafted into the approval queue. <span class="chip l1">L1</span></div></div>
+      <div class="t-row"><div class="t-time">13:00</div><div class="t-card" style="--c:var(--violet)"><b>/content-batch</b> checks the week's queue and fills gaps. <span class="chip l1">L1</span></div></div>
+      <div class="t-row"><div class="t-time">17:30</div><div class="t-card" style="--c:var(--amber)"><b>/qa</b> sweeps anything drafted today. Blocks on a rule break. <span class="chip l0">L0</span></div></div>
+      <div class="t-row"><div class="t-time">21:00</div><div class="t-card" style="--c:var(--teal)"><b>/wrapup</b> writes the day's log, decisions, reflection and vault sync. Boss logs for 15 min. <span class="chip l0">L0</span></div></div>
+    </div>
+    <div class="timeline">
+      <div class="t-row"><div class="t-time">Always</div><div class="t-card" style="--c:var(--indigo)"><b>GHL, no Claude needed:</b> forms, tagging, stage moves, FAQ bot, reminders, social queue publishing.</div></div>
+      <div class="t-row"><div class="t-time">Mon</div><div class="t-card" style="--c:var(--violet)">Content brief. Boss approves anchor ideas.</div></div>
+      <div class="t-row"><div class="t-time">Fri</div><div class="t-card" style="--c:var(--violet)">Queue spot-check. Weekly report (5 to 8 numbers only).</div></div>
+      <div class="t-row"><div class="t-time">1st</div><div class="t-card" style="--c:var(--amber)"><b>/month-close:</b> margin per SKU, usage billed vs absorbed, runway.</div></div>
+      <div class="t-row"><div class="t-time">On event</div><div class="t-card" style="--c:var(--red)">New qualified lead, signed contract, stale lead, reply received: GHL webhook wakes the right agent.</div></div>
+    </div>
+  </div>
+  <div class="note teal" style="margin-top:14px"><b>Where it runs.</b> Windows Task Scheduler calling headless Claude Code needs the PC on and awake. If Boss wants it truly always-on, the cloud alternative is Claude's scheduled tasks. Decide at P3; the commands are the same either way.</div>
+</section>
+
+<!-- 7. DATA -->
+<section id="data">
+  <div class="sec-head"><div class="num">07</div><div><div class="kicker">Nothing lost between sessions</div><h2>Memory and state</h2><p class="sub">No database. Knowledge lives in the vault. Machine state lives in plain files. Contacts and the approval queue live in GHL, so nothing is duplicated.</p></div></div>
+  <div class="grid g2">
+<pre class="tree"><span class="k">C:\JK Zentra\Agentic OS\</span>            <span class="m"># kernel + code (private repo)</span>
+├─ <span class="k">CLAUDE.md</span>                  <span class="m"># kernel, under 200 lines</span>
+├─ <span class="a">agents\</span>                     <span class="m"># 12 files, each under 100 lines</span>
+├─ <span class="c">.claude\commands\</span>           <span class="m"># /brief /wrapup /quote /qa ...</span>
+├─ <span class="c">scripts\</span>                    <span class="m"># scheduler wrappers, health check</span>
+├─ <span class="d">data\</span>                       <span class="m"># machine state (logs gitignored)</span>
+│  ├─ inbox\  logs\daily\  decisions\  state\  costs\
+├─ <span class="k">modules\</span>                    <span class="m"># jkz-agency-os specs, adopted</span>
+└─ <span class="k">HR-Attendance\</span>              <span class="m"># template pattern (PhoneLab on hold)</span>
+
+<span class="k">C:\Vaults\JKZ-Obsidian\</span>            <span class="m"># knowledge, human readable</span>
+├─ JKZ_MASTER_CONTEXT.md        <span class="m"># single source of truth</span>
+├─ 01_Active\  02_Agents\  03_Sessions\  04_Reference\
+│  └─ <span class="a">04_Reference\pain-library\</span>  <span class="m"># industry-level pains, no client names</span>
+└─ every note: tags · status · last-updated · linked</pre>
+    <div class="grid">
+      <div class="card bar" style="--c:var(--teal)"><h3>Memory scope per agent</h3><p class="sub" style="margin-top:6px">Each agent file lists exactly what it may read and append. @offer reads the catalog and brand rules. It cannot read PhoneLab data. Separate stacks stay separate.</p></div>
+      <div class="card bar" style="--c:var(--orange)"><h3>Append-only logs</h3><p class="sub" style="margin-top:6px">Past daily logs are never edited. Decisions go in as short records: what, why, who approved, what it supersedes. Every document carries a Doc Meta block.</p></div>
+      <div class="card bar" style="--c:var(--red)"><h3>Secrets never in files</h3><p class="sub" style="margin-top:6px">Tokens and logins live in environment variables or a gitignored <span class="code">.env</span>. A token pasted in chat gets rotated, no exceptions.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. REUSE -->
+<section id="reuse">
+  <div class="sec-head"><div class="num">08</div><div><div class="kicker">Adopt, don't restart</div><h2>What already exists</h2><p class="sub">Most of the thinking is done. The ECC build gives it a runnable kernel, a clock and a memory.</p></div></div>
+  <div class="grid g3">
+    <div class="card bar" style="--c:var(--green)"><h3>Reuse as is</h3><ul style="margin:8px 0 0;padding-left:18px;font-size:13.5px"><li>15 module specs, prompts and GHL workflows (<span class="code">jkz-agency-os</span>)</li><li>L0 to L3 matrix and the GHL Task approval queue</li><li>Estimate Builder catalog and the billing reference</li><li>Brand Guide V2.1 and the vault structure</li><li>HR-Attendance template pattern, scrub test and all</li></ul></div>
+    <div class="card bar" style="--c:var(--amber)"><h3>Rewrite to match 28 Oct</h3><ul style="margin:8px 0 0;padding-left:18px;font-size:13.5px"><li>Rules 5 and 7: GHL is now actively sold, affiliate disclosed</li><li>Rule 9: sub-account clients vs affiliate-referred signups</li><li>"Solo operator" wording in the company plan</li><li>Stale vault files: profile, handoff, brand note</li><li>Managed tier $497 and prices under the 2x floor</li></ul></div>
+    <div class="card bar" style="--c:var(--indigo)"><h3>New in the ECC build</h3><ul style="margin:8px 0 0;padding-left:18px;font-size:13.5px"><li>Kernel <span class="code">CLAUDE.md</span> with the 12-agent routing table</li><li>@vault and @delivery agents</li><li>Commands: /brief /wrapup /qa /month-close</li><li>Scheduler scripts and a health check</li><li>One decision log with ADR records</li></ul></div>
+  </div>
+</section>
+
+<!-- 9. ROADMAP -->
+<section id="road">
+  <div class="sec-head"><div class="num">09</div><div><div class="kicker">Proposed order</div><h2>Roadmap</h2><p class="sub">Nothing is scheduled. The 10 Oct to 8 Nov sprint ends in 11 days, so P0 to P2 are the realistic target. Each phase has an exit gate. Nothing goes live in GHL until the compliance checklist is signed.</p></div></div>
+  <div class="road">
+    <div class="phase" style="--c:var(--orange)"><div class="pn">P0</div><div><b>Freeze the truth</b><div class="sub">Master context signed off. Rule conflicts answered. Stale vault files regenerated from it.</div><div class="progress"><i style="width:85%"></i></div></div><div class="gate">Gate: Boss signs off. Draft v5.1 is written; open questions remain.</div></div>
+    <div class="phase" style="--c:var(--orange)"><div class="pn">P1</div><div><b>Kernel</b><div class="sub">Adopt the repo's 12 rules, fix rules 5, 7, 9, add the routing table and vault paths.</div><div class="progress"><i style="width:0%"></i></div></div><div class="gate">Gate: Boss reads the diff in 5 minutes.</div></div>
+    <div class="phase" style="--c:var(--green)"><div class="pn">P2</div><div><b>Wave 1: five agents + commands</b><div class="sub">@brief, @painpoints, @offer, @qa, @vault with /brief /pain /wrapup /quote /qa.</div><div class="progress"><i style="width:0%"></i></div></div><div class="gate">Gate: one real run each, ending at a Boss gate.</div></div>
+    <div class="phase" style="--c:var(--amber)"><div class="pn">P3</div><div><b>The clock</b><div class="sub">Scheduler scripts, daily log, reflection, cost tracking, health check.</div><div class="progress"><i style="width:0%"></i></div></div><div class="gate">Gate: three unattended days, nothing sent, nothing lost.</div></div>
+    <div class="phase" style="--c:var(--indigo)"><div class="pn">P4</div><div><b>GHL wiring (needs Boss)</b><div class="sub">Sub-account, fields, tags, pipelines, webhooks, approval queue. Dummy contacts first.</div><div class="progress"><i style="width:0%"></i></div></div><div class="gate">Gate: compliance checklist signed, fake client end to end.</div></div>
+    <div class="phase" style="--c:var(--pink)"><div class="pn">P5</div><div><b>Wave 2: sell GHL and run leads</b><div class="sub">@research, @ghl, @leads, @outreach. GHL-selling flows at L1/L2 with disclosure.</div><div class="progress"><i style="width:0%"></i></div></div><div class="gate">Gate: first real prospect through the pipeline.</div></div>
+    <div class="phase" style="--c:var(--violet)"><div class="pn">P6</div><div><b>Wave 3: content, video, delivery, finance</b><div class="sub">Weekly batch, AI Ambassador, client tracker, margin reports.</div><div class="progress"><i style="width:0%"></i></div></div><div class="gate">Gate: one week queued, one month closed.</div></div>
+    <div class="phase" style="--c:var(--teal)"><div class="pn">P7</div><div><b>Spin out the template</b><div class="sub">Client-agnostic version. PhoneLab returns when Boss hands over the compiled build.</div><div class="progress"><i style="width:0%"></i></div></div><div class="gate">Gate: scrub test passes.</div></div>
+  </div>
+</section>
+
+<!-- 10. DECISIONS -->
+<section id="decide">
+  <div class="sec-head"><div class="num">10</div><div><div class="kicker">Blocks the build</div><h2>Decisions only Boss can make</h2><p class="sub">Recommendation first. Everything else in this plan I can proceed on.</p></div></div>
+  <div class="scroll"><table>
+    <tr><th>#</th><th>Decision</th><th>Recommended</th><th>Blocks</th></tr>
+    <tr><td>1</td><td>Where does the OS code live?</td><td>New clean repo <span class="code">jkzentra/agentic-os</span> for code, vault for knowledge. Migrate from <span class="code">jkellady/Claude-</span> without the Access Bar proposal files</td><td>P1</td></tr>
+    <tr><td>2</td><td>Rewrite rules 5, 7, 9 for selling GHL (sub-account and affiliate)</td><td>Agents may recommend GHL with affiliate disclosure, at L1/L2</td><td>P1</td></tr>
+    <tr><td>3</td><td>Is the $497 Managed tier real? It needs Agency Pro</td><td>Decide with the first client's usage volume. Keep Starter until then</td><td>P4</td></tr>
+    <tr><td>4</td><td>Three items priced under the 2x floor</td><td>Raise the prices, or record an exception</td><td>P2 (@offer)</td></tr>
+    <tr><td>5</td><td>Compliance checklist sign-off</td><td>Sign before any real send. TCPA/10DLC, GDPR/PECR, EU AI Act Art. 50</td><td>P4</td></tr>
+    <tr><td>6</td><td>Sub-account credentials, Folista terms, intake form (23 questions)</td><td>Fill the form once; it unblocks three modules</td><td>P4</td></tr>
+    <tr><td>7</td><td>Scheduler: Windows Task Scheduler or cloud scheduled tasks</td><td>Task Scheduler first, cloud later if the PC sleeps</td><td>P3</td></tr>
+    <tr><td>8</td><td>Rotate the GHL token pasted in plaintext; clean the template repo's git history</td><td>Do both now</td><td>Security</td></tr>
+    <tr><td>9</td><td>@painpoints: which industries first, is the brief client-visible, English only or BM and Mandarin too</td><td>Start with five from the pipeline: money lender, luxury barbershop, phone-repair franchise, wellness practitioner, SME back-office. Internal first, English first</td><td>P2</td></tr>
+    <tr><td>10</td><td>Public repo <span class="code">AIC-Plug-n-Play</span>: intended?</td><td>Check contents, make private if unsure</td><td>Security</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <div class="grid g2">
+    <div class="card bar" style="--c:var(--red)"><h3>Guardrails that never move</h3><ul style="margin:8px 0 0;padding-left:18px;font-size:13.5px"><li>Only Boss sends, prices, deletes, publishes or spends credits</li><li>Studio voice. No solo. No company suffix</li><li>No tool names client-facing, except GHL where Boss sells it</li><li>SEA pricing never where a Western client can reach</li><li>Real data stays on the client's own PC. PhoneLab is on hold</li><li>Dummy data for every test. No live sends before the compliance gate</li></ul></div>
+    <div class="card bar" style="--c:var(--teal)"><h3>What I did not verify</h3><ul style="margin:8px 0 0;padding-left:18px;font-size:13.5px"><li>Headless Claude Code flags for scheduling. Check at P3</li><li>Module specs and costing detail inside the repo, read only at summary level</li><li>Session transcripts for the four cloud sessions. Their output was read instead</li><li>GHL affiliate +5% override. Public sources show 40% only</li><li>All times and phase lengths are placeholders</li></ul></div>
+  </div>
+</section>
+
+<script>
+/* Nav chips: scroll by script, because hash links are blocked inside sandboxed previews. Keeps the href as a fallback. */
+(function(){
+  var links=document.querySelectorAll('nav a[href^="#"]');
+  links.forEach(function(a){
+    a.addEventListener('click',function(e){
+      var t=document.getElementById(a.getAttribute('href').slice(1));
+      if(!t) return;
+      e.preventDefault();
+      var nav=document.querySelector('nav');
+      var y=t.getBoundingClientRect().top+window.pageYOffset-(nav?nav.offsetHeight:0)-8;
+      window.scrollTo({top:y,behavior:'smooth'});
+    });
+  });
+})();
+</script>
+<footer>
+  <b>Doc Meta</b> · Created 2026-10-28 · Version v0.2 (adds @painpoints, supersedes v0.1) · Supersedes: none · Source: JKZ_MASTER_CONTEXT.md v5.1 and 02_Agents/painpoints-agent.md and the ECC agentic-os skill. Internal to JK Zentra, not client-facing.
+</footer>
+</div>
+</body>
+</html>

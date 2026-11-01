@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JKZ Agentic OS Org Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* Org-chart view: brand base (off-white, near-black, orange anchor) plus one colour per department so the hierarchy reads at a glance. Light only, dark text. */
+:root{
+  --bg:#F5F5F5; --paper:#FFFFFF; --ink:#181818; --sub:#5A5A5A; --line:rgba(24,24,24,.12);
+  --orange:#F37002; --orange-t:#FDEBDB;
+  --lime:#6B9B1E; --lime-t:#E8F2D2;
+  --pink:#D6498C; --pink-t:#F9E1EE;
+  --teal:#0E8F9B; --teal-t:#DDF1F3;
+  --amber:#D99208; --amber-t:#FBEFD2;
+  --red:#D2443A; --red-t:#FADFDC;
+  --indigo:#4F5BD5; --indigo-t:#E6E8FA;
+  --green:#1E9E68; --green-t:#DEF3EA;
+  --slate:#2A2F3A;
+  --f-d:'Oswald','Arial Narrow',Arial,sans-serif; --f-b:'Montserrat',system-ui,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 15px/1.6 var(--f-b);padding:0 max(16px,env(safe-area-inset-right)) 80px max(16px,env(safe-area-inset-left))}
+.wrap{max-width:1140px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-d);font-weight:400;margin:0}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.02;text-transform:uppercase}
+h2{font-size:clamp(24px,3.2vw,32px);margin-bottom:6px}
+h3{font-size:19px}
+p{margin:0}
+.kicker{font:700 12px/1 var(--f-b);letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
+.sub{color:var(--sub);font-size:14px;max-width:72ch}
+section{margin-top:56px}
+.sec-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
+.num{font-family:var(--f-d);font-weight:300;font-size:54px;line-height:.9;color:var(--orange);min-width:64px}
+nav{position:sticky;top:0;z-index:5;background:rgba(245,245,245,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin:0 calc(-1*max(16px,env(safe-area-inset-left)));padding:10px max(16px,env(safe-area-inset-left));overflow-x:auto;white-space:nowrap}
+nav a{display:inline-block;font-size:12px;font-weight:600;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 12px;margin-right:6px;cursor:pointer}
+nav a:hover{border-color:var(--orange)}
+.hero{padding:44px 0 4px;display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
+@media(max-width:820px){.hero{grid-template-columns:1fr}}
+.lead{font-size:17px;margin-top:16px;max-width:54ch}
+.badge{display:inline-block;font:700 11px/1 var(--f-b);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:var(--slate);color:#fff;margin-right:6px}
+.badge.o{background:var(--orange)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:0 2px 14px rgba(24,24,24,.05)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.bar{border-left:6px solid var(--c);padding-left:16px}
+.chip{display:inline-block;font:700 11px/1 var(--f-b);letter-spacing:.06em;padding:4px 8px;border-radius:6px;margin:2px 4px 2px 0;background:var(--ct,#eee);color:var(--ink);border:1px solid var(--c,transparent)}
+.l0{--c:var(--green);--ct:var(--green-t)}.l1{--c:var(--amber);--ct:var(--amber-t)}.l2{--c:var(--red);--ct:var(--red-t)}.l3{--c:var(--slate);--ct:#E3E5EA}
+.code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#EDEDED;border-radius:4px;padding:1px 5px}
+svg{display:block;width:100%;height:auto}
+.note{border-left:6px solid var(--orange);background:var(--orange-t);border-radius:0 12px 12px 0;padding:12px 16px;font-size:14px}
+.note.teal{border-color:var(--teal);background:var(--teal-t)}
+.note.red{border-color:var(--red);background:var(--red-t)}
+.note.lime{border-color:var(--lime);background:var(--lime-t)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 11px/1.2 var(--f-b);letter-spacing:.1em;text-transform:uppercase;color:var(--sub);background:#F0F0F0}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto}
+ul.t{margin:8px 0 0;padding-left:18px;font-size:13.5px}
+ul.t li{margin:2px 0}
+.dept{border-top:8px solid var(--c);background:var(--paper);border-radius:16px;border-left:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 18px 18px;box-shadow:0 2px 14px rgba(24,24,24,.05)}
+.dept h3{color:var(--ink);text-transform:uppercase;letter-spacing:.02em}
+.dept .lead-tag{display:inline-block;font:700 12px/1 var(--f-b);background:var(--ct);color:var(--ink);border:1px solid var(--c);border-radius:6px;padding:5px 9px;margin:6px 0 10px}
+.dept dl{margin:0;display:grid;grid-template-columns:86px 1fr;gap:6px 10px;font-size:13px}
+.dept dt{font:700 10.5px/1.7 var(--f-b);letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+.dept dd{margin:0}
+.steps{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.step{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:8px 10px;font-size:12.5px;flex:1 1 130px;max-width:190px}
+.step small{display:block;color:var(--sub);font-size:11px;font-weight:600}
+.step.gate{background:var(--red-t);border-color:var(--red)}
+.step .who{display:block;font:700 10px/1.4 var(--f-b);letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.arrow{align-self:center;color:var(--sub);font-weight:700}
+.wave{display:grid;grid-template-columns:78px 1fr;gap:14px;background:var(--paper);border:1px solid var(--line);border-left:8px solid var(--c);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+@media(max-width:700px){.wave{grid-template-columns:1fr}}
+.wave .wn{font:500 30px/1 var(--f-d);color:var(--c)}
+.tag{display:inline-block;font:700 10.5px/1 var(--f-b);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:5px;color:#fff}
+.keep{background:var(--green)}.rework{background:var(--amber)}.retire{background:var(--red)}
+.mine{background:var(--indigo)}.boss{background:var(--slate)}
+footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:16px;font-size:12.5px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="#org">Org chart</a><a href="#why">Design rules</a><a href="#depts">Departments</a><a href="#trace">One request</a><a href="#keep">Keep / rework / retire</a><a href="#waves">Opening the seats</a><a href="#boss">Boss's time</a><a href="#open">Open points</a>
+</nav>
+
+<header class="hero">
+  <div>
+    <span class="badge o">Plan only</span><span class="badge">Org map v0.3 · 28 Oct 2026</span>
+    <h1 style="margin-top:14px">How the JKZ OS is organised</h1>
+    <p class="lead">One human, one chief of staff, six departments. Fewer seats than before, clearer reporting lines, and an independent quality desk. Built from your records where they still hold, and from my current view where they are out of date.</p>
+  </div>
+  <svg viewBox="0 0 400 300" role="img" aria-label="Three levels: Boss, chief of staff, six departments">
+    <rect width="400" height="300" rx="22" fill="#FFFFFF" stroke="rgba(24,24,24,.12)"/>
+    <rect x="140" y="22" width="120" height="44" rx="12" fill="#FADFDC" stroke="#D2443A" stroke-width="2"/>
+    <text x="200" y="49" text-anchor="middle" font-family="Oswald" font-size="20" fill="#181818">BOSS</text>
+    <line x1="200" y1="66" x2="200" y2="96" stroke="#5A5A5A" stroke-width="2"/>
+    <rect x="110" y="96" width="180" height="48" rx="14" fill="#F37002"/>
+    <text x="200" y="126" text-anchor="middle" font-family="Oswald" font-size="19" fill="#fff">CHIEF OF STAFF</text>
+    <path d="M200 144 V168 M52 168 H348" stroke="#5A5A5A" stroke-width="2" fill="none"/>
+    <g stroke="#5A5A5A" stroke-width="2"><line x1="52" y1="168" x2="52" y2="190"/><line x1="112" y1="168" x2="112" y2="190"/><line x1="172" y1="168" x2="172" y2="190"/><line x1="232" y1="168" x2="232" y2="190"/><line x1="288" y1="168" x2="288" y2="190"/><line x1="348" y1="168" x2="348" y2="190"/></g>
+    <rect x="22" y="190" width="56" height="70" rx="10" fill="#E8F2D2" stroke="#6B9B1E" stroke-width="2"/>
+    <rect x="84" y="190" width="56" height="70" rx="10" fill="#F9E1EE" stroke="#D6498C" stroke-width="2"/>
+    <rect x="144" y="190" width="56" height="70" rx="10" fill="#DDF1F3" stroke="#0E8F9B" stroke-width="2"/>
+    <rect x="204" y="190" width="56" height="70" rx="10" fill="#FBEFD2" stroke="#D99208" stroke-width="2"/>
+    <rect x="260" y="190" width="56" height="70" rx="10" fill="#FADFDC" stroke="#D2443A" stroke-width="2"/>
+    <rect x="320" y="190" width="56" height="70" rx="10" fill="#E6E8FA" stroke="#4F5BD5" stroke-width="2"/>
+    <text x="200" y="285" text-anchor="middle" font-family="Montserrat" font-size="11" font-weight="700" fill="#5A5A5A">3 levels · max</text>
+  </svg>
+</header>
+
+<!-- ORG CHART -->
+<section id="org">
+  <div class="sec-head"><div class="num">01</div><div><div class="kicker">The hierarchy</div><h2>Org chart</h2><p class="sub">Read top to bottom. Each department has one lead agent and a set of skills (commands) the lead can run. Everything outgoing passes <b>Quality</b> and then <b>Boss</b>. Everything is remembered in the memory band at the bottom.</p></div></div>
+  <div class="card">
+  <svg viewBox="0 0 1100 740" role="img" aria-label="Org chart: Boss, Chief of Staff, six departments, memory and tools">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5A5A5A"/></marker></defs>
+    <!-- Boss -->
+    <rect x="400" y="14" width="300" height="62" rx="16" fill="#FADFDC" stroke="#D2443A" stroke-width="2.5"/>
+    <text x="550" y="40" text-anchor="middle" font-family="Oswald" font-size="24" fill="#181818">BOSS · CEO</text>
+    <text x="550" y="60" text-anchor="middle" font-family="Montserrat" font-size="11.5" font-weight="700" fill="#181818">approve or reject · inputs only he can give</text>
+    <line x1="550" y1="76" x2="550" y2="108" stroke="#5A5A5A" stroke-width="2.2" marker-end="url(#ah)"/>
+    <text x="566" y="97" font-family="Montserrat" font-size="10.5" font-weight="700" fill="#5A5A5A">one queue</text>
+    <!-- COS -->
+    <rect x="380" y="108" width="340" height="78" rx="18" fill="#F37002"/>
+    <text x="550" y="138" text-anchor="middle" font-family="Oswald" font-size="26" fill="#fff">CHIEF OF STAFF · KERNEL</text>
+    <text x="550" y="160" text-anchor="middle" font-family="Montserrat" font-size="11.5" font-weight="700" fill="#fff">CLAUDE.md · routing · rules · budgets · the 08:00 brief</text>
+    <text x="550" y="176" text-anchor="middle" font-family="Montserrat" font-size="10.5" font-weight="600" fill="#fff">/brief  ·  never does department work itself</text>
+    <!-- bus -->
+    <path d="M550 186 V214" stroke="#5A5A5A" stroke-width="2.2" fill="none"/>
+    <path d="M105 214 H995" stroke="#5A5A5A" stroke-width="2.2" fill="none"/>
+    <g stroke="#5A5A5A" stroke-width="2.2"><line x1="105" y1="214" x2="105" y2="240"/><line x1="283" y1="214" x2="283" y2="240"/><line x1="461" y1="214" x2="461" y2="240"/><line x1="639" y1="214" x2="639" y2="240"/><line x1="817" y1="214" x2="817" y2="240"/><line x1="995" y1="214" x2="995" y2="240"/></g>
+    <text x="1075" y="208" text-anchor="end" font-family="Montserrat" font-size="10.5" font-weight="700" fill="#D2443A">every outgoing draft: Quality, then Boss gate</text>
+    <!-- DEPARTMENTS -->
+    <g font-family="Montserrat" text-anchor="middle" fill="#181818">
+      <!-- 1 intelligence -->
+      <rect x="25" y="240" width="160" height="250" rx="14" fill="#E8F2D2" stroke="#6B9B1E" stroke-width="2"/>
+      <rect x="25" y="240" width="160" height="42" rx="14" fill="#6B9B1E"/><rect x="25" y="262" width="160" height="20" fill="#6B9B1E"/>
+      <text x="105" y="268" font-family="Oswald" font-size="19" fill="#fff">INTELLIGENCE</text>
+      <text x="105" y="306" font-size="13" font-weight="700">@intel</text>
+      <text x="105" y="330" font-size="11.5" font-weight="600">/pain  /prospect</text><text x="105" y="348" font-size="11.5" font-weight="600">/market  /trend</text>
+      <text x="105" y="384" font-size="10.5" font-weight="700" fill="#5A5A5A">OUTPUT</text><text x="105" y="400" font-size="11" font-weight="600">pain briefs</text><text x="105" y="415" font-size="11" font-weight="600">prospect profiles</text>
+      <text x="105" y="446" font-size="10.5" font-weight="700" fill="#5A5A5A">GATE</text><text x="105" y="462" font-size="11" font-weight="600">L0 read-only</text>
+      <text x="105" y="482" font-size="10.5" font-weight="700" fill="#6B9B1E">WAVE 1</text>
+      <!-- 2 growth -->
+      <rect x="203" y="240" width="160" height="250" rx="14" fill="#F9E1EE" stroke="#D6498C" stroke-width="2"/>
+      <rect x="203" y="240" width="160" height="42" rx="14" fill="#D6498C"/><rect x="203" y="262" width="160" height="20" fill="#D6498C"/>
+      <text x="283" y="268" font-family="Oswald" font-size="19" fill="#fff">GROWTH</text>
+      <text x="283" y="306" font-size="13" font-weight="700">@growth</text>
+      <text x="283" y="330" font-size="11.5" font-weight="600">/outreach  /reply</text><text x="283" y="348" font-size="11.5" font-weight="600">/score  /quote</text><text x="283" y="366" font-size="11.5" font-weight="600">/proposal  /content</text>
+      <text x="283" y="396" font-size="10.5" font-weight="700" fill="#5A5A5A">OUTPUT</text><text x="283" y="412" font-size="11" font-weight="600">drafts · quotes</text><text x="283" y="427" font-size="11" font-weight="600">pipeline moves</text>
+      <text x="283" y="450" font-size="10.5" font-weight="700" fill="#5A5A5A">GATE</text><text x="283" y="466" font-size="11" font-weight="600">L1 · L2 quotes</text>
+      <text x="283" y="482" font-size="10.5" font-weight="700" fill="#D6498C">WAVE 1 sales · 2 content</text>
+      <!-- 3 delivery -->
+      <rect x="381" y="240" width="160" height="250" rx="14" fill="#DDF1F3" stroke="#0E8F9B" stroke-width="2"/>
+      <rect x="381" y="240" width="160" height="42" rx="14" fill="#0E8F9B"/><rect x="381" y="262" width="160" height="20" fill="#0E8F9B"/>
+      <text x="461" y="268" font-family="Oswald" font-size="19" fill="#fff">DELIVERY</text>
+      <text x="461" y="306" font-size="13" font-weight="700">@delivery</text>
+      <text x="461" y="330" font-size="11" font-weight="600">/onboard /ghl-setup</text><text x="461" y="348" font-size="11" font-weight="600">/build-brief /track</text><text x="461" y="366" font-size="11.5" font-weight="600">/checkin  /handover</text>
+      <text x="461" y="396" font-size="10.5" font-weight="700" fill="#5A5A5A">OUTPUT</text><text x="461" y="412" font-size="11" font-weight="600">client builds</text><text x="461" y="427" font-size="11" font-weight="600">status updates</text>
+      <text x="461" y="450" font-size="10.5" font-weight="700" fill="#5A5A5A">GATE</text><text x="461" y="466" font-size="11" font-weight="600">L2 before release</text>
+      <text x="461" y="482" font-size="10.5" font-weight="700" fill="#0E8F9B">WAVE 2</text>
+      <!-- 4 finance -->
+      <rect x="559" y="240" width="160" height="250" rx="14" fill="#FBEFD2" stroke="#D99208" stroke-width="2"/>
+      <rect x="559" y="240" width="160" height="42" rx="14" fill="#D99208"/><rect x="559" y="262" width="160" height="20" fill="#D99208"/>
+      <text x="639" y="268" font-family="Oswald" font-size="19" fill="#181818">FINANCE · ADMIN</text>
+      <text x="639" y="306" font-size="13" font-weight="700">@finance</text>
+      <text x="639" y="330" font-size="11.5" font-weight="600">/invoice  /usage</text><text x="639" y="348" font-size="10.8" font-weight="600">/margin /month-close</text><text x="639" y="366" font-size="11.5" font-weight="600">/tax-prep</text>
+      <text x="639" y="396" font-size="10.5" font-weight="700" fill="#5A5A5A">OUTPUT</text><text x="639" y="412" font-size="11" font-weight="600">price book · invoices</text><text x="639" y="427" font-size="11" font-weight="600">margins · runway</text>
+      <text x="639" y="450" font-size="10.5" font-weight="700" fill="#5A5A5A">GATE</text><text x="639" y="466" font-size="11" font-weight="600">L3 pricing · L2 invoices</text>
+      <text x="639" y="482" font-size="10.5" font-weight="700" fill="#D99208">WAVE 2</text>
+      <!-- 5 quality -->
+      <rect x="737" y="240" width="160" height="250" rx="14" fill="#FADFDC" stroke="#D2443A" stroke-width="2"/>
+      <rect x="737" y="240" width="160" height="42" rx="14" fill="#D2443A"/><rect x="737" y="262" width="160" height="20" fill="#D2443A"/>
+      <text x="817" y="268" font-family="Oswald" font-size="19" fill="#fff">QUALITY · RISK</text>
+      <text x="817" y="306" font-size="13" font-weight="700">@qa</text>
+      <text x="817" y="330" font-size="11.5" font-weight="600">/qa  /brand-check</text><text x="817" y="348" font-size="11.5" font-weight="600">/compliance</text><text x="817" y="366" font-size="11.5" font-weight="600">/secrets-scan</text>
+      <text x="817" y="396" font-size="10.5" font-weight="700" fill="#5A5A5A">OUTPUT</text><text x="817" y="412" font-size="11" font-weight="600">pass or block</text><text x="817" y="427" font-size="11" font-weight="600">with reasons</text>
+      <text x="817" y="450" font-size="10.5" font-weight="700" fill="#5A5A5A">GATE</text><text x="817" y="466" font-size="11" font-weight="600">blocks · Boss final</text>
+      <text x="817" y="482" font-size="10.5" font-weight="700" fill="#D2443A">WAVE 1</text>
+      <!-- 6 knowledge -->
+      <rect x="915" y="240" width="160" height="250" rx="14" fill="#E6E8FA" stroke="#4F5BD5" stroke-width="2"/>
+      <rect x="915" y="240" width="160" height="42" rx="14" fill="#4F5BD5"/><rect x="915" y="262" width="160" height="20" fill="#4F5BD5"/>
+      <text x="995" y="268" font-family="Oswald" font-size="14.5" fill="#fff">KNOWLEDGE · PLATFORM</text>
+      <text x="995" y="306" font-size="13" font-weight="700">@keeper</text>
+      <text x="995" y="330" font-size="11.5" font-weight="600">/wrapup  /decision</text><text x="995" y="348" font-size="10.8" font-weight="600">/vault-sync /conflicts</text><text x="995" y="366" font-size="11.5" font-weight="600">/health  /template</text>
+      <text x="995" y="396" font-size="10.5" font-weight="700" fill="#5A5A5A">OUTPUT</text><text x="995" y="412" font-size="11" font-weight="600">memory · schedules</text><text x="995" y="427" font-size="11" font-weight="600">templates</text>
+      <text x="995" y="450" font-size="10.5" font-weight="700" fill="#5A5A5A">GATE</text><text x="995" y="466" font-size="11" font-weight="600">L0 · reports to COS</text>
+      <text x="995" y="482" font-size="10.5" font-weight="700" fill="#4F5BD5">WAVE 0 · first</text>
+    </g>
+    <!-- drops to memory -->
+    <g stroke="rgba(24,24,24,.35)" stroke-width="1.6" stroke-dasharray="3 4"><line x1="105" y1="490" x2="105" y2="528"/><line x1="283" y1="490" x2="283" y2="528"/><line x1="461" y1="490" x2="461" y2="528"/><line x1="639" y1="490" x2="639" y2="528"/><line x1="817" y1="490" x2="817" y2="528"/><line x1="995" y1="490" x2="995" y2="528"/></g>
+    <!-- memory band -->
+    <g font-family="Montserrat" text-anchor="middle" fill="#181818">
+      <text x="550" y="522" font-family="Oswald" font-size="15" fill="#0E8F9B">MEMORY · three places, one writer per file</text>
+      <rect x="25" y="530" width="340" height="62" rx="12" fill="#DDF1F3" stroke="#0E8F9B" stroke-width="2"/><text x="195" y="556" font-size="13" font-weight="700">VAULT · knowledge</text><text x="195" y="574" font-size="11" font-weight="600">master context · pain library · decisions</text>
+      <rect x="380" y="530" width="340" height="62" rx="12" fill="#DDF1F3" stroke="#0E8F9B" stroke-width="2"/><text x="550" y="556" font-size="13" font-weight="700">data/ · machine state</text><text x="550" y="574" font-size="11" font-weight="600">daily logs · run state · costs · inbox</text>
+      <rect x="735" y="530" width="340" height="62" rx="12" fill="#DDF1F3" stroke="#0E8F9B" stroke-width="2"/><text x="905" y="556" font-size="13" font-weight="700">GHL · live business data</text><text x="905" y="574" font-size="11" font-weight="600">contacts · pipelines · approval tasks</text>
+    </g>
+    <!-- tools band -->
+    <g font-family="Montserrat" text-anchor="middle" fill="#181818">
+      <text x="550" y="622" font-family="Oswald" font-size="15" fill="#5A5A5A">HANDS · connected tools (agents act only through these)</text>
+      <rect x="25" y="630" width="140" height="36" rx="10" fill="#fff" stroke="rgba(24,24,24,.3)"/><text x="95" y="653" font-size="11.5" font-weight="700">GHL</text>
+      <rect x="177" y="630" width="140" height="36" rx="10" fill="#fff" stroke="rgba(24,24,24,.3)"/><text x="247" y="653" font-size="11.5" font-weight="700">Make</text>
+      <rect x="329" y="630" width="150" height="36" rx="10" fill="#fff" stroke="rgba(24,24,24,.3)"/><text x="404" y="653" font-size="11.5" font-weight="700">Drive · Gmail · Calendar</text>
+      <rect x="491" y="630" width="140" height="36" rx="10" fill="#fff" stroke="rgba(24,24,24,.3)"/><text x="561" y="653" font-size="11.5" font-weight="700">Meta Ads · library</text>
+      <rect x="643" y="630" width="140" height="36" rx="10" fill="#fff" stroke="rgba(24,24,24,.3)"/><text x="713" y="653" font-size="11.5" font-weight="700">Higgsfield · video</text>
+      <rect x="795" y="630" width="140" height="36" rx="10" fill="#fff" stroke="rgba(24,24,24,.3)"/><text x="865" y="653" font-size="11.5" font-weight="700">Firecrawl · web</text>
+      <rect x="947" y="630" width="128" height="36" rx="10" fill="#fff" stroke="rgba(24,24,24,.3)"/><text x="1011" y="653" font-size="11.5" font-weight="700">Folista (OEM)</text>
+    </g>
+    <!-- clocks -->
+    <rect x="25" y="690" width="520" height="40" rx="12" fill="#FDEBDB" stroke="#F37002" stroke-width="2"/>
+    <text x="285" y="715" text-anchor="middle" font-family="Montserrat" font-size="12" font-weight="700" fill="#181818">CLOCK 1 · GHL events: always on, no Claude needed</text>
+    <rect x="555" y="690" width="520" height="40" rx="12" fill="#FDEBDB" stroke="#F37002" stroke-width="2"/>
+    <text x="815" y="715" text-anchor="middle" font-family="Montserrat" font-size="12" font-weight="700" fill="#181818">CLOCK 2 · scheduler: Claude runs briefs, drafts, QA, wrap-ups</text>
+  </svg>
+  </div>
+</section>
+
+<!-- DESIGN RULES -->
+<section id="why">
+  <div class="sec-head"><div class="num">02</div><div><div class="kicker">What changed and why</div><h2>Seven design rules</h2><p class="sub">These are my own recommendations, based on how Claude Code agent systems work well today. The ECC skill supplies the frame (kernel, agents, commands, scheduler, state). The rules below decide how to fill it.</p></div></div>
+  <div class="grid g3">
+    <div class="card bar" style="--c:var(--orange)"><h3>1 · Shallow hierarchy</h3><p class="sub" style="margin-top:6px">Boss, chief of staff, department lead. Three levels, never four. Deep chains lose context and cost money.</p></div>
+    <div class="card bar" style="--c:var(--lime)"><h3>2 · Skills, not agents</h3><p class="sub" style="margin-top:6px">A repeatable procedure (pain brief, quote, QA check) is a skill or command. An agent exists only when something needs its own identity, memory scope and approval level. This is why 13 agents became 6 leads.</p></div>
+    <div class="card bar" style="--c:var(--indigo)"><h3>3 · Subagents are temporary</h3><p class="sub" style="margin-top:6px">A lead may spawn short-lived helpers for parallel work, such as five source scanners in one pain brief. They have no name, no memory and no seat on the chart.</p></div>
+    <div class="card bar" style="--c:var(--red)"><h3>4 · Quality is independent</h3><p class="sub" style="margin-top:6px">The reviewer does not report to the department it checks. It reports to the chief of staff and Boss, and it can block. Same logic as the adversarial reviewer in your repo.</p></div>
+    <div class="card bar" style="--c:var(--teal)"><h3>5 · One writer per file</h3><p class="sub" style="margin-top:6px">Your own build lost data when parallel agents wrote one shared file. Each department writes only its own files and appends to shared logs. Memory has three homes and a clear owner each.</p></div>
+    <div class="card bar" style="--c:var(--amber)"><h3>6 · Events vs schedules</h3><p class="sub" style="margin-top:6px">GHL reacts to events in real time. Claude runs on a schedule for judgment work. The OS never rebuilds a CRM or sequencer that GHL already has.</p></div>
+  </div>
+  <div class="note" style="margin-top:14px"><b>7 · One model family, tiered.</b> Your June design used a second vendor (ChatGPT) for volume drafts. I suggest one orchestrator family with a small, cheap model for bulk drafts and a stronger one for judgment. Fewer logins, fewer handoffs, one set of rules to enforce. This is my suggestion, not a recorded decision.</div>
+</section>
+
+<!-- DEPARTMENTS -->
+<section id="depts">
+  <div class="sec-head"><div class="num">03</div><div><div class="kicker">Mission, seats, rules</div><h2>The six departments</h2><p class="sub">Module codes from your repo stay as identifiers, so the existing specs map straight in. Blueprint targets (conversion above 20%, margin above 30%, on time above 90%) are carried over as goals, not as measured results.</p></div></div>
+  <div class="grid g2">
+    <div class="dept" style="--c:var(--lime);--ct:var(--lime-t)"><h3>Intelligence</h3><span class="lead-tag">Lead: @intel</span>
+      <dl><dt>Mission</dt><dd>Know the customer's problem better than the competitors do, and prove it with evidence.</dd>
+      <dt>Skills</dt><dd><span class="code">/pain</span> <span class="code">/prospect</span> <span class="code">/market</span> <span class="code">/trend</span></dd>
+      <dt>Modules</dt><dd>New. Feeds OUT-DM-003, CON-GEN-007, SOC-EXP-001</dd>
+      <dt>Reads</dt><dd>Public web, ad library, reviews, client intake answers</dd>
+      <dt>Writes</dt><dd>Pain library (industry level, no client names), pain briefs</dd>
+      <dt>Rule</dt><dd>No outreach draft without a graded brief. Only A or B pains appear in a message. Spec: <span class="code">02_Agents/painpoints-agent.md</span></dd>
+      <dt>Measure</dt><dd>Share of outreach built on a graded pain (goal: 100%)</dd></dl></div>
+    <div class="dept" style="--c:var(--pink);--ct:var(--pink-t)"><h3>Growth</h3><span class="lead-tag">Lead: @growth · two desks</span>
+      <dl><dt>Mission</dt><dd>Turn attention into qualified conversations, quotes and signed work. Desk A: sales. Desk B: marketing.</dd>
+      <dt>Skills</dt><dd><span class="code">/outreach</span> <span class="code">/reply</span> <span class="code">/score</span> <span class="code">/quote</span> <span class="code">/proposal</span> <span class="code">/content</span></dd>
+      <dt>Modules</dt><dd>OUT-DM-003, LEA-CAP-004, PIP-MGR-005, FOL-SEQ-006, CON-GEN-007, SOC-EXP/ENG/BRD/CMP/CNT</dd>
+      <dt>Rule</dt><dd>Inbound-first. Quotes use the price book. First touches to high-value targets stay L2. Cold email waits for the compliance sign-off</dd>
+      <dt>Measure</dt><dd>Replies per 10 first touches, qualified leads, quotes sent, close rate. Calibrate on 90 days of real data</dd>
+      <dt>Split later</dt><dd>Two desks become two departments only when volume demands it</dd></dl></div>
+    <div class="dept" style="--c:var(--teal);--ct:var(--teal-t)"><h3>Delivery</h3><span class="lead-tag">Lead: @delivery</span>
+      <dl><dt>Mission</dt><dd>Do what was sold, on time, and keep the client informed without Boss chasing.</dd>
+      <dt>Skills</dt><dd><span class="code">/onboard</span> <span class="code">/ghl-setup</span> <span class="code">/build-brief</span> <span class="code">/track</span> <span class="code">/checkin</span> <span class="code">/handover</span></dd>
+      <dt>Modules</dt><dd>GHL-AI-008 (bots, on hold), PRJ-MGT-009, PRJ-CLI-014/015, AIGC video and AI Ambassador production</dd>
+      <dt>Rule</dt><dd>No release without a Quality pass and Boss sign-off. Credit-spending video needs pre-approval. Intake form opens only after payment</dd>
+      <dt>Measure</dt><dd>On-time rate, revisions per project, check-in coverage</dd></dl></div>
+    <div class="dept" style="--c:var(--amber);--ct:var(--amber-t)"><h3>Finance · Admin</h3><span class="lead-tag">Lead: @finance</span>
+      <dl><dt>Mission</dt><dd>Protect margin and cash, and keep the books ready for tax.</dd>
+      <dt>Skills</dt><dd><span class="code">/invoice</span> <span class="code">/usage</span> <span class="code">/margin</span> <span class="code">/month-close</span> <span class="code">/tax-prep</span></dd>
+      <dt>Modules</dt><dd>FIN-01 invoicing, FIN-02 expenses, FIN-06 bank reconciliation, FIN-07 runway, FIN-09 tax prep, FIN-10 SST and withholding</dd>
+      <dt>Owns</dt><dd>The price book (Estimate Builder catalog) and the 2x cost floor check</dd>
+      <dt>Rule</dt><dd>Pricing changes are L3, Boss only. Meter usage per client even when it cannot be rebilled</dd>
+      <dt>Measure</dt><dd>Margin per SKU, usage billed vs absorbed, months of runway</dd></dl></div>
+    <div class="dept" style="--c:var(--red);--ct:var(--red-t)"><h3>Quality · Risk</h3><span class="lead-tag">Lead: @qa · independent</span>
+      <dl><dt>Mission</dt><dd>Nothing wrong leaves the building, and nothing secret leaves the machine.</dd>
+      <dt>Skills</dt><dd><span class="code">/qa</span> <span class="code">/brand-check</span> <span class="code">/compliance</span> <span class="code">/secrets-scan</span></dd>
+      <dt>Checks</dt><dd>Price-wall, tool names, studio voice, Brand Guide V2.1, unverified claims, TCPA/10DLC, GDPR, EU AI Act disclosure, tokens in files</dd>
+      <dt>Rule</dt><dd>Can block anything. Cannot approve anything. Reports to the chief of staff, never to the department it reviews</dd>
+      <dt>Measure</dt><dd>Blocks per week; issues found after release (goal: zero)</dd></dl></div>
+    <div class="dept" style="--c:var(--indigo);--ct:var(--indigo-t)"><h3>Knowledge · Platform</h3><span class="lead-tag">Lead: @keeper</span>
+      <dl><dt>Mission</dt><dd>Nothing is lost between sessions, every decision has a record, and the machine keeps running.</dd>
+      <dt>Skills</dt><dd><span class="code">/wrapup</span> <span class="code">/decision</span> <span class="code">/vault-sync</span> <span class="code">/conflicts</span> <span class="code">/health</span> <span class="code">/template</span></dd>
+      <dt>Owns</dt><dd>Master context, decision log, conflict register, GHL tag and field registry, the scheduler, cost log, template spin-out</dd>
+      <dt>Rule</dt><dd>Session start loads the master context; session end writes a wrap-up. Logs are append-only. Secrets stay out of files</dd>
+      <dt>Measure</dt><dd>Open conflicts, scheduled-run success rate, spend per day</dd></dl></div>
+  </div>
+</section>
+
+<!-- TRACE -->
+<section id="trace">
+  <div class="sec-head"><div class="num">04</div><div><div class="kicker">The structure in motion</div><h2>One request, end to end</h2><p class="sub">Example: a licensed money lender becomes a qualified prospect. Boss touches it once.</p></div></div>
+  <div class="steps">
+    <div class="step" style="--c:var(--orange)"><span class="who">Chief of staff</span><b>Routes</b><small>event: lead qualified</small></div><span class="arrow">→</span>
+    <div class="step" style="--c:var(--lime)"><span class="who">Intelligence</span><b>/pain brief</b><small>5 scanners in parallel, graded A/B/C</small></div><span class="arrow">→</span>
+    <div class="step" style="--c:var(--pink)"><span class="who">Growth</span><b>/outreach draft</b><small>one pain, a question first</small></div><span class="arrow">→</span>
+    <div class="step" style="--c:var(--red)"><span class="who">Quality</span><b>/qa + /compliance</b><small>price-wall, claims, tone</small></div><span class="arrow">→</span>
+    <div class="step" style="--c:var(--orange)"><span class="who">Chief of staff</span><b>08:00 queue</b><small>draft and brief side by side</small></div><span class="arrow">→</span>
+    <div class="step gate"><span class="who" style="color:var(--red)">Boss</span><b>Approve / reject</b><small>L2 first touch</small></div><span class="arrow">→</span>
+    <div class="step" style="--c:var(--green)"><span class="who">GHL</span><b>Sends and tracks</b><small>reply fires an event</small></div><span class="arrow">→</span>
+    <div class="step" style="--c:var(--indigo)"><span class="who">Knowledge</span><b>/wrapup</b><small>logs outcome, re-grades the pain</small></div>
+  </div>
+  <div class="note lime" style="margin-top:14px"><b>The loop that makes it improve:</b> the reply (or silence) feeds back into the pain library. Pains that earn replies move up. Pains that never do get demoted. After a month the OS knows which angles work for which industry. That is where an AI-run studio beats a human one.</div>
+</section>
+
+<!-- KEEP REWORK RETIRE -->
+<section id="keep">
+  <div class="sec-head"><div class="num">05</div><div><div class="kicker">Your records vs today</div><h2>Keep, rework, retire</h2><p class="sub">The tag in the last column says whose judgment this is: <span class="tag boss">Boss</span> something you stated or approved, <span class="tag mine">Mine</span> my recommendation.</p></div></div>
+  <div class="scroll"><table>
+    <tr><th style="width:92px">Verdict</th><th>Item</th><th>Why</th><th style="width:70px">Basis</th></tr>
+    <tr><td><span class="tag keep">Keep</span></td><td>Approval ladder L0 to L3, and "Boss only approves or supplies inputs"</td><td>Still the right control model. Everything else is built around it</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag keep">Keep</span></td><td>Price-wall, no tool names to clients, studio voice, Brand Guide V2.1</td><td>Brand and positioning rules that protect margin and credibility</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag keep">Keep</span></td><td>GHL as CRM and body; Folista as OEM; Estimate Builder as price book; 2x cost floor</td><td>Real, built, and consistent with selling GHL</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag keep">Keep</span></td><td>Inbound-first social, compliance sign-off before going live, dummy data first</td><td>Avoids the platform and legal risks that would stop the business</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag keep">Keep</span></td><td>Vault as memory, Doc Meta on every file, one module per folder, memory scope per agent</td><td>Proven habits. Cheap and they scale</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag rework">Rework</span></td><td>15 modules and 10 paper agents</td><td>Regroup under 6 departments. Module codes stay as IDs so no spec is lost</td><td><span class="tag mine">Mine</span></td></tr>
+    <tr><td><span class="tag rework">Rework</span></td><td>Approvals as GHL Tasks only</td><td>Keep the tasks as the audit trail, but add one daily approval digest so Boss does not need to live in GHL</td><td><span class="tag mine">Mine</span></td></tr>
+    <tr><td><span class="tag rework">Rework</span></td><td>OS rules 5, 7, 9 (GHL never recommended, affiliates never pitched, clients never get a login)</td><td>Boss now sells GHL, as sub-account or affiliate. Rewrite with affiliate disclosure</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag rework">Rework</span></td><td>Plan tiers, "Managed $497" tier, three prices under the 2x floor</td><td>Managed needs Agency Pro. Fix the catalog or record exceptions</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag rework">Rework</span></td><td>Two-LLM model (ChatGPT drafts, Claude judges)</td><td>One family, tiered by task (design rule 7)</td><td><span class="tag mine">Mine</span></td></tr>
+    <tr><td><span class="tag rework">Rework</span></td><td>Notion as control layer; "Claude Project JKZ Command" as the home</td><td>Replace with the kernel in Claude Code plus GHL and the vault. Notion was never built</td><td><span class="tag mine">Mine</span></td></tr>
+    <tr><td><span class="tag retire">Retire</span></td><td>Three brand rooms</td><td>Collapsed to one handle on 10 Sep. The price-wall stays</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag retire">Retire</span></td><td>"Solo operator" voice, Sdn Bhd and SSM wording</td><td>Studio voice only; brand, not a registered company</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag retire">Retire</span></td><td>Systeme.io as default client surface</td><td>GHL is the default now. Systeme only as a fallback</td><td><span class="tag boss">Boss</span></td></tr>
+    <tr><td><span class="tag retire">Retire</span></td><td>The 7 builder lanes as runtime agents</td><td>They were build-time workers that wrote the specs. They retire when the specs are done</td><td><span class="tag mine">Mine</span></td></tr>
+    <tr><td><span class="tag retire">Retire</span></td><td>n8n, Hermes, LangGraph, Kimi swarm in the JKZ OS</td><td>Extra moving parts. PhoneLab keeps its own stack and is on hold</td><td><span class="tag mine">Mine</span></td></tr>
+    <tr><td><span class="tag retire">Retire</span></td><td>TikTok track</td><td>Parked. No channel decision and nothing live to attach it to</td><td><span class="tag boss">Boss</span></td></tr>
+  </table></div>
+</section>
+
+<!-- WAVES -->
+<section id="waves">
+  <div class="sec-head"><div class="num">06</div><div><div class="kicker">Open one seat at a time</div><h2>Opening the seats</h2><p class="sub">Revenue path first. Each wave has an exit test, and the first run of every wave is in <b>shadow mode</b>: the OS drafts, Boss compares with what he would have done, nothing is sent.</p></div></div>
+  <div class="wave" style="--c:var(--indigo)"><div class="wn">W0</div><div><b>Memory kernel</b> · Knowledge · Platform + chief of staff<ul class="t"><li>Kernel <span class="code">CLAUDE.md</span>, <span class="code">/wrapup</span>, <span class="code">/decision</span>, master context loaded at session start</li><li><b>Exit:</b> three sessions in a row start with context and end with a wrap-up, with no re-explaining</li></ul></div></div>
+  <div class="wave" style="--c:var(--lime)"><div class="wn">W1</div><div><b>First revenue path, shadow mode</b> · Intelligence · Growth (sales desk) · Quality<ul class="t"><li><span class="code">/pain</span>, <span class="code">/outreach</span>, <span class="code">/quote</span>, <span class="code">/qa</span>, <span class="code">/brief</span>. No GHL wiring needed yet</li><li><b>Exit:</b> five real prospects go from pain brief to approved draft to quote, with every step graded by Boss</li></ul></div></div>
+  <div class="wave" style="--c:var(--pink)"><div class="wn">W2</div><div><b>Go live with GHL</b> · Delivery · Finance · Growth (marketing desk)<ul class="t"><li>Compliance sign-off, sub-account, approval digest, intake gating, content batch, usage metering</li><li><b>Exit:</b> one fake client end to end, then one real client onboarded, delivered and invoiced</li></ul></div></div>
+  <div class="wave" style="--c:var(--teal)"><div class="wn">W3</div><div><b>Scale and spin out</b><ul class="t"><li>Split Growth into two departments if load demands. AI Ambassador offer. Template spin-out of the plugplay product. PhoneLab returns when Boss hands over the compiled build</li><li><b>Exit:</b> a month closed with margin per SKU measured</li></ul></div></div>
+</section>
+
+<!-- BOSS TIME -->
+<section id="boss">
+  <div class="sec-head"><div class="num">07</div><div><div class="kicker">The human's time budget</div><h2>What Boss does, and when</h2><p class="sub">The OS is judged by how little of Boss's day it needs. Proposed targets, to tune.</p></div></div>
+  <div class="grid g3">
+    <div class="card bar" style="--c:var(--red)"><h3>Daily · 30 min</h3><ul class="t"><li>15 min morning: approve or reject the queue</li><li>15 min evening: read the wrap-up, answer anything the OS parked</li></ul></div>
+    <div class="card bar" style="--c:var(--amber)"><h3>Weekly · 60 min</h3><ul class="t"><li>Monday: approve the content angles</li><li>Friday: review the weekly report (5 to 8 numbers only)</li></ul></div>
+    <div class="card bar" style="--c:var(--indigo)"><h3>Monthly · 90 min</h3><ul class="t"><li>Month-close: margins, usage, runway</li><li>Pricing and strategy calls (L3)</li><li>Read the conflict register and decide</li></ul></div>
+  </div>
+  <div class="note red" style="margin-top:14px"><b>Inputs only Boss can supply</b> (the second allowed action): credentials, legal signatures, compliance sign-off, strategy calls with no rule yet. The OS asks for these once, in the morning queue, never mid-day.</div>
+</section>
+
+<!-- OPEN -->
+<section id="open">
+  <div class="sec-head"><div class="num">08</div><div><div class="kicker">Before I build</div><h2>Points for Boss</h2></div></div>
+  <div class="scroll"><table>
+    <tr><th>#</th><th>Question</th><th>My recommendation</th></tr>
+    <tr><td>1</td><td>Is six departments plus a chief of staff the right shape, or do you want Marketing and Sales split now?</td><td>Keep Growth as one department with two desks until volume demands a split</td></tr>
+    <tr><td>2</td><td>Approvals: GHL Tasks only, or a daily approval digest as well?</td><td>Digest as the thing you touch; GHL Tasks as the record</td></tr>
+    <tr><td>3</td><td>One model family, tiered (design rule 7), or keep a second vendor for volume drafts?</td><td>One family</td></tr>
+    <tr><td>4</td><td>Where should the code live: <span class="code">jkzentra/agentic-os</span> (clean) or the existing cloud-session repo?</td><td>Clean repo. Migrate specs in, leave the Access Bar proposal files behind</td></tr>
+    <tr><td>5</td><td>Should the client see the Pain Point Brief as a paid discovery deliverable?</td><td>Internal first. Decide after five real briefs</td></tr>
+    <tr><td>6</td><td>Run on this PC (Task Scheduler) or in the cloud?</td><td>This PC first. Move to cloud if it sleeps and misses runs</td></tr>
+  </table></div>
+  <div class="note teal" style="margin-top:14px"><b>Not verified:</b> exact headless scheduling settings in Claude Code, the module specs inside your repo (read at summary level), and the figures in the blueprint targets, which were never measured. Department names, skill names and wave order are proposals.</div>
+</section>
+
+<footer>
+  <b>Doc Meta</b> · Created 2026-10-28 · Version v0.3 · Supersedes: none (a separate view; <span class="code">JKZ_Agentic_OS_Plan.html</span> v0.2 stays as the first draft) · Sources: JKZ_MASTER_CONTEXT.md v5.1, 02_Agents/painpoints-agent.md, the OS repo rules, the ECC agentic-os skill. Internal to JK Zentra.
+</footer>
+</div>
+<script>
+/* Nav chips scroll by script because hash links are blocked inside sandboxed previews. */
+(function(){
+  document.querySelectorAll('nav a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var t=document.getElementById(a.getAttribute('href').slice(1)); if(!t) return;
+      e.preventDefault();
+      var nav=document.querySelector('nav');
+      window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-(nav?nav.offsetHeight:0)-8,behavior:'smooth'});
+    });
+  });
+})();
+</script>
+</body>
+</html>

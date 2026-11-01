@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JKZ Direction Round</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* One-time direction round: every answer pre-set to the recommended option so Boss only changes what he disagrees with. Light only, dark text. */
+:root{--bg:#F5F5F5;--paper:#fff;--ink:#181818;--sub:#5A5A5A;--line:rgba(24,24,24,.14);--orange:#F37002;--orange-t:#FDEBDB;--green:#1E9E68;--green-t:#DEF3EA;--red:#D2443A;--red-t:#FADFDC;--teal:#0E8F9B;--teal-t:#DDF1F3;--f-d:'Oswald','Arial Narrow',Arial,sans-serif;--f-b:'Montserrat',system-ui,'Segoe UI',sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 15px/1.6 var(--f-b);padding:0 max(16px,env(safe-area-inset-right)) 140px max(16px,env(safe-area-inset-left))}
+.wrap{max-width:860px;margin:0 auto}
+h1,h2{font-family:var(--f-d);font-weight:400;margin:0}
+h1{font-size:clamp(32px,6vw,52px);text-transform:uppercase;line-height:1.02;margin-top:32px}
+.kicker{font:700 12px/1 var(--f-b);letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
+.lead{color:var(--sub);max-width:62ch;margin-top:12px}
+.note{border-left:6px solid var(--orange);background:var(--orange-t);border-radius:0 12px 12px 0;padding:12px 16px;font-size:14px;margin:18px 0}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:14px 0;box-shadow:0 2px 12px rgba(24,24,24,.05)}
+.q.changed{border-color:var(--orange);box-shadow:0 0 0 1px var(--orange)}
+.qh{display:flex;gap:14px;align-items:baseline}
+.qn{font:300 34px/1 var(--f-d);color:var(--orange);min-width:44px}
+.q h2{font-size:22px}
+.why{color:var(--sub);font-size:13px;margin:4px 0 10px 58px}
+.opts{margin-left:58px;display:grid;gap:8px}
+@media(max-width:600px){.why,.opts{margin-left:0}}
+label.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:#FCFCFC}
+label.opt:hover{border-color:var(--orange)}
+label.opt input{margin-top:4px;accent-color:var(--orange);width:17px;height:17px;flex:none}
+label.opt.sel{border-color:var(--orange);background:var(--orange-t)}
+.ot b{display:block;font-size:14px}
+.ot span.d{display:block;font-size:12.5px;color:var(--sub)}
+.rec{display:inline-block !important;font:700 10px/1 var(--f-b);letter-spacing:.1em;text-transform:uppercase;background:var(--green);color:#fff;border-radius:5px;padding:3px 6px;margin-left:8px;vertical-align:middle}
+.other{margin:6px 0 0 58px}
+@media(max-width:600px){.other{margin-left:0}}
+.other input[type=text],select{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:500 14px var(--f-b);background:#fff;color:var(--ink)}
+.grid2{display:grid;grid-template-columns:150px 1fr;gap:8px 12px;align-items:center;margin-left:58px}
+@media(max-width:600px){.grid2{margin-left:0;grid-template-columns:110px 1fr}}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-left));z-index:9}
+.bar .in{max-width:860px;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button{font:700 13px var(--f-b);border-radius:10px;padding:11px 16px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+button:hover{filter:brightness(.97)}
+#stat{font-size:12.5px;color:var(--sub);margin-left:auto}
+#out{display:none;margin-top:20px}
+textarea{width:100%;min-height:260px;border:1px solid var(--line);border-radius:12px;padding:12px;font:500 12.5px/1.5 ui-monospace,Consolas,monospace;background:#fff;color:var(--ink)}
+.safe{font-size:12.5px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">One round, then the OS runs</div>
+  <h1>Direction round</h1>
+  <p class="lead">Fourteen questions. Every answer is already set to my recommendation, so you only change what you disagree with. When you finish, press <b>Copy answers</b> and paste them back to Claude. After this the OS plans, drafts, checks and posts by itself inside the approval ladder.</p>
+  <div class="note"><b>Safe by design.</b> This form collects no passwords, tokens or logins. Platform access is connected by you through GHL's own sign-in. Nothing here posts anything; it only sets the rules. Your answers save in this browser as you go.</div>
+  <div id="form"></div>
+  <div id="out"><h2 style="font-size:24px;margin-bottom:8px">Your answers</h2><p class="safe">Copy this and paste it into the chat with Claude, or download the JSON.</p><textarea id="ta" readonly></textarea></div>
+</div>
+<div class="bar"><div class="in">
+  <button class="primary" id="bCopy">Copy answers</button>
+  <button id="bDl">Download JSON</button>
+  <button id="bReset">Reset to recommended</button>
+  <span id="stat"></span>
+</div></div>
+
+<script>
+/* Question data. "def" is the recommended option. Types: radio, multi (checkboxes), accounts (one select per platform). */
+var Q=[
+{id:'lanes',t:'Who is the content for?',why:'Already decided on 10 Sep. Confirm or change.',type:'radio',def:'three',opts:[
+ {v:'three',l:'Three lanes',d:'Personal (FB, IG, LinkedIn, Threads), Business (FB, IG), Video (TikTok, YouTube, US-leaning). Price-wall kept by separate surfaces.'},
+ {v:'my',l:'Malaysia and SEA only, for now',d:'Fastest to first Malaysian clients. Video stays local too.'},
+ {v:'global',l:'Global and US-leaning only, for now',d:'Premium lane first. Slower to local cashflow.'}]},
+{id:'lang',t:'Which languages?',why:'Home market is Malaysia. YouTube was set US-first.',type:'radio',def:'en_bm',opts:[
+ {v:'en_bm',l:'English plus Bahasa Malaysia for the MY lane, English only for video',d:'Mandarin added later.'},
+ {v:'en',l:'English only',d:'Simplest. Weaker reach with local SMEs.'},
+ {v:'en_bm_zh',l:'English, Bahasa Malaysia and Mandarin',d:'Widest reach. About double the review work.'}]},
+{id:'pillars',t:'Content pillars and mix?',why:'Locked on 10 Sep: the pain-point angles from @painpoints slot into these.',type:'radio',def:'keep',opts:[
+ {v:'keep',l:'Keep 35 / 30 / 15 / 15 / 5',d:'Build in public 35, systems education 30, proof 15, POV 15, offer 5.'},
+ {v:'edu',l:'More education, less build in public',d:'30 / 40 / 15 / 10 / 5.'},
+ {v:'offer',l:'More offer-aware posts',d:'25 / 25 / 15 / 10 / 25. Faster leads, higher fatigue risk.'}]},
+{id:'cadence',t:'How much should it post?',why:'You have little time. Consistency beats volume, so start lean and ramp after two weeks.',type:'radio',def:'lean',opts:[
+ {v:'lean',l:'Lean',d:'LinkedIn 4, Instagram 4, Threads 5, Facebook 3 a week. 3 short videos a week (TikTok and YouTube Shorts). 1 long video a month.'},
+ {v:'standard',l:'Standard',d:'Same social. 5 shorts a week. 1 long video every 2 weeks.'},
+ {v:'aggressive',l:'Aggressive',d:'Daily on every channel. 7 shorts a week. 1 long video a week. Highest credit spend and review load.'}]},
+{id:'presence',t:'Who or what is on screen?',why:'You never appear on camera.',type:'radio',def:'faceless',opts:[
+ {v:'faceless',l:'Faceless first',d:'Voice, captions, b-roll and screen visuals. Cheapest and fewest likeness issues. AI avatar host comes later.'},
+ {v:'avatar',l:'AI avatar host from day one',d:'More personality. Needs a character brief and extra labelling.'},
+ {v:'mix',l:'Mix',d:'Faceless for education, avatar for brand pieces.'}]},
+{id:'cta',t:'How hard may a post sell?',why:'Credibility content was set to a soft link only.',type:'radio',def:'soft',opts:[
+ {v:'soft',l:'Soft link only',d:'A bio link and an occasional "how we do it" mention. Never a hard sell in the body.'},
+ {v:'none',l:'No call to action at all',d:'Pure authority. Slowest to leads.'},
+ {v:'direct',l:'Direct offer in about 1 post in 5',d:'Matches the 5% offer pillar if you choose that mix.'}]},
+{id:'identity',t:'One identity or two?',why:'Decided on 10 Sep as one handle. The OS repo suggested a separate identity for credibility content.',type:'radio',def:'one',opts:[
+ {v:'one',l:'One handle, jkzentra, everywhere',d:'Fastest, one audience to build.'},
+ {v:'two',l:'Separate identity for education and for the studio',d:'Cleaner tone split. Two audiences to build, double the setup.'}]},
+{id:'accounts',t:'Which accounts exist, and are they connected in GHL?',why:'Pre-filled from your 25 to 28 Sep notes. Please correct anything wrong. You connect accounts yourself through GHL; the OS never receives a password.',type:'accounts',
+ plats:[['Facebook page','conn'],['LinkedIn page','conn'],['Instagram business','conn'],['Threads','conn'],['TikTok','conn'],['YouTube channel','unsure']],
+ sel:[['conn','Connected in GHL'],['exists','Exists, not connected'],['none','Does not exist yet'],['unsure','Not sure']]},
+{id:'budget',t:'Video and credit budget?',why:'A hard stop applies at the cap. Confirm the numbers against your real subscriptions.',type:'radio',def:'b150',opts:[
+ {v:'b50',l:'$50 a month, $5 per video',d:'Mostly stills, captions and short clips.'},
+ {v:'b150',l:'$150 a month, $15 per video',d:'A few short videos a week at modest quality.'},
+ {v:'b300',l:'$300 a month, $30 per video',d:'Higher quality and the occasional long video.'}]},
+{id:'windows',t:'When should posts go out?',why:'A starting point. After two weeks the OS re-tunes from real engagement.',type:'radio',def:'std',opts:[
+ {v:'std',l:'MY lane 08:30 and 19:30 MYT. Video 21:00 MYT (US morning). Quiet 00:00 to 07:00',d:'Weekdays first; weekends light.'},
+ {v:'late',l:'MY lane 12:30 and 21:00 MYT. Video 21:00 MYT. Quiet 00:00 to 07:00',d:'Lunch and late evening.'}]},
+{id:'autonomy',t:'What may post without your approval, and when?',why:'Trust is earned in steps. Anything not on the current step needs your explicit approval first.',type:'radio',def:'ladder',opts:[
+ {v:'ladder',l:'Step ladder',d:'Shadow week: nothing live. Then evergreen text posts from approved templates. Carousels after 2 clean weeks. Video only after 10 approved with no edits.'},
+ {v:'text',l:'Evergreen text posts only, after the shadow week',d:'Carousels and video always need your approval.'},
+ {v:'never',l:'Everything needs my approval, always',d:'Safest. Defeats "posts by itself".'}]},
+{id:'guard',t:'Guardrails for every post',why:'These checks run on every draft. Untick any you disagree with.',type:'multi',def:['label','claims','clients','competitors','finadvice','templates','dms','pol'],opts:[
+ {v:'label',l:'Always label AI-generated video and voice'},
+ {v:'claims',l:'No outcome claims and no numbers I cannot show evidence for'},
+ {v:'clients',l:'Never name a client or show their work without written consent'},
+ {v:'competitors',l:'Never name competitors'},
+ {v:'finadvice',l:'No personal financial or investment advice'},
+ {v:'templates',l:'Comment replies only from approved templates'},
+ {v:'dms',l:'Direct messages always need my approval'},
+ {v:'pol',l:'No politics or religion'}]},
+{id:'kill',t:'Kill switches and automatic pauses',why:'These stop the OS posting. The dead-man\'s switch stops auto-posting if you have not opened the queue for a while.',type:'multi',def:['pause','warn','qa','spend','neg','dead'],opts:[
+ {v:'pause',l:'A global pause switch I can flip at any time'},
+ {v:'warn',l:'Auto-pause on a platform warning or strike'},
+ {v:'qa',l:'Auto-pause after two blocked drafts in 24 hours'},
+ {v:'spend',l:'Auto-pause when the spend cap is hit'},
+ {v:'neg',l:'Auto-pause on a spike of negative comments'},
+ {v:'dead',l:'Dead-man\'s switch: stop auto-posting if I have not opened the queue for 3 days'}]},
+{id:'dest',t:'Where should calls to action point?',why:'jkzentra.com returned a 404 on 20 Oct, so a link is needed that works today.',type:'radio',def:'ghl',opts:[
+ {v:'ghl',l:'A GHL discovery-call page on a GHL address',d:'Works now. Switch to the main site when it is fixed.'},
+ {v:'fix',l:'Fix jkzentra.com first, then post',d:'Cleanest, but delays going live.'},
+ {v:'booking',l:'Link straight to a booking calendar',d:'One click to a call. No context for the visitor.'}]}
+];
+var KEY='jkz-direction-v1', S={};
+function rec(q){return q.def}
+function defaults(){var o={};Q.forEach(function(q){if(q.type==='accounts'){o[q.id]={};q.plats.forEach(function(p){o[q.id][p[0]]=p[1]})}else if(q.type==='multi'){o[q.id]=q.def.slice()}else{o[q.id]=q.def}o[q.id+'_other']=''});return o}
+function load(){try{var r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return null}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function same(a,b){return JSON.stringify(a)===JSON.stringify(b)}
+function isChanged(q){var d=defaults();return !same(S[q.id],d[q.id])||(S[q.id+'_other']||'')!==''}
+function el(t,a,h){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(h!=null)e.innerHTML=h;return e}
+function render(){
+  var f=document.getElementById('form');f.innerHTML='';
+  Q.forEach(function(q,i){
+    var c=el('div',{class:'q',id:'q_'+q.id});
+    c.innerHTML='<div class="qh"><div class="qn">'+(i+1<10?'0':'')+(i+1)+'</div><h2>'+q.t+'</h2></div><div class="why">'+q.why+'</div>';
+    if(q.type==='accounts'){
+      var g=el('div',{class:'grid2'});
+      q.plats.forEach(function(p){
+        g.appendChild(el('div',null,'<b>'+p[0]+'</b>'));
+        var s=el('select');q.sel.forEach(function(o){var op=el('option',{value:o[0]},o[1]);if(S[q.id][p[0]]===o[0])op.selected=true;s.appendChild(op)});
+        s.onchange=function(){S[q.id][p[0]]=s.value;upd()};g.appendChild(s)});
+      c.appendChild(g);
+    }else{
+      var w=el('div',{class:'opts'});
+      q.opts.forEach(function(o){
+        var multi=q.type==='multi';
+        var on=multi?S[q.id].indexOf(o.v)>-1:S[q.id]===o.v;
+        var lb=el('label',{class:'opt'+(on?' sel':'')});
+        var inp=el('input',{type:multi?'checkbox':'radio',name:q.id,value:o.v});inp.checked=on;
+        inp.onchange=function(){
+          if(multi){var a=S[q.id],ix=a.indexOf(o.v);if(inp.checked&&ix<0)a.push(o.v);if(!inp.checked&&ix>-1)a.splice(ix,1)}else{S[q.id]=o.v}
+          upd(true)};
+        lb.appendChild(inp);
+        var isRec=multi?q.def.indexOf(o.v)>-1:q.def===o.v;
+        lb.appendChild(el('div',{class:'ot'},'<b>'+o.l+(isRec?'<span class="rec">Recommended</span>':'')+'</b>'+(o.d?'<span class="d">'+o.d+'</span>':'')));
+        w.appendChild(lb)});
+      c.appendChild(w);
+    }
+    var ot=el('div',{class:'other'});var ti=el('input',{type:'text',placeholder:'Other, or a note (optional)'});ti.value=S[q.id+'_other']||'';
+    ti.oninput=function(){S[q.id+'_other']=ti.value;upd()};ot.appendChild(ti);c.appendChild(ot);
+    f.appendChild(c)});
+  upd();
+}
+function upd(rerender){
+  save();
+  if(rerender){var y=window.scrollY;render();window.scrollTo(0,y);return}
+  var n=0;Q.forEach(function(q){var ch=isChanged(q);var c=document.getElementById('q_'+q.id);if(c)c.classList.toggle('changed',ch);if(ch)n++});
+  document.getElementById('stat').textContent=n===0?'All recommended. Saved.':n+' changed from recommended. Saved.';
+}
+function labelOf(q,v){if(q.type==='accounts')return v;var o=q.opts.filter(function(x){return x.v===v})[0];return o?o.l:v}
+function summary(){
+  var L=['JKZ DIRECTION ROUND (answers)','Date: '+new Date().toISOString().slice(0,10),''];
+  Q.forEach(function(q,i){
+    var line=(i+1)+'. '+q.t+' => ';
+    if(q.type==='accounts'){line+=q.plats.map(function(p){var s=q.sel.filter(function(x){return x[0]===S[q.id][p[0]]})[0];return p[0]+': '+(s?s[1]:'')}).join('; ')}
+    else if(q.type==='multi'){line+=S[q.id].map(function(v){return labelOf(q,v)}).join('; ')||'(none ticked)'}
+    else{line+=labelOf(q,S[q.id])}
+    if(isChanged(q)&&q.type!=='accounts')line+='   [CHANGED from recommended]';
+    if(S[q.id+'_other'])line+='   NOTE: '+S[q.id+'_other'];
+    L.push(line)});
+  L.push('','JSON:',JSON.stringify(S));
+  return L.join('\n');
+}
+function show(){var t=summary();document.getElementById('ta').value=t;document.getElementById('out').style.display='block';return t}
+document.getElementById('bCopy').onclick=function(){
+  var t=show(),b=this;
+  function done(){b.textContent='Copied. Paste it to Claude';setTimeout(function(){b.textContent='Copy answers'},2500)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){var ta=document.getElementById('ta');ta.select();document.execCommand('copy');done()})}
+  else{var ta=document.getElementById('ta');ta.select();try{document.execCommand('copy')}catch(e){}done()}
+  document.getElementById('out').scrollIntoView({behavior:'smooth'});
+};
+document.getElementById('bDl').onclick=function(){
+  var blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='jkz-direction-answers.json';document.body.appendChild(a);a.click();document.body.removeChild(a);show();
+};
+document.getElementById('bReset').onclick=function(){if(confirm('Reset every answer to the recommended option?')){S=defaults();render()}};
+S=load()||defaults();
+(function fill(){var d=defaults();for(var k in d){if(S[k]===undefined)S[k]=d[k]}})();
+render();
+</script>
+</body>
+</html>

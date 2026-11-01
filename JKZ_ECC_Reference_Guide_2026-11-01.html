@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECC Directory and Usage Guide</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1b1f2a;--mut:#5b6475;--line:#e3e6ee;--blue:#2563eb;--green:#16a34a;--amber:#d97706;--purple:#7c3aed;--teal:#0d9488;--pink:#db2777;--red:#dc2626}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1220;--card:#181c2e;--ink:#eef0f7;--mut:#9aa3b8;--line:#2a2f47}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,sans-serif}
+.wrap{max-width:1050px;margin:0 auto;padding:16px}
+header{background:linear-gradient(135deg,var(--teal),var(--blue) 50%,var(--purple));color:#fff;border-radius:18px;padding:22px 20px}
+header h1{margin:0 0 6px;font-size:clamp(22px,5vw,32px)}header p{margin:0}
+.bar{position:sticky;top:0;z-index:9;background:var(--bg);padding:10px 0}
+#q{width:100%;padding:11px 14px;border-radius:12px;border:2px solid var(--blue);background:var(--card);color:var(--ink);font-size:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tabs button{border:0;border-radius:99px;padding:5px 12px;color:#fff;cursor:pointer;font-size:13px;opacity:.55}
+.tabs button.on{opacity:1;outline:2px solid var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.stat{border-radius:14px;padding:12px;color:#fff}.stat b{font-size:26px;display:block}
+section{background:var(--card);border-radius:16px;padding:16px;margin:14px 0;border-top:5px solid var(--c,var(--blue))}
+section h2{margin:0 0 4px;color:var(--c,var(--blue));font-size:19px}
+.sub{color:var(--mut);font-size:13px;margin:0 0 10px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:540px}
+th{background:var(--c,var(--blue));color:#fff;text-align:left;padding:7px 10px}
+td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+code{background:var(--line);padding:1px 6px;border-radius:6px;font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12.5px;padding:3px 10px;border-radius:99px;border:1.5px solid var(--c,var(--blue));color:var(--ink);background:transparent}
+.chip.used{background:var(--c,var(--blue));color:#fff;font-weight:600}
+.tag{display:inline-block;padding:1px 9px;border-radius:99px;color:#fff;font-size:12px}
+.g{background:var(--green)}.a{background:var(--amber)}.r{background:var(--red)}.b{background:var(--blue)}.p{background:var(--purple)}
+.hide{display:none!important}
+.note{color:var(--mut);font-size:13px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.step{border-radius:12px;padding:12px;color:#fff}.step b{display:block;margin-bottom:4px}
+</style>
+</head>
+<body><div class="wrap">
+
+<header>
+<h1>🧰 ECC: Directory, Reference and Usage Guide</h1>
+<p>Everything the <code>ecc</code> plugin exposes in your session, grouped and searchable. Built 2026-11-01 from this session's skill, command and agent lists.</p>
+</header>
+
+<div class="stats">
+<div class="stat" style="background:var(--blue)"><b id="nCmd">0</b>slash commands</div>
+<div class="stat" style="background:var(--purple)"><b id="nAg">0</b>agents</div>
+<div class="stat" style="background:var(--teal)"><b id="nSk">0</b>skills</div>
+<div class="stat" style="background:var(--green)"><b>5</b>skills you've used</div>
+</div>
+
+<div class="bar">
+<input id="q" type="search" placeholder="🔍 Search commands, agents, skills (e.g. react, plan, security)…" autocomplete="off">
+<div class="tabs" id="tabs"></div>
+</div>
+
+<section style="--c:var(--green)" id="how">
+<h2>📖 How to use ECC</h2>
+<p class="sub">Three kinds of things. Same plugin, different invocation.</p>
+<div class="steps">
+<div class="step" style="background:var(--blue)"><b>1 · Commands</b>Type <code style="color:#000">/ecc:plan</code> style names. Action-oriented workflows (build-fix, code-review, pr…).</div>
+<div class="step" style="background:var(--teal)"><b>2 · Skills</b>Knowledge packs Claude loads on demand (patterns, testing, ops). Ask in plain words or say "use the ecc:X skill".</div>
+<div class="step" style="background:var(--purple)"><b>3 · Agents</b>Specialist reviewers/resolvers Claude delegates to. Ask: "have the ecc:python-reviewer check this".</div>
+<div class="step" style="background:var(--amber)"><b>4 · Cost</b>Every installed skill adds description text to context on every chat. Trim what you don't use.</div>
+</div>
+</section>
+
+<section style="--c:var(--pink)" id="start">
+<h2>⭐ Start here (for Agentic OS) <span class="tag a">assumed</span></h2>
+<p class="sub">Picked from your usage history and project. Not confirmed by you.</p>
+<div class="tw"><table>
+<tr><th>Item</th><th>When</th><th>Evidence</th></tr>
+<tr><td><code>ecc:agentic-os</code></td><td>Designing the agent/org structure</td><td>Used 9×</td></tr>
+<tr><td><code>ecc:context-and-decisions</code></td><td>Recording why choices were made</td><td>Used 9×</td></tr>
+<tr><td><code>/ecc:plan</code>, <code>ecc:plan-prd</code></td><td>Before building a feature</td><td>plan used 2×</td></tr>
+<tr><td><code>ecc:tdd-workflow</code></td><td>Writing the Python attendance code</td><td>Used 2×</td></tr>
+<tr><td><code>ecc:python-reviewer</code> agent</td><td>After editing HR-attendance Python</td><td>Repo is Python (assumed)</td></tr>
+<tr><td><code>/ecc:code-review</code>, <code>/ecc:security-scan</code></td><td>Before commits/PRs</td><td>Employee data involved (assumed)</td></tr>
+<tr><td><code>/ecc:save-session</code> / <code>resume-session</code></td><td>Ending / restarting long work</td><td>General</td></tr>
+<tr><td><code>ecc:skill-create</code></td><td>Turning workflows into skills like jkz-html</td><td>Used 2×</td></tr>
+</table></div>
+</section>
+
+<div id="out"></div>
+
+<section style="--c:var(--red)" id="trim">
+<h2>✂️ Trim candidates</h2>
+<p class="sub">Categories with no sign of use in your project. Disabling means removing the whole plugin or its skills; ask me before I touch settings.</p>
+<div class="tw"><table>
+<tr><th>Category</th><th>Why trim</th></tr>
+<tr><td>Other languages: C++, C#, F#, Go, Rust, Kotlin, Java, Swift, Dart/Flutter, Perl, PHP, Ruby, Laravel, Quarkus, Spring, Django, Android</td><td>Your repo is Python/HTML</td></tr>
+<tr><td>Network/homelab, healthcare, logistics, energy, customs, returns, inventory, production</td><td>Not your domain</td></tr>
+<tr><td>Crypto/DeFi, prediction-market, ito-*</td><td>Not your domain</td></tr>
+<tr><td>Hermes, nanoclaw, openclaw, nasiko, uncloud, flox</td><td>Niche tooling</td></tr>
+</table></div>
+<p class="note">Highlighted chips below = skills you've used. Everything is from this session's lists; short descriptions are only given for agents (copied from the agent registry).</p>
+</section>
+
+</div>
+<script>
+const USED=new Set(["agentic-os","context-and-decisions","plan","tdd-workflow","skill-create"]);
+const CMD="aside astra-review build-fix checkpoint code-review cost-report cpp-build cpp-review cpp-test ecc-guide epic-claim epic-decompose epic-publish epic-review epic-sync epic-unblock epic-validate evolve fastapi-review feature-dev flutter-build flutter-review flutter-test gan-build gan-design go-build go-review go-test gradle-build harness-audit hookify-configure hookify-help hookify-list hookify instinct-export instinct-import instinct-status jira kotlin-build kotlin-review kotlin-test learn-eval learn loop-start loop-status marketing-campaign model-route multi-backend multi-execute multi-frontend multi-plan multi-workflow orch-add-feature orch-build-mvp orch-change-feature orch-fix-defect orch-refine-code plan-canvas plan-prd plan pm2 pr project-init projects promote prp-commit prp-implement prp-plan prp-pr prp-prd prune python-review quality-gate react-build react-review react-test refactor-clean resume-session review-pr rust-build rust-review rust-test santa-loop save-session security-scan sessions skill-create skill-health skill-host-compat test-coverage token-card update-codemaps update-docs vue-review orch-review".split(" ");
+const CMDG={"Planning & PRD":"plan plan-prd plan-canvas prp-plan prp-prd multi-plan project-init projects","Build & implement":"build-fix feature-dev prp-implement multi-execute multi-workflow multi-backend multi-frontend orch-add-feature orch-build-mvp orch-change-feature orch-fix-defect orch-refine-code gan-build gan-design","Review & quality":"code-review review-pr python-review react-review vue-review fastapi-review go-review rust-review kotlin-review cpp-review flutter-review security-scan quality-gate test-coverage refactor-clean orch-review astra-review santa-loop","Language build/test":"cpp-build cpp-test go-build go-test rust-build rust-test kotlin-build kotlin-test gradle-build flutter-build flutter-test react-build react-test","Git & PR":"pr prp-commit prp-pr jira","Sessions & memory":"save-session resume-session sessions checkpoint aside promote prune","Epics":"epic-claim epic-decompose epic-publish epic-review epic-sync epic-unblock epic-validate","Learning & hooks":"learn learn-eval evolve instinct-export instinct-import instinct-status hookify hookify-configure hookify-help hookify-list skill-create skill-health skill-host-compat","Ops & cost":"cost-report token-card harness-audit loop-start loop-status model-route pm2 update-codemaps update-docs ecc-guide marketing-campaign"};
+const AGENTS=[
+["a11y-architect","WCAG 2.2 accessibility design and audit"],["agent-evaluator","Scores agent output on a 5-axis rubric"],["architect","System design and technical decisions"],["bengali-reviewer","Bengali text and Unicode correctness"],["build-error-resolver","Fixes build/type errors with minimal diffs"],["chief-of-staff","Triages email/Slack, drafts replies"],["code-architect","Feature blueprints from existing patterns"],["code-explorer","Traces execution paths in a codebase"],["code-reviewer","General code review (use after any change)"],["code-simplifier","Simplifies code, preserves behaviour"],["comment-analyzer","Finds inaccurate or stale comments"],["commit-reviewer","Drafts Conventional Commit messages"],["conversation-analyzer","Finds behaviours worth hooking"],["cpp-build-resolver","C++/CMake build errors"],["cpp-reviewer","C++ review"],["csharp-reviewer","C#/.NET review"],["dart-build-resolver","Dart/Flutter build errors"],["database-reviewer","PostgreSQL/Supabase review"],["django-build-resolver","Django setup/migration errors"],["django-reviewer","Django review"],["doc-updater","Codemaps and docs upkeep"],["docs-lookup","Library docs via Context7"],["e2e-runner","End-to-end tests (Playwright)"],["fastapi-reviewer","FastAPI review"],["flutter-reviewer","Flutter/Dart review"],["fsharp-reviewer","F# review"],["gan-evaluator","GAN harness: scores the live app"],["gan-generator","GAN harness: builds features"],["gan-planner","GAN harness: expands a prompt into a spec"],["go-build-resolver","Go build errors"],["go-reviewer","Go review"],["harmonyos-app-resolver","HarmonyOS/ArkTS"],["harness-optimizer","Tunes agent-harness config"],["healthcare-reviewer","Clinical/PHI review"],["homelab-architect","Home network plans"],["java-build-resolver","Java/Maven/Gradle build errors"],["java-reviewer","Java review (Spring/Quarkus)"],["kotlin-build-resolver","Kotlin/Gradle build errors"],["kotlin-reviewer","Kotlin/Android review"],["loop-operator","Runs and monitors agent loops"],["marketing-agent","Campaign planning and copy"],["mle-reviewer","ML engineering review"],["network-architect","Multi-site network design"],["network-config-reviewer","Router/switch config review"],["network-troubleshooter","Read-only network diagnosis"],["opensource-forker","Strips secrets before open-sourcing"],["opensource-packager","README/LICENSE/CLAUDE.md packaging"],["opensource-sanitizer","Verifies a fork is clean"],["performance-optimizer","Bottlenecks and bundle size"],["php-reviewer","PHP review"],["planner","Plans complex features"],["pr-test-analyzer","PR test-coverage quality"],["python-reviewer","Python review (PEP 8, types, security)"],["pytorch-build-resolver","PyTorch/CUDA errors"],["rag-pipeline-reviewer","RAG pipeline review"],["react-build-resolver","React build failures"],["react-reviewer","React/JSX review"],["refactor-cleaner","Dead code cleanup"],["ruby-reviewer","Ruby/Rails review"],["rust-build-resolver","Cargo/borrow-checker errors"],["rust-reviewer","Rust review"],["security-reviewer","Vulnerabilities, secrets, OWASP"],["seo-specialist","Technical SEO audits"],["silent-failure-hunter","Swallowed errors and bad fallbacks"],["spec-miner","Extracts specs from a codebase"],["swift-build-resolver","Swift/Xcode build errors"],["swift-reviewer","Swift review"],["tdd-guide","Test-first workflow, 80%+ coverage"],["type-design-analyzer","Type design and invariants"],["typescript-reviewer","TS/JS review"],["vue-reviewer","Vue review"]];
+const SK={
+"Agentic & orchestration":"agentic-os agentic-engineering agent-architecture-audit agent-eval agent-harness-construction agent-introspection-debugging agent-runtime-gateway-smoke-test agent-security-hardening agent-self-evaluation agent-sort ai-first-engineering autonomous-agent-harness autonomous-loops continuous-agent-loop claude-devfleet council council-multi-model dev-team dmux-workflows dynamic-workflow-mode enterprise-agent-ops loop-design-check nanoclaw-repl operator-approval-loop orch-pipeline parallel-execution-optimizer plan-orchestrate santa-method team-agent-orchestration team-builder nasiko-control-plane",
+"Planning, docs & decisions":"context-and-decisions architecture-decision-records blueprint brownfield-retrospective change-impact code-tour codebase-onboarding docs-governance documentation-lookup living-docs-governance recursive-decision-ledger story-lifecycle intent-driven-development contract-first spec-miner ralphinho-rfc-pipeline",
+"Testing & quality":"tdd-workflow ai-regression-testing e2e-testing browser-qa click-path-audit verification-loop eval-harness module-regression test-collaboration plankton-code-quality coding-standards error-handling delivery-gate gateguard canary-watch production-audit react-testing python-testing golang-testing rust-testing cpp-testing csharp-testing fsharp-testing kotlin-testing windows-desktop-e2e benchmark benchmark-methodology benchmark-optimization-loop",
+"Security & safety":"security-review security-bounty-hunter safety-guard mcp-dependency-review hipaa-compliance django-security laravel-security perl-security quarkus-security springboot-security defi-amm-security llm-trading-agent-security",
+"Python / backend / data":"python-patterns fastapi-patterns django-patterns django-celery django-tdd django-verification backend-patterns api-design api-connector-builder postgres-patterns mysql-patterns redis-patterns clickhouse-io database-migrations prisma-patterns jpa-patterns mybatis-patterns data-scraper-agent regex-vs-llm-structured-text hexagonal-architecture",
+"Frontend & design":"frontend-patterns frontend-design-direction frontend-a11y frontend-slides react-patterns react-performance react-native-patterns vue-patterns nuxt4-patterns nextjs-turbopack vite-patterns angular-developer design-system ui-demo ui-to-vue liquid-glass-design make-interfaces-feel-better motion-advanced motion-foundations motion-patterns accessibility taste taste-application taste-distillation tasteforge-video dashboard-builder",
+"Other languages & platforms":"golang-patterns rust-patterns kotlin-patterns kotlin-coroutines-flows kotlin-exposed-patterns kotlin-ktor-patterns cpp-coding-standards java-coding-standards springboot-patterns springboot-tdd springboot-verification quarkus-patterns quarkus-tdd quarkus-verification laravel-patterns laravel-plugin-discovery laravel-tdd laravel-verification rails-patterns perl-patterns perl-testing dotnet-patterns swift-actor-persistence swift-concurrency-6-2 swift-protocol-di-testing swiftui-patterns foundation-models-on-device dart-flutter-patterns compose-multiplatform-patterns android-clean-architecture nestjs-patterns bun-runtime nodejs-keccak256 tinystruct-patterns",
+"DevOps & infra":"deployment-patterns docker-patterns kubernetes-patterns git-workflow github-ops terminal-ops terminal-opener config-gc flox-environments uncloud generating-python-installer homelab-network-readiness homelab-network-setup homelab-pihole-dns homelab-vlan-segmentation homelab-wireguard-vpn cisco-ios-patterns netmiko-ssh-automation network-bgp-diagnostics network-config-validation network-interface-health latency-critical-systems",
+"Cost, memory & learning":"context-budget cost-aware-llm-pipeline cost-tracking token-budget-advisor prompt-caching-strategy prompt-optimizer strategic-compact unified-memory continuous-learning continuous-learning-v2 learn-eval rules-distill skill-comply skill-scout skill-stocktake ck growth-log ecc-recipes configure-ecc hookify-rules inherit-legacy-style iterative-retrieval content-hash-cache-pattern ecc-tools-cost-audit",
+"Content, marketing & business":"article-writing content-engine brand-voice brand-discovery crosspost social-publisher social-graph-ranker seo lead-intelligence investor-materials investor-outreach market-research competitive-platform-analysis competitive-report-structure connections-optimizer deep-research exa-search osint-investigation video-editing videodb fal-ai-media manim-video remotion-video-creation blender-motion-state-inspection product-capability product-lens",
+"Ops & admin":"email-ops messages-ops google-workspace-ops unified-notifications-ops knowledge-ops research-ops project-flow-ops workspace-surface-audit automation-audit-ops customer-billing-ops finance-billing-ops master-agreement-generator nutrient-document-processing esign-field-placement visa-doc-translate counterparty-channel-discipline workspace-surface-audit",
+"Healthcare, science & ML":"healthcare-cdss-patterns healthcare-emr-patterns healthcare-eval-harness healthcare-phi-compliance mle-workflow ml-adoption-playbook pytorch-patterns recsys-pipeline-architect scientific-db-pubmed-database scientific-db-uspto-database scientific-pkg-gget scientific-thinking-literature-review scientific-thinking-scholar-evaluation bengali-nlp",
+"Supply chain, trade & crypto":"carrier-relationship-management customs-trade-compliance energy-procurement inventory-demand-planning logistics-exception-management production-scheduling quality-nonconformance returns-reverse-logistics evm-token-decimals prediction-market-oracle-research prediction-market-risk-review ito-baskets ito-compute ito-inference ito-training x-api",
+"Tooling & misc":"agent-payment-x402 codehealth-mcp mcp-server-patterns hermes-imports openclaw-persona-forge opensource-pipeline ios-icon-gen mailtrap-email-integration search-first repo-scan"};
+const COL=["#2563eb","#7c3aed","#0d9488","#d97706","#db2777","#16a34a","#dc2626","#0891b2"];
+const out=document.getElementById("out"),q=document.getElementById("q"),tabs=document.getElementById("tabs");
+let skCount=0,seen=new Set();
+function chips(list,c,pre){return list.map(n=>`<span class="chip${USED.has(n)?" used":""}" data-t="${n}" style="--c:${c}">${pre}${n}</span>`).join("")}
+function sec(id,title,sub,c,body){return `<section data-s="${id}" style="--c:${c}"><h2>${title}</h2><p class="sub">${sub}</p>${body}</section>`}
+let html="";
+const cmdAll=new Set(CMD);
+html+=sec("cmd","⚡ Slash commands","Run as /ecc:name. Grouped by purpose. Highlighted = used.","#2563eb",
+ Object.entries(CMDG).map(([g,s],i)=>`<h3 style="color:${COL[i%8]};margin:12px 0 6px;font-size:15px">${g}</h3><div class="chips">${chips(s.split(" "),COL[i%8],"/")}</div>`).join(""));
+html+=sec("agent","🤖 Agents","Specialists Claude delegates to. Ask for them by name.","#7c3aed",
+ `<div class="tw"><table><tr><th>Agent</th><th>What it does</th></tr>${AGENTS.map(a=>`<tr data-t="${a[0]} ${a[1]}"><td><code>ecc:${a[0]}</code></td><td>${a[1]}</td></tr>`).join("")}</table></div>`);
+Object.entries(SK).forEach(([g,s],i)=>{const l=[...new Set(s.split(" "))];l.forEach(n=>seen.add(n));skCount+=l.length;
+ html+=sec("skill","🧠 Skills: "+g,l.length+" skills","#"+["0d9488","16a34a","d97706","dc2626","2563eb","db2777","7c3aed","0891b2","0d9488","16a34a","d97706","dc2626","2563eb","db2777"][i%14].replace("#",""),`<div class="chips">${chips(l,["#0d9488","#16a34a","#d97706","#dc2626","#2563eb","#db2777","#7c3aed","#0891b2"][i%8],"")}</div>`)});
+out.innerHTML=html;
+document.getElementById("nCmd").textContent=CMD.length;
+document.getElementById("nAg").textContent=AGENTS.length;
+document.getElementById("nSk").textContent=skCount;
+const T=[["all","All","#475569"],["cmd","Commands","#2563eb"],["agent","Agents","#7c3aed"],["skill","Skills","#0d9488"]];
+let cur="all";
+T.forEach(([k,l,c])=>{const b=document.createElement("button");b.textContent=l;b.style.background=c;if(k==="all")b.className="on";b.onclick=()=>{cur=k;[...tabs.children].forEach(x=>x.className="");b.className="on";f()};tabs.appendChild(b)});
+function f(){const v=q.value.toLowerCase().trim();
+ document.querySelectorAll("section[data-s]").forEach(s=>{const kind=s.dataset.s;let show=cur==="all"||cur===kind;
+  if(show){let any=false;s.querySelectorAll("[data-t]").forEach(e=>{const m=!v||e.dataset.t.toLowerCase().includes(v);e.classList.toggle("hide",!m);if(m)any=true});show=any||!v&&true}
+  s.classList.toggle("hide",!show)})}
+q.oninput=f;
+</script>
+</body></html>

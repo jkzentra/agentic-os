@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JKZ Design Concept v0.1</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F5F5;--ink:#181818;--sub:#676767;--acc:#F37002;--card:#FFFFFF;--line:#DADADA;--t1:#EDEDED;--t2:#E2E2E2;--t3:#D3D3D3;--t4:#C2C2C2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 Montserrat,system-ui,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:32px 16px 80px}
+h1,h2,h3{font-family:Oswald,Impact,sans-serif;font-weight:700;letter-spacing:.02em;margin:0}
+h1{font-size:44px;line-height:1.05}
+h2{font-size:26px;margin:48px 0 6px;text-transform:uppercase}
+h2 .n{color:var(--acc)}
+h3{font-size:17px;text-transform:uppercase;letter-spacing:.04em}
+p{margin:6px 0}
+.sub{color:var(--sub)}
+.tag{display:inline-block;font:600 11px Montserrat;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:99px;background:var(--ink);color:var(--bg)}
+.tag.o{background:var(--acc);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.hero{border-left:6px solid var(--acc);padding-left:16px;margin-bottom:18px}
+.bar{display:flex;height:34px;border-radius:10px;overflow:hidden;border:1px solid var(--line);margin:12px 0}
+.bar div{display:flex;align-items:center;justify-content:center;font:600 12px Montserrat;color:var(--ink)}
+.sw{display:flex;gap:10px;flex-wrap:wrap}
+.sw div{flex:1 1 150px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.sw i{display:block;height:64px}
+.sw b{display:block;padding:8px 10px 0;font-size:13px}
+.sw span{display:block;padding:0 10px 10px;font-size:12px;color:var(--sub)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px Montserrat;letter-spacing:.08em;text-transform:uppercase;color:var(--sub)}
+.frames{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.frame{flex:1 1 230px;text-align:center}
+.frame svg{width:100%;max-width:300px;height:auto;border-radius:10px;box-shadow:0 2px 14px rgba(0,0,0,.14)}
+.frame small{display:block;color:var(--sub);margin-top:6px}
+.do,.dont{border-radius:14px;padding:16px;border:1px solid var(--line);background:var(--card)}
+.do{border-top:5px solid var(--ink)}
+.dont{border-top:5px solid var(--acc)}
+ul{margin:8px 0 0;padding-left:18px}
+li{margin:3px 0}
+code,pre{font:500 12.5px/1.5 ui-monospace,Consolas,monospace}
+pre{background:var(--ink);color:#F5F5F5;padding:14px;border-radius:12px;overflow:auto;margin:10px 0}
+pre .k{color:#F37002}
+.chk label{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.chk input{width:18px;height:18px;accent-color:#F37002;margin-top:2px}
+.chk select{font:500 12px Montserrat;padding:4px;border-radius:8px;border:1px solid var(--line);background:var(--card)}
+button{font:600 13px Montserrat;background:var(--ink);color:var(--bg);border:0;border-radius:10px;padding:11px 18px;cursor:pointer}
+button.o{background:var(--acc);color:#fff}
+.pill{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+@media(max-width:560px){h1{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<span class="tag">Dummy data · nothing live · draft for Boss</span>
+<div class="hero" style="margin-top:14px">
+<h1>JKZ Design Concept <span style="color:var(--acc)">v0.1</span></h1>
+<p class="sub">The gate before the shadow week and any live post (plan task 13a). Faceless first. No paid image generation: every frame below is drawn in code. Studio voice, never solo.</p>
+</div>
+
+<div class="grid g3">
+<div class="card"><h3>What you decide</h3><p>Look, voice, pillars, carousel formats and the variation rules. Section 8 is the sign-off.</p></div>
+<div class="card"><h3>What it unlocks</h3><p>Text and carousel posts that conform may go unattended, <b>only</b> after a clean shadow week. Video stays L2 for the first 5.</p></div>
+<div class="card"><h3>What it costs</h3><p>Nothing. No credits spent. Real assets are made later, inside the 2,000-credit month.</p></div>
+</div>
+
+<!-- 1 -->
+<h2><span class="n">1</span> Visual identity (faceless first)</h2>
+<p class="sub">Source: JK Zentra brand guide (confirmed). Quiet luxury, not a loud agency. Orange is one accent per surface, never a background.</p>
+
+<div class="sw" style="margin-top:12px">
+<div><i style="background:#F5F5F5;border-bottom:1px solid var(--line)"></i><b>Background</b><span>#F5F5F5 · all pages and slides</span></div>
+<div><i style="background:#181818"></i><b>Ink</b><span>#181818 · headings, body</span></div>
+<div><i style="background:#676767"></i><b>Subtext</b><span>#676767 · captions</span></div>
+<div><i style="background:#F37002"></i><b>Accent</b><span>#F37002 · one element only</span></div>
+</div>
+
+<div class="grid g2" style="margin-top:14px">
+<div class="card"><h3>Type</h3>
+<p style="font:700 30px Oswald">Headings: Oswald 700 / 600</p>
+<p style="font:500 16px Montserrat">Body: Montserrat 400 / 500</p>
+<p class="sub">Hook line 7 words or fewer. Body 14 words or fewer per line. Never below 40 px on a 1080-wide slide.</p></div>
+<div class="card"><h3>Layout rules</h3>
+<ul>
+<li>Carousel 1080×1350 (4:5). Short 1080×1920 (9:16). Safe margin 90 px.</li>
+<li>Left-aligned, generous empty space, one idea per frame.</li>
+<li>Small "JK ZENTRA" wordmark bottom-left; slide count bottom-right.</li>
+<li>Orange: one thing per frame (a slash, the keyword, or one number).</li>
+<li>"AI-generated" label on every piece, bottom edge, subtext grey.</li>
+<li>Real facts only. No stock people, no faces, no avatar until the character brief exists.</li>
+</ul></div>
+</div>
+
+<h3 style="margin-top:22px">Three mock frames (SVG, no generated images)</h3>
+<div class="frames" style="margin-top:10px">
+
+<div class="frame">
+<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Carousel cover mock">
+<rect width="1080" height="1350" fill="#F5F5F5"/>
+<text x="90" y="170" font-family="Montserrat,sans-serif" font-size="30" font-weight="600" letter-spacing="4" fill="#676767">MISTAKES AND FIXES</text>
+<text font-family="Oswald,Impact,sans-serif" font-weight="700" font-size="150" fill="#181818"><tspan x="90" y="480">YOUR AUTO-</tspan><tspan x="90" y="640">REPLY IS</tspan><tspan x="90" y="800" fill="#F37002">PROMISING</tspan><tspan x="90" y="960">TOO MUCH.</tspan></text>
+<text x="90" y="1080" font-family="Montserrat,sans-serif" font-size="40" fill="#676767">Check 3 things before it sends.</text>
+<text x="90" y="1250" font-family="Oswald,sans-serif" font-weight="700" font-size="34" letter-spacing="4" fill="#181818">JK ZENTRA</text>
+<text x="1000" y="1250" text-anchor="end" font-family="Montserrat,sans-serif" font-size="30" fill="#676767">1 / 8</text>
+<text x="90" y="1310" font-family="Montserrat,sans-serif" font-size="24" fill="#676767">AI-generated</text>
+</svg>
+<small>Frame A · carousel cover (hook)</small></div>
+
+<div class="frame">
+<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Carousel checklist mock">
+<rect width="1080" height="1350" fill="#F5F5F5"/>
+<text x="90" y="170" font-family="Montserrat,sans-serif" font-size="30" font-weight="600" letter-spacing="4" fill="#676767">THE FIX</text>
+<text x="90" y="330" font-family="Oswald,sans-serif" font-weight="700" font-size="100" fill="#181818">CHECK THESE 3.</text>
+<g font-family="Montserrat,sans-serif" font-size="46" fill="#181818">
+<line x1="90" y1="450" x2="990" y2="450" stroke="#DADADA" stroke-width="3"/>
+<text x="90" y="540" font-family="Oswald,sans-serif" font-weight="700" font-size="70" fill="#F37002">01</text><text x="230" y="535">Numbers, dates, links</text>
+<line x1="90" y1="610" x2="990" y2="610" stroke="#DADADA" stroke-width="3"/>
+<text x="90" y="700" font-family="Oswald,sans-serif" font-weight="700" font-size="70" fill="#181818">02</text><text x="230" y="695">Promises to the customer</text>
+<line x1="90" y1="770" x2="990" y2="770" stroke="#DADADA" stroke-width="3"/>
+<text x="90" y="860" font-family="Oswald,sans-serif" font-weight="700" font-size="70" fill="#181818">03</text><text x="230" y="855">Lines that do not sound like us</text>
+<line x1="90" y1="930" x2="990" y2="930" stroke="#DADADA" stroke-width="3"/>
+</g>
+<text x="90" y="1060" font-family="Montserrat,sans-serif" font-size="38" fill="#676767">AI makes the list. We make the call.</text>
+<text x="90" y="1250" font-family="Oswald,sans-serif" font-weight="700" font-size="34" letter-spacing="4" fill="#181818">JK ZENTRA</text>
+<text x="1000" y="1250" text-anchor="end" font-family="Montserrat,sans-serif" font-size="30" fill="#676767">5 / 8</text>
+<text x="90" y="1310" font-family="Montserrat,sans-serif" font-size="24" fill="#676767">AI-generated</text>
+</svg>
+<small>Frame B · carousel body (checklist)</small></div>
+
+<div class="frame">
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Faceless short mock">
+<rect width="1080" height="1920" fill="#181818"/>
+<rect x="90" y="200" width="900" height="2" fill="#676767"/>
+<text x="90" y="260" font-family="Montserrat,sans-serif" font-size="30" font-weight="600" letter-spacing="4" fill="#9a9a9a">BEHIND THE BUILD · DAY 12</text>
+<text font-family="Oswald,Impact,sans-serif" font-weight="700" font-size="170" fill="#F5F5F5"><tspan x="90" y="700">WE LET</tspan><tspan x="90" y="880">THE QUEUE</tspan><tspan x="90" y="1060" fill="#F37002">REFUSE</tspan><tspan x="90" y="1240">US.</tspan></text>
+<rect x="90" y="1390" width="900" height="150" rx="16" fill="#262626"/>
+<text x="130" y="1480" font-family="Montserrat,sans-serif" font-size="42" fill="#F5F5F5">Caption bar: one line, word by word</text>
+<text x="90" y="1740" font-family="Oswald,sans-serif" font-weight="700" font-size="34" letter-spacing="4" fill="#F5F5F5">JK ZENTRA</text>
+<text x="90" y="1800" font-family="Montserrat,sans-serif" font-size="24" fill="#9a9a9a">AI-generated</text>
+</svg>
+<small>Frame C · faceless short (dark variant, text-led)<br>Dark variant is the only allowed inversion; orange stays single.</small></div>
+</div>
+
+<!-- 2 -->
+<h2><span class="n">2</span> Five content pillars · 35 / 30 / 15 / 15 / 5</h2>
+<p class="sub">Matches <code>config/direction.toml</code>. Example posts use dummy facts and studio voice.</p>
+<div class="bar">
+<div style="width:35%;background:var(--t4)">Build in public 35</div>
+<div style="width:30%;background:var(--t3)">Systems 30</div>
+<div style="width:15%;background:var(--t2)">Proof 15</div>
+<div style="width:15%;background:var(--t1)">POV 15</div>
+<div style="width:5%;background:var(--acc);color:#fff">5</div>
+</div>
+<div class="grid g2">
+<div class="card"><span class="tag">35% · build_in_public</span><h3 style="margin-top:8px">Behind the build</h3>
+<p><b>Job:</b> show the studio working in the open.</p>
+<p><i>"Day 12. We told the queue to refuse a post that broke our own spend cap. It did. We call that a good Tuesday."</i></p></div>
+<div class="card"><span class="tag">30% · systems_education</span><h3 style="margin-top:8px">Systems education</h3>
+<p><b>Job:</b> teach one process. Role, Facts, Limits.</p>
+<p><i>"Give your AI three things before it writes: who it is, the facts it may use, what it must not do. If a fact is missing, it asks."</i></p></div>
+<div class="card"><span class="tag">15% · proof</span><h3 style="margin-top:8px">Proof</h3>
+<p><b>Job:</b> before and after. Needs written client consent and a scrubbed price. Until a client agrees: dummy studio case only.</p>
+<p><i>"Before: a generic reply to 'open Sunday?'. After: the real hours plus one next step. Same tool, better facts."</i></p></div>
+<div class="card"><span class="tag">15% · pov</span><h3 style="margin-top:8px">Point of view</h3>
+<p><b>Job:</b> a clear opinion, fed by graded pain briefs (A or B only).</p>
+<p><i>"Automation without a check step is a faster way to be wrong. We build the check first."</i></p></div>
+<div class="card"><span class="tag o">5% · offer</span><h3 style="margin-top:8px">Offer</h3>
+<p><b>Job:</b> the closing call to action. Never a stand-alone hard sell. Soft link to the booking calendar.</p>
+<p><i>"Want this check built into your replies? Book a short call. Link in bio."</i></p></div>
+<div class="card"><span class="tag">Applies to all</span><h3 style="margin-top:8px">Pillar guardrails</h3>
+<ul><li>AI label always; no outcome claims.</li><li>No client names without written consent; no competitors.</li><li>No politics or religion; no personal financial advice.</li></ul></div>
+</div>
+
+<!-- 3 -->
+<h2><span class="n">3</span> Carousel formats</h2>
+<p class="sub">Five fixed 8-slide skeletons from <code>carousel.py</code>: hook, sound familiar, cost, why, fix, template, example, call to action. At most 2 of one format a week. The last slide is the only place the offer appears.</p>
+<table>
+<tr><th>Format</th><th>Pillar</th><th>Keyword</th><th>Job</th></tr>
+<tr><td>How-to</td><td>Systems education</td><td>PROMPT</td><td>Teach a process</td></tr>
+<tr><td>Mistakes and fixes</td><td>POV</td><td>CHECK</td><td>Solve a problem. Strongest fit</td></tr>
+<tr><td>Behind the build</td><td>Build in public</td><td>BUILD</td><td>Connection, in studio voice ("we")</td></tr>
+<tr><td>Before and after</td><td>Proof</td><td>SHOW</td><td>Show the thinking (consent first)</td></tr>
+<tr><td>Checklist</td><td>Systems education</td><td>LIST</td><td>Make action easier; lead magnet</td></tr>
+</table>
+<p class="sub">Reference carousels Boss saved are inspiration only. We use the structure, never their wording or layout.</p>
+
+<!-- 4 -->
+<h2><span class="n">4</span> Template-variation rules</h2>
+<p class="sub">Protects YouTube monetisation under the "inauthentic content" policy: faceless is fine, repeated templates are not. The check (<code>similarity.py</code>) scores each pair: <b>0.4 hook words + 0.4 structure + 0.2 length</b>. A score of <b>0.8 or more</b>, or the same angle, blocks the later plan and sends it back for a new angle.</p>
+<div class="grid g2">
+<div class="card"><h3>Stays fixed (the brand shell)</h3>
+<ul><li>Palette, type, wordmark position, AI label.</li><li>Caption bar style and safe margins.</li><li>The 8-slide carousel skeleton roles.</li></ul></div>
+<div class="card"><h3>Must change every piece</h3>
+<ul>
+<li><b>Hook:</b> a different opening pattern (number, question, claim, story, contrast). No hook pattern twice in a week.</li>
+<li><b>Structure:</b> shorts rotate between 4 shapes: list, story, before/after, one-rule. Never the same shape back to back.</li>
+<li><b>Length:</b> spread across at least 3 bands (about 25 to 35 s, 40 to 55 s, 60 s+). No two within 15% of each other.</li>
+<li><b>Angle:</b> one real angle per piece, written in the brief. Same angle twice = blocked.</li>
+<li><b>Script:</b> original wording per piece, drafted from that week's brief, never a nouns-swapped copy.</li>
+<li><b>Visual:</b> alternate light and dark variants; vary the lead graphic.</li>
+</ul></div>
+</div>
+<div class="card" style="margin-top:14px"><h3>Worked example (illustrative, not scored)</h3>
+<p><b>Would block:</b> "3 mistakes that break your booking follow-up" and "3 mistakes that break your lead form": same hook words, same 5-step structure, same 45 s.</p>
+<p><b>Would pass:</b> the first, plus "We rebuilt a booking flow in one afternoon" (story, 38 s), plus "Is your auto-reply promising too much?" (check, 52 s).</p></div>
+
+<!-- 5 -->
+<h2><span class="n">5</span> Do and don't</h2>
+<div class="grid g2">
+<div class="do"><h3>Do</h3><ul>
+<li>Write as "we" or "the studio". Direct, warm, short.</li>
+<li>Show the result, never the receipt.</li>
+<li>Label every piece "AI-generated". Disclose affiliate links on every GHL video.</li>
+<li>Use real facts from the facts file; if a fact is missing, ask or flag.</li>
+<li>One idea, one orange element, one call to action.</li>
+<li>Reply to comments from approved templates only.</li>
+<li>Keep USD for the first-tier lane.</li>
+</ul></div>
+<div class="dont"><h3>Don't</h3><ul>
+<li>Say "I", "my", or sound like a solo operator.</li>
+<li>Name production tools in client-facing material (GHL is the disclosed exception).</li>
+<li>Promise outcomes: "guaranteed", "10x", "double your", "overnight".</li>
+<li>Use filler words: innovative, disruptive, best-in-class, synergy, leverage, "we try", "we hope".</li>
+<li>Show RM prices anywhere a foreign-lane viewer can reach.</li>
+<li>Name clients without written consent, name competitors, or touch politics, religion or personal finance advice.</li>
+<li>Use faces, avatars, stock people or paid image generation in v0.1.</li>
+<li>Post twice from the same template in one week.</li>
+</ul></div>
+</div>
+
+<!-- 6 -->
+<h2><span class="n">6</span> What the gate checks</h2>
+<p class="sub">Read from <code>jkzos/design_concept.py</code> (read-only). A draft takes the unattended path only if <b>all three</b> hold: concept approved, shadow week clean (Boss writes this), draft conforms.</p>
+<div class="grid g2">
+<div class="card"><h3>Fields</h3>
+<table>
+<tr><th>Field</th><th>Type</th><th>Draft value</th></tr>
+<tr><td><code>template_pack</code></td><td>str</td><td>"jkz-faceless-v0.1"</td></tr>
+<tr><td><code>direction_brief</code></td><td>str</td><td>Sections 1 to 5 of this page</td></tr>
+<tr><td><code>voice</code></td><td>tuple[str]</td><td>we, studio, our</td></tr>
+<tr><td><code>banned_patterns</code></td><td>tuple[regex]</td><td>see right (must compile)</td></tr>
+<tr><td><code>approved</code></td><td>bool</td><td><b>False</b> until Boss approves</td></tr>
+<tr><td><code>approved_on</code></td><td>date</td><td>required when approved</td></tr>
+</table>
+<p class="sub">Voice rule: a draft must contain at least one voice word as a whole word. Banned patterns match case-insensitively.</p></div>
+<div class="card"><h3>Draft record (not approved)</h3>
+<pre id="rec"><span class="k">DesignConcept</span>(
+  template_pack="jkz-faceless-v0.1",
+  direction_brief="JKZ_Design_Concept_v0.1.html",
+  voice=("we", "studio", "our"),
+  banned_patterns=(
+    r"\binnovative\b", r"\bdisruptive\b",
+    r"best-in-class", r"\bsynergy\b",
+    r"\bleverage\b", r"\bwe (try|hope)\b",
+    r"\bguaranteed\b", r"\b10x\b",
+    r"double your", r"overnight results",
+    r"\bI\b", r"\bmy\b", r"\bsolo\b",
+    r"\bRM\s?\d", r"\bMYR\b", r"\bringgit\b",
+    r"\b(HeyGen|ElevenLabs|Higgsfield|CapCut|Kling"
+    r"|PromptEdit|Midjourney|ChatGPT|OpenAI)\b",
+  ),
+  approved=False,
+  approved_on=None,
+)</pre>
+<p class="sub">Open point: the repo's guardrails list also names Claude, Make.com, Zapier, n8n. I left those out of the pattern because "Make" and "Claude" can be ordinary words. Your call.</p></div>
+</div>
+
+<!-- 7 -->
+<h2><span class="n">7</span> Order of events</h2>
+<div class="grid g3">
+<div class="card"><span class="tag o">Now</span><p><b>You approve this concept.</b> Recorded as approved + date. Nothing posts.</p></div>
+<div class="card"><span class="tag">Next</span><p><b>Shadow week.</b> 7 days of real drafts, dry-run log only. You review and mark it clean.</p></div>
+<div class="card"><span class="tag">After</span><p><b>Compliance sign-off</b>, then text and carousel may go unattended. Video L2 for the first 5.</p></div>
+</div>
+
+<!-- 8 -->
+<h2><span class="n">8</span> Approve or change</h2>
+<p class="sub">Tick what you accept; pick Change for anything you want reworked. Your choices stay in this browser only.</p>
+<div class="card chk" id="chk">
+<label><input type="checkbox"><span><b>Palette and orange rule.</b> #F5F5F5, #181818, #676767, one #F37002 element.</span><select><option>Approve</option><option>Change</option></select></label>
+<label><input type="checkbox"><span><b>Type.</b> Oswald headings, Montserrat body, size floors.</span><select><option>Approve</option><option>Change</option></select></label>
+<label><input type="checkbox"><span><b>Layout and the 3 mock frames.</b> Faceless, text-led, dark variant allowed.</span><select><option>Approve</option><option>Change</option></select></label>
+<label><input type="checkbox"><span><b>Five pillars 35/30/15/15/5</b> and the example posts.</span><select><option>Approve</option><option>Change</option></select></label>
+<label><input type="checkbox"><span><b>Five carousel formats</b> with the 8-slide skeleton.</span><select><option>Approve</option><option>Change</option></select></label>
+<label><input type="checkbox"><span><b>Variation rules.</b> Fixed shell, changing hook, structure, length and angle (0.8 block).</span><select><option>Approve</option><option>Change</option></select></label>
+<label><input type="checkbox"><span><b>Do and don't list</b> and the banned patterns.</span><select><option>Approve</option><option>Change</option></select></label>
+<label><input type="checkbox"><span><b>Voice words</b> "we", "studio", "our".</span><select><option>Approve</option><option>Change</option></select></label>
+<label><input type="checkbox"><span><b>I understand</b> approval alone posts nothing: shadow week and compliance sign-off come first.</span><select><option>Approve</option><option>Change</option></select></label>
+<div class="pill">
+<button class="o" id="mk">Generate decision note</button>
+<button id="cp">Copy</button>
+</div>
+<pre id="out" style="display:none"></pre>
+</div>
+<p class="sub">This page records nothing in the repo. When you say "approved", the build session sets <code>approved=True</code> and <code>approved_on</code> to that date.</p>
+
+</div>
+<script>
+(function(){
+var K='jkz_dc_v01',rows=[].slice.call(document.querySelectorAll('#chk label'));
+function load(){try{return JSON.parse(localStorage.getItem(K))||{}}catch(e){return {}}}
+function save(){var s={};rows.forEach(function(r,i){s[i]=[r.querySelector('input').checked,r.querySelector('select').value]});try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}}
+var st=load();rows.forEach(function(r,i){if(st[i]){r.querySelector('input').checked=st[i][0];r.querySelector('select').value=st[i][1]}r.addEventListener('change',save)});
+var out=document.getElementById('out');
+document.getElementById('mk').onclick=function(){
+ var d=new Date().toISOString().slice(0,10),ok=true,l=[];
+ rows.forEach(function(r){var t=r.querySelector('b').textContent.replace(/\.$/,''),c=r.querySelector('input').checked,v=r.querySelector('select').value;
+  if(!c||v!=='Approve')ok=false;l.push((c&&v==='Approve'?'[x] ':'[ ] ')+t+' - '+(c?v:'not reviewed'))});
+ out.textContent='JKZ Design Concept v0.1 - decision '+d+'\nStatus: '+(ok?'APPROVED (approved=True, approved_on='+d+')':'CHANGES NEEDED (approved=False)')+'\n\n'+l.join('\n');
+ out.style.display='block'};
+document.getElementById('cp').onclick=function(){if(navigator.clipboard&&out.textContent)navigator.clipboard.writeText(out.textContent)};
+})();
+</script>
+</body>
+</html>

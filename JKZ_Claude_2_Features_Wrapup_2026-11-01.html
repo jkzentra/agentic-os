@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude 2.0 Features Wrap-Up</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1b1f2a;--mut:#5b6475;--line:#e3e6ee;
+--green:#16a34a;--amber:#d97706;--red:#dc2626;--blue:#2563eb;--purple:#7c3aed;--teal:#0d9488;--pink:#db2777}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1220;--card:#181c2e;--ink:#eef0f7;--mut:#9aa3b8;--line:#2a2f47}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:16px}
+header{background:linear-gradient(135deg,var(--purple),var(--blue) 55%,var(--teal));color:#fff;border-radius:18px;padding:24px 20px}
+header h1{margin:0 0 6px;font-size:clamp(22px,5vw,32px)}
+header p{margin:0;opacity:.95}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;display:flex;gap:8px;flex-wrap:wrap}
+nav a{font-size:13px;text-decoration:none;color:#fff;padding:4px 10px;border-radius:99px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:14px 0}
+.stat{border-radius:14px;padding:14px;color:#fff}
+.stat b{font-size:28px;display:block}
+section{background:var(--card);border-radius:16px;padding:18px;margin:16px 0;border-top:5px solid var(--c,var(--blue));box-shadow:0 1px 3px rgba(0,0,0,.06)}
+section h2{margin:0 0 10px;color:var(--c,var(--blue));font-size:20px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{background:var(--c,var(--blue));color:#fff;text-align:left;padding:8px 10px}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.tag{display:inline-block;padding:1px 9px;border-radius:99px;color:#fff;font-size:12px;white-space:nowrap}
+.g{background:var(--green)}.a{background:var(--amber)}.r{background:var(--red)}.b{background:var(--blue)}.p{background:var(--purple)}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--ink);font:13px system-ui}
+.note{color:var(--mut);font-size:13px}
+ul.chk{list-style:none;padding:0;margin:0}ul.chk li{padding:6px 0;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body><div class="wrap">
+
+<header>
+<h1>🚀 Claude 2.0: 11 Updates Wrap-Up</h1>
+<p>2026-11-01 · Source: pasted video transcript ("Master it in 17 minutes") · TL;DR: Claude Code now orchestrates its own sessions, ships built-in artifacts and mods, and has cost-control commands worth adopting for the Agentic OS build.</p>
+</header>
+
+<nav>
+<a style="background:var(--blue)" href="#glance">At a glance</a>
+<a style="background:var(--purple)" href="#diagram">Diagram</a>
+<a style="background:var(--teal)" href="#features">Features</a>
+<a style="background:var(--amber)" href="#compare">Nested vs Projects</a>
+<a style="background:var(--pink)" href="#cmds">Commands</a>
+<a style="background:var(--green)" href="#next">Next steps</a>
+</nav>
+
+<div class="stats" id="glance">
+<div class="stat" style="background:var(--blue)"><b>11</b>updates covered</div>
+<div class="stat" style="background:var(--purple)"><b>12</b>slash cmds / shortcuts</div>
+<div class="stat" style="background:var(--green)">
+<b>1M</b>token context window</div>
+<div class="stat" style="background:var(--amber)"><b>5</b>artifact types</div>
+<div class="stat" style="background:var(--red)"><b>14 Dec</b>claude.ai/design closes</div>
+</div>
+
+<section id="diagram" style="--c:var(--purple)">
+<h2>🧭 How the session pieces fit</h2>
+<svg viewBox="0 0 760 270" role="img" aria-label="Master session orchestrating nested sessions and subagents">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" fill="#7c3aed"/></marker></defs>
+<rect x="290" y="10" width="180" height="56" rx="12" fill="#7c3aed"/>
+<text x="380" y="34" text-anchor="middle" style="fill:#fff;font-weight:700">⭐ Master session</text>
+<text x="380" y="53" text-anchor="middle" style="fill:#fff;font-size:11px">pinned · sees 20 recent chats</text>
+<g fill="#2563eb"><rect x="30" y="130" width="160" height="50" rx="10"/><rect x="300" y="130" width="160" height="50" rx="10"/><rect x="570" y="130" width="160" height="50" rx="10"/></g>
+<g style="fill:#fff" text-anchor="middle"><text x="110" y="160" style="fill:#fff">Nested: sales page</text><text x="380" y="160" style="fill:#fff">Nested: emails</text><text x="650" y="160" style="fill:#fff">Nested: ads</text></g>
+<g stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#ar)"><path d="M340 66 L120 128"/><path d="M380 66 L380 128"/><path d="M420 66 L640 128"/></g>
+<rect x="300" y="215" width="160" height="40" rx="10" fill="#0d9488"/>
+<text x="380" y="240" text-anchor="middle" style="fill:#fff">Subagent (one-way)</text>
+<path d="M380 180 L380 213" stroke="#0d9488" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<text x="30" y="225" class="note" style="font-size:12px">Nested sessions: clickable chats, report back.</text>
+<text x="30" y="245" class="note" style="font-size:12px">Subagents: prompt in, result out.</text>
+</svg>
+</section>
+
+<section id="features" style="--c:var(--teal)">
+<h2>🧩 The 11 updates</h2>
+<div class="tw"><table>
+<tr><th>#</th><th>Update</th><th>What it does</th><th>Plan / status</th></tr>
+<tr><td>1</td><td>Session rail</td><td>Right panel: environment (local/cloud, Remote Control), context usage, connectors, outputs</td><td><span class="tag g">available</span></td></tr>
+<tr><td>2</td><td>Sidebar sections</td><td>Folder-like groups; ⋯ → move to new section, drag sessions in</td><td><span class="tag g">available</span></td></tr>
+<tr><td>3</td><td>Nested sessions</td><td>A session starts sub-sessions that report back; each is a real chat you can steer</td><td><span class="tag g">any plan</span></td></tr>
+<tr><td>4</td><td>Master session</td><td>Pin one chat to review, group and launch others; default sees 20 most recent</td><td><span class="tag g">available</span></td></tr>
+<tr><td>5</td><td>Claude Code Projects</td><td>Cloud-run team of chats, shared memory, overview page</td><td><span class="tag a">beta · Pro/Max · waitlist</span></td></tr>
+<tr><td>6</td><td>Side chats (/btw)</td><td>Persistent side conversation that can read the main session</td><td><span class="tag g">available</span></td></tr>
+<tr><td>7</td><td>Split view</td><td>Alt/Option-click a chat or right-click → Open in split view; Ctrl/Cmd − to zoom out (about 10 panes)</td><td><span class="tag g">available</span></td></tr>
+<tr><td>8</td><td>Artifacts</td><td>Docs, Slides, Design, Dashboards (live data), Motion; publish as links</td><td><span class="tag a">Motion not on Pro/Max yet</span></td></tr>
+<tr><td>9</td><td>AI-powered artifacts</td><td>Settings → Capabilities toggle; artifacts embed Claude (chat/search over dashboard data)</td><td><span class="tag g">toggle</span></td></tr>
+<tr><td>10</td><td>Mods</td><td>Describe an add-on in plain English; examples: Ribbon (usage + cache warmth), savvy progress (agent panel)</td><td><span class="tag g">available</span></td></tr>
+<tr><td>11</td><td>Shortcuts</td><td>Ctrl+Alt+Space global open · Esc Esc rewind · Ctrl+D voice · Ctrl/Cmd+/ list all</td><td><span class="tag g">available</span></td></tr>
+</table></div>
+<p class="note">Note: the transcript spells it "cloud"; this wrap-up reads that as Claude.</p>
+</section>
+
+<section id="compare" style="--c:var(--amber)">
+<h2>⚖️ Nested sessions vs Claude Code Projects</h2>
+<div class="tw"><table>
+<tr><th>Aspect</th><th>Nested sessions</th><th>Projects</th></tr>
+<tr><td>Runs on</td><td>Your computer (must be awake)</td><td>Anthropic cloud (keeps going when you close the device)</td></tr>
+<tr><td>Local skills / files / tools</td><td>Full access</td><td>Must be added to the project first</td></tr>
+<tr><td>Memory</td><td>Per chat</td><td>Shared custom memory, set rules once</td></tr>
+<tr><td>Data location</td><td>Local</td><td>Uploaded files go to Anthropic servers</td></tr>
+<tr><td>Overview</td><td>Sidebar tree</td><td>Page: done / working / waiting on you</td></tr>
+<tr><td>Availability</td><td><span class="tag g">any plan</span></td><td><span class="tag a">beta, Pro/Max</span></td></tr>
+<tr><td>Rule of thumb</td><td>Needs your machine or local-first</td><td>Big ongoing job while you are away</td></tr>
+</table></div>
+</section>
+
+<section id="cmds" style="--c:var(--pink)">
+<h2>⌨️ Commands worth using</h2>
+<div class="tw"><table>
+<tr><th>Command</th><th>Use</th><th>Cost angle</th></tr>
+<tr><td>/output-style</td><td>Change how Claude talks (shorter, plainer, ELI5)</td><td>Fewer output tokens</td></tr>
+<tr><td>/doctor</td><td>Checks settings and CLAUDE.md, offers fixes</td><td>Hygiene</td></tr>
+<tr><td>/skill-doctor</td><td>Shows each skill's context cost and usage; disable unused</td><td><span class="tag g">saves tokens</span></td></tr>
+<tr><td>/advisor</td><td>Cheap model day to day, escalates to Opus/Fable on big decisions</td><td><span class="tag g">saves limits</span></td></tr>
+<tr><td>/insights</td><td>Report on how you use Claude Code</td><td>Learning</td></tr>
+<tr><td>/recap</td><td>One-line status of a chat</td><td>Orientation</td></tr>
+<tr><td>/rewind (Esc Esc)</td><td>Undo back to an earlier prompt</td><td>Recovery</td></tr>
+<tr><td>/btw</td><td>Side chat without interrupting main work</td><td>Avoids derailing the main chat</td></tr>
+</table></div>
+</section>
+
+<section id="decisions" style="--c:var(--blue)">
+<h2>🎯 Takeaways: relevance to Agentic OS <span class="tag a">assumed</span></h2>
+<p class="note">The session contained no stated decisions. The mapping below is my reading, not something you confirmed.</p>
+<div class="tw"><table>
+<tr><th>Idea</th><th>Why it might fit</th><th>Effort</th><th>Verdict</th></tr>
+<tr><td>Master session pinned for the Agentic OS build</td><td>One place to see which chats await decisions</td><td>Low</td><td><span class="tag g">try first</span></td></tr>
+<tr><td>Nested sessions for parallel agents</td><td>Needs local repo and skills; works on any plan</td><td>Low</td><td><span class="tag g">try</span></td></tr>
+<tr><td>/skill-doctor + context card audit</td><td>Many plugins and skills load on every chat</td><td>Low</td><td><span class="tag g">do soon</span></td></tr>
+<tr><td>/advisor</td><td>Cheaper default model, escalate on big calls</td><td>Low</td><td><span class="tag p">evaluate</span></td></tr>
+<tr><td>Dashboard artifact with live data</td><td>Could replace the static JKZ_*.html status pages</td><td>Med</td><td><span class="tag p">explore</span></td></tr>
+<tr><td>Cloud Projects</td><td>Business files would be uploaded to Anthropic servers; beta</td><td>Med</td><td><span class="tag a">wait / check privacy</span></td></tr>
+<tr><td>Ribbon mod (cache warmth + usage)</td><td>Reduces token burn from cold cache</td><td>Low</td><td><span class="tag p">evaluate</span></td></tr>
+</table></div>
+</section>
+
+<section id="open" style="--c:var(--red)">
+<h2>❓ Open questions</h2>
+<div class="tw"><table>
+<tr><th>Question</th><th>Blocker?</th></tr>
+<tr><td>Is Projects visible in your sidebar (under More) or do you need the waitlist?</td><td><span class="tag a">unknown</span></td></tr>
+<tr><td>Is data residency acceptable for uploading business files to cloud Projects?</td><td><span class="tag a">your call</span></td></tr>
+<tr><td>Which plan are you on? It decides Motion and Projects access</td><td><span class="tag a">unknown</span></td></tr>
+<tr><td>The video's PDF guide and mod links were not in the paste</td><td><span class="tag b">info</span></td></tr>
+</table></div>
+</section>
+
+<section id="next" style="--c:var(--green)">
+<h2>✅ Next steps</h2>
+<div class="tw"><table>
+<tr><th>Step</th><th>Owner</th><th>Priority</th></tr>
+<tr><td>Open the session rail context card; note memory/skills/MCP size</td><td>You</td><td><span class="tag r">High</span></td></tr>
+<tr><td>Run /skill-doctor and disable unused skills</td><td>You / Claude</td><td><span class="tag r">High</span></td></tr>
+<tr><td>Pin a master session for the Agentic OS project</td><td>You</td><td><span class="tag a">Med</span></td></tr>
+<tr><td>Try nested sessions on one parallel task</td><td>Claude</td><td><span class="tag a">Med</span></td></tr>
+<tr><td>Check Projects availability and privacy implications</td><td>You</td><td><span class="tag b">Low</span></td></tr>
+<tr><td>Note: claude.ai/design closes 14 Dec; move any design work</td><td>You</td><td><span class="tag a">Med</span></td></tr>
+</table></div>
+</section>
+
+<p class="note" style="text-align:center">Built from the pasted transcript only. Claims about your setup are marked "assumed".</p>
+</div></body></html>

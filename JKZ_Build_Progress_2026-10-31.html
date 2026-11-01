@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JKZ OS Build Progress 31 Oct 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* Progress dashboard: facts checked on the repo (not from session notes), estimates labelled with confidence. Light ground, dark text. */
+:root{--bg:#F5F5F5;--paper:#fff;--ink:#181818;--sub:#5A5A5A;--line:rgba(24,24,24,.12);--orange:#F37002;--orange-t:#FDEBDB;--green:#1E9E68;--green-t:#DEF3EA;--amber:#D99208;--amber-t:#FBEFD2;--red:#D2443A;--red-t:#FADFDC;--indigo:#4F5BD5;--indigo-t:#E6E8FA;--teal:#0E8F9B;--violet:#8A5AD6;--violet-t:#EDE4FA;--f-d:'Oswald','Arial Narrow',Arial,sans-serif;--f-b:'Montserrat',system-ui,'Segoe UI',sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 14px/1.5 var(--f-b);padding:0 max(16px,env(safe-area-inset-right)) 60px max(16px,env(safe-area-inset-left))}
+.wrap{max-width:1100px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-d);font-weight:400;margin:0}
+h1{font-size:clamp(30px,6vw,50px);text-transform:uppercase;line-height:1.02;margin-top:28px}
+h2{font-size:24px;margin:34px 0 12px}
+.kicker{font:700 11px/1 var(--f-b);letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
+.sub{color:var(--sub);font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:18px}
+.tile{background:var(--paper);border:1px solid var(--line);border-top:6px solid var(--c);border-radius:14px;padding:12px 14px}
+.tile b{display:block;font:500 32px/1 var(--f-d)}
+.tile span{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sub)}
+.alert{border-left:8px solid var(--red);background:var(--red-t);border-radius:0 14px 14px 0;padding:12px 16px;margin-top:16px;font-size:13.5px}
+.alert b{font-family:var(--f-d);font-weight:400;font-size:18px}
+.phase{display:grid;grid-template-columns:44px 1fr 150px;gap:12px;align-items:center;background:var(--paper);border:1px solid var(--line);border-left:8px solid var(--c);border-radius:12px;padding:9px 14px;margin-bottom:8px}
+@media(max-width:640px){.phase{grid-template-columns:34px 1fr}.phase .who{grid-column:1/-1}}
+.phase .pn{font:500 24px/1 var(--f-d);color:var(--c)}
+.phase small{color:var(--sub);font-weight:600}
+.meter{height:10px;background:#E6E6E6;border-radius:99px;overflow:hidden;margin-top:5px}
+.meter i{display:block;height:100%;background:var(--c)}
+.who{font:700 10.5px/1.3 var(--f-b);letter-spacing:.06em;text-transform:uppercase;text-align:right;color:var(--c)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font:700 11.5px/1 var(--f-b);border-radius:999px;padding:7px 10px;background:var(--green-t);border:1px solid var(--green)}
+.chips span.part{background:var(--amber-t);border-color:var(--amber)}
+.chips span.todo{background:#EEE;border-color:#BBB;color:#555}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 2px 12px rgba(24,24,24,.05)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 11px/1.2 var(--f-b);letter-spacing:.1em;text-transform:uppercase;color:var(--sub);background:#F0F0F0}
+tr:last-child td{border-bottom:none}
+.conf{display:inline-block;font:700 10px/1 var(--f-b);letter-spacing:.08em;text-transform:uppercase;color:#fff;border-radius:5px;padding:4px 7px}
+.hi{background:var(--green)}.md{background:var(--amber)}.lo{background:var(--red)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;font-weight:700;margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+svg{display:block;width:100%;height:auto}
+.scroll{overflow-x:auto}
+footer{margin-top:40px;border-top:2px solid var(--ink);padding-top:12px;font-size:12px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker">Build progress · 31 Oct 2026</div>
+<h1>JKZ OS: code nearly done, go-live is Boss-gated</h1>
+<p class="sub">Facts below were checked on the repo and by running the tests, not taken from the sessions' own notes. Dates are estimates.</p>
+
+<div class="tiles">
+  <div class="tile" style="--c:var(--indigo)"><b>41</b><span>commits in 3 days</span></div>
+  <div class="tile" style="--c:var(--green)"><b>1,340</b><span>tests passing</span></div>
+  <div class="tile" style="--c:var(--teal)"><b>99%</b><span>coverage of jkzos</span></div>
+  <div class="tile" style="--c:var(--orange)"><b>~95%</b><span>of plan code tasks done</span></div>
+  <div class="tile" style="--c:var(--violet)"><b>1–2</b><span>days to code-complete</span></div>
+  <div class="tile" style="--c:var(--red)"><b>~11–17 Nov</b><span>earliest first live posts</span></div>
+</div>
+
+<div class="alert"><b>Flag: a possible secret file in the repo.</b> <code>.env.txt</code> (138 bytes, one line that looks like a key) sits untracked in <code>C:\JK Zentra\JKZ OS\</code>. The ignore file only covers <code>.env</code>, so <code>.env.txt</code> is <b>not</b> ignored. Nothing is committed, but one stray add would put it in git history. Fix: rename it to <code>.env</code>, and ignore <code>.env*</code> except <code>.env.example</code>. Say the word and I'll ask the build session to do it.</div>
+
+<h2>Where each phase stands</h2>
+<div class="phase" style="--c:var(--green)"><div class="pn">P0</div><div><b>Direction and plan</b> <small>answers, budget, market policy, plan v0.4</small><div class="meter"><i style="width:100%"></i></div></div><div class="who">Done<br>token rotated</div></div>
+<div class="phase" style="--c:var(--green)"><div class="pn">P1</div><div><b>Kernel and memory</b> <small>kernel, 9 agent seats, 6 commands, config, structure and scrub tests</small><div class="meter"><i style="width:100%"></i></div></div><div class="who">Done</div></div>
+<div class="phase" style="--c:var(--green)"><div class="pn">P2</div><div><b>Deterministic core</b> <small>calendar, approvals, guardrails, queue, budget, kill switch, adapters. 3 independent reviews applied</small><div class="meter"><i style="width:100%"></i></div></div><div class="who">Done</div></div>
+<div class="phase" style="--c:var(--amber)"><div class="pn">P3</div><div><b>Outreach path</b> <small>brief gate, QA, mockup, market gate, approvals, cadence, USD quote wired end to end</small><div class="meter"><i style="width:92%"></i></div></div><div class="who">In progress<br>build session</div></div>
+<div class="phase" style="--c:var(--amber)"><div class="pn">P4</div><div><b>Content engine</b> <small>engine, design-concept gate, programme calendar, lane reports, assembler, trust history, final dry-run week</small><div class="meter"><i style="width:88%"></i></div></div><div class="who">In progress<br>build session</div></div>
+<div class="phase" style="--c:var(--red)"><div class="pn">P5</div><div><b>Shadow week</b> <small>7 days, real drafts, dry-run log only, nothing live</small><div class="meter"><i style="width:0%"></i></div></div><div class="who">Not started<br>needs Design Concept</div></div>
+<div class="phase" style="--c:var(--red)"><div class="pn">P6</div><div><b>Go-live gate</b> <small>compliance, accounts, booking link, USD collection, kill-switch drill, GHL set-up</small><div class="meter"><i style="width:0%"></i></div></div><div class="who">Not started<br>Boss-gated</div></div>
+<div class="phase" style="--c:var(--red)"><div class="pn">P7</div><div><b>Live, laddered autonomy</b> <small>L2 first, then text, carousels, video</small><div class="meter"><i style="width:0%"></i></div></div><div class="who">Not started</div></div>
+
+<h2>Plan tasks</h2>
+<div class="chips">
+  <span>1 Scaffold + structure</span><span>2 Config loader</span><span>3 Clock</span><span>4 Calendar</span><span>5 Approvals</span><span>6 Guardrails</span><span>7 Queue (persisted)</span><span>8 Budget</span><span>9 Kill switch</span><span>10 Adapters</span><span>11 Intel interfaces</span><span>12 Quote path</span><span>13 Content engine</span><span>13a Design concept</span><span>13b Cost model</span><span>13c Similarity</span><span>13d Programme</span><span>13e Lane reports</span><span>13f Assembler</span><span>13g Markets</span><span>13h USD price book</span><span>14a Scoreboard</span><span>14b Audit pack</span><span>14c Claim check</span><span>14d Follow-up</span><span>14e Sources + filter</span><span>14f Mockup</span><span>14g Carousels</span><span>14h Lanes</span><span>Scheduler + health</span>
+  <span class="part">15 End-to-end dry run (extending)</span><span class="part">16 Docs + release (changelog, README, decision record done; final review of P3/P4 pending)</span>
+  <span class="todo">Pain-point agent (pending, ECC)</span><span class="todo">Prospect assessment agent (pending, ECC)</span><span class="todo">Real GHL configuration</span>
+</div>
+<div class="legend"><span><i style="background:var(--green)"></i>Done</span><span><i style="background:var(--amber)"></i>Partly done</span><span><i style="background:#BBB"></i>Not started, by design or Boss-gated</span></div>
+
+<h2>Estimated path to going live</h2>
+<div class="card"><div class="scroll"><svg id="gantt" viewBox="0 0 860 380" role="img" aria-label="Estimated timeline from 31 Oct to mid December"></svg></div>
+<div class="legend"><span><i style="background:var(--indigo)"></i>Build team</span><span><i style="background:var(--red)"></i>Boss</span><span><i style="background:var(--amber)"></i>Mixed</span><span><i style="background:var(--green)"></i>OS running</span><span><i style="background:repeating-linear-gradient(45deg,#BBB,#BBB 3px,#EEE 3px,#EEE 6px)"></i>Unscheduled</span></div></div>
+
+<h2>Milestones and confidence</h2>
+<div class="scroll"><table>
+<tr><th>Milestone</th><th>Estimate</th><th>Confidence</th><th>Depends on</th></tr>
+<tr><td><b>Code complete</b> (P3 and P4 finished, independent review of the new wiring, fixes)</td><td>1 to 2 days: <b>1–2 Nov</b></td><td><span class="conf hi">High</span></td><td>Build sessions. Pace so far: 22 commits on day 1, 9 on day 2, 10 on day 3</td></tr>
+<tr><td><b>Shadow week can start</b></td><td><b>3–5 Nov</b></td><td><span class="conf md">Medium</span></td><td>Boss approves a Design Concept (I draft it). Needs no accounts and almost no credits</td></tr>
+<tr><td><b>Shadow week ends</b></td><td><b>10–12 Nov</b> (7 days)</td><td><span class="conf md">Medium</span></td><td>No guardrail escapes, no missed runs</td></tr>
+<tr><td><b>Go-live gate cleared</b></td><td><b>11–17 Nov</b></td><td><span class="conf lo">Low</span></td><td><b>Boss, not code:</b> YouTube connected, booking URL, PromptEdit top-up, sender identity and postal address, USD collection, first-tier markets, compliance sign-off, GHL sub-account access. Real GHL configuration is a further 1 to 3 days once access exists</td></tr>
+<tr><td><b>Text posts unattended</b></td><td>At go-live (<b>~11–17 Nov</b>)</td><td><span class="conf md">Medium</span></td><td>Clean shadow week plus an approved Design Concept</td></tr>
+<tr><td><b>Carousels unattended</b></td><td><b>~25 Nov – 1 Dec</b></td><td><span class="conf md">Medium</span></td><td>2 clean weeks live</td></tr>
+<tr><td><b>Video at "send unless vetoed"</b></td><td><b>~Dec</b></td><td><span class="conf lo">Low</span></td><td>10 approved videos with no edits; at 3 shorts a week that is about 3 to 4 weeks after go-live, if each one passes</td></tr>
+<tr><td><b>Pain-point and prospect assessment agents</b></td><td>Unscheduled</td><td><span class="conf lo">Low</span></td><td>Boss starts them with ECC; they plug into the existing interfaces, so nothing waits for them</td></tr>
+</table></div>
+
+<h2>What would slow it down</h2>
+<div class="scroll"><table>
+<tr><th>Risk</th><th>Effect</th></tr>
+<tr><td>Boss's go-live items stay open</td><td>Every day they slip moves go-live a day. The code will be ready first</td></tr>
+<tr><td>P3 and P4 added wiring after the last review round</td><td>Needs one more independent review (about half a day); may find fixes</td></tr>
+<tr><td>GHL social planner may not publish natively to TikTok or YouTube</td><td>Fallback is a manual-upload package approved at L2, so video goes live later than text</td></tr>
+<tr><td>A secret file in the repo (see flag above)</td><td>Fix in minutes; ignore it and it can leak the key</td></tr>
+<tr><td>Test counts and dates are for the repo as of this morning, with edits still uncommitted</td><td>Numbers will move as the build session commits</td></tr>
+</table></div>
+
+<footer><b>Doc Meta</b> · Created 2026-10-31 · Version v1.0 · Supersedes: none · Checked on <code>C:\JK Zentra\JKZ OS\</code> (41 commits, <code>py -3 -m pytest</code> 1,340 passed, coverage 99%, with uncommitted edits in <code>content_engine.py</code>, <code>trust.py</code>, <code>test_dryrun_week.py</code>). Estimates are mine, not measured.</footer>
+</div>
+
+<script>
+/* Timeline data: day 0 = 31 Oct. owner: b build, r boss, m mixed, g running, u unscheduled */
+var D=[
+ {l:'Code complete + final review',s:0,e:2,o:'b'},
+ {l:'Design Concept: draft and approve',s:1,e:4,o:'m'},
+ {l:'Boss go-live items (parallel)',s:0,e:14,o:'r'},
+ {l:'Shadow week (dry-run only)',s:3,e:11,o:'m'},
+ {l:'GHL set-up (after access)',s:6,e:13,o:'m'},
+ {l:'Go-live gate and first posts (L2)',s:11,e:17,o:'m'},
+ {l:'Text posts unattended',s:14,e:45,o:'g'},
+ {l:'Carousels unattended',s:25,e:45,o:'g'},
+ {l:'Video: approved, then send-unless-veto',s:31,e:45,o:'g'},
+ {l:'Pain-point and prospect agents (ECC)',s:0,e:45,o:'u'}
+];
+var C={b:'#4F5BD5',r:'#D2443A',m:'#D99208',g:'#1E9E68',u:'#BBBBBB'};
+var x0=250,w=590,days=46,rowH=30,top=34;
+function X(d){return x0+w*d/days}
+var s='<defs><pattern id="hat" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#EEE"/><rect width="4" height="8" fill="#BBB"/></pattern></defs>';
+var marks=[[0,'31 Oct'],[3,'3 Nov'],[8,'8 Nov: sprint ends'],[10,'10 Nov'],[17,'17 Nov'],[24,'24 Nov'],[31,'1 Dec'],[45,'15 Dec']];
+marks.forEach(function(m){var x=X(m[0]);s+='<line x1="'+x+'" x2="'+x+'" y1="'+(top-6)+'" y2="'+(top+rowH*D.length)+'" stroke="rgba(24,24,24,.12)"/><text x="'+x+'" y="'+(top-12)+'" text-anchor="'+(m[0]>40?'end':'middle')+'" font-size="10" font-family="Montserrat" font-weight="700" fill="#5A5A5A">'+m[1]+'</text>'});
+D.forEach(function(r,i){
+  var y=top+i*rowH;
+  s+='<text x="'+(x0-10)+'" y="'+(y+rowH/2+4)+'" text-anchor="end" font-size="11.5" font-family="Montserrat" font-weight="600" fill="#181818">'+r.l+'</text>';
+  var fill=r.o==='u'?'url(#hat)':C[r.o];
+  s+='<rect x="'+X(r.s)+'" y="'+(y+5)+'" width="'+(X(r.e)-X(r.s))+'" height="'+(rowH-10)+'" rx="6" fill="'+fill+'" opacity="'+(r.o==='g'?.85:1)+'" '+(r.o==='u'?'stroke="#BBB"':'')+'/>';
+});
+var gx=X(11),gx2=X(17);
+s+='<rect x="'+gx+'" y="'+(top-2)+'" width="'+(gx2-gx)+'" height="'+(rowH*D.length+4)+'" fill="none" stroke="#D2443A" stroke-width="2" stroke-dasharray="5 4" rx="4"/><text x="'+((gx+gx2)/2)+'" y="'+(top+rowH*D.length+16)+'" text-anchor="middle" font-size="11" font-weight="700" font-family="Montserrat" fill="#D2443A">earliest go-live window</text>';
+document.getElementById('gantt').innerHTML=s;
+</script>
+</body>
+</html>
