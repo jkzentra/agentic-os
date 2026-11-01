@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mods Install Report</title>
+<style>:root{--bg:#fff;--fg:#1a1a1a;--mut:#666;--ok:#1a7f37;--warn:#b45309;--no:#b42318;--card:#f6f6f6}
+@media(prefers-color-scheme:dark){:root{--bg:#161616;--fg:#eee;--mut:#aaa;--ok:#4ade80;--warn:#fbbf24;--no:#f87171;--card:#222}}
+body{background:var(--bg);color:var(--fg);font:15px system-ui;margin:0;padding:16px;max-width:860px;margin:auto}
+h1{font-size:20px}.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.c{background:var(--card);border-radius:10px;padding:12px;border-left:5px solid var(--ok)}
+.c.w{border-color:var(--warn)}.c.n{border-color:var(--no)}.c b{display:block}.c small{color:var(--mut)}
+code{background:var(--card);padding:1px 5px;border-radius:4px;font-size:13px}pre{background:var(--card);padding:10px;border-radius:8px;overflow:auto;font-size:13px}
+.t{font-size:12px;font-weight:700}.ok{color:var(--ok)}.w .t{color:var(--warn)}.n .t{color:var(--no)}</style></head><body>
+<h1>Mods: vetted and enabled in jkzentra/agentic-os</h1>
+<p>Green = enabled via <code>.claude/settings.json</code> (branch <code>claude/elegant-edison-owy590</code>). Amber = enabled, with a caveat. Red = not enabled.</p>
+<div class="g">
+<div class="c"><span class="t">ENABLED</span><b>Savvy Progress</b><small>JohnnyVizz/claude-kit · UI hooks only, no network or exec</small></div>
+<div class="c"><span class="t">ENABLED</span><b>Claude Skins</b><small>hellosverre/claude-skins · UI hooks. Optional update check reads a raw GitHub file and sends nothing.</small></div>
+<div class="c"><span class="t">ENABLED</span><b>Filetree</b><small>data-goblin/claude-code-filetree · UI plus local file/git reads</small></div>
+<div class="c w"><span class="t">ENABLED · COSTS TOKENS</span><b>Cache Tax</b><small>karanb192 · keep-warm pings use model requests. Installs from the author's separate claude-code-mods marketplace, which I did not fully audit.</small></div>
+<div class="c w"><span class="t">ENABLED · CAVEAT</span><b>Reflect</b><small>BayramAnnakov · hooks on every prompt, and runs <code>claude -p</code> subprocesses on your prompts</small></div>
+<div class="c w"><span class="t">ENABLED · NEEDS BINARY</span><b>Terminal Browser</b><small>zenbu-labs · plugin needs the separate <code>terminal-browser</code> app (curl|bash installer, not run)</small></div>
+<div class="c"><span class="t">ENABLED</span><b>You Should Know</b><small>built in · <code>cc-plugin-you-should-know@builtin</code></small></div>
+<div class="c n"><span class="t">NOT ENABLED</span><b>Blast Radius</b><small>anthropics/claude-code-playground. Marketplace is in a subfolder, so it can't be added by repo name.</small></div>
+<div class="c n"><span class="t">NOT ENABLED</span><b>Replay Theater</b><small>same as Blast Radius</small></div>
+</div>
+<h2>Local machines (run once)</h2>
+<pre>claude plugin marketplace add JohnnyVizz/claude-kit
+claude plugin marketplace add hellosverre/claude-skins
+claude plugin marketplace add data-goblin/claude-code-filetree
+claude plugin marketplace add karanb192/claude-code-mods
+claude plugin marketplace add BayramAnnakov/claude-reflect
+claude plugin marketplace add zenbu-labs/terminal-browser
+claude plugin install savvy-progress@claude-kit --scope user
+claude plugin install skins@hellosverre-mods --scope user
+claude plugin install filetree@claude-code-filetree --scope user
+claude plugin install cache-tax@claude-code-mods --scope user
+claude plugin install claude-reflect@claude-reflect-marketplace --scope user
+claude plugin install terminal-browser@terminal-browser --scope user
+git clone https://github.com/anthropics/claude-code-playground && cd claude-code-playground/claude-code/mods
+claude plugin marketplace add ./
+claude plugin install blast-radius@claude-code-playground-mods --scope user
+claude plugin install replay-theater@claude-code-playground-mods --scope user
+/plugin enable cc-plugin-you-should-know@builtin</pre>
+<p><b>Not verified:</b> I haven't confirmed the plugins load in a live session, and the 2.1.287+ requirement for cache-tax.</p></body></html>
